@@ -3,30 +3,10 @@
 #include <algorithm>
 #include <vector>
 #include <limits>
+#include "Entities.hpp"
 
-class Player;
-class Character{
-    public:
-        std::string name;
-        int strenght;
-        int agility;
-        int stamina;
-        int intelligence;
-        int armor;
-        int health;
-        bool alive = true;
-        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,bool alive)
-        {
-            this->name = name;
-            this->strenght = strenght;
-            this->agility = agility;
-            this->stamina = stamina;
-            this->intelligence = intelligence;
-            this->armor = armor;
-            this->health = health;
-            this->alive = alive;
-        }
-        Character();
+
+
    /* int Attack(Character entity,Player player)
     {
        return player.health -= entity.strenght + 2 - player.armor;
@@ -53,34 +33,13 @@ class Character{
             return true;
         }
     }*/
-};
-class Player : public Character{
-    public:
-            std::string gender;
-            std::string playerClass;
-            int playerId;
-            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,bool alive)
-            {
-                this->name = name;
-                this->playerId = playerId;
-                this->playerClass = playerClass;
-                this->gender = gender;
-                this->strenght = strenght;
-                this->agility = agility;
-                this->stamina = stamina;
-                this->intelligence = intelligence;
-                this->armor = armor;
-                this->health = health;
-                this->alive = alive;
-            }
-            Player();
-};
+
+
 
 void Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);
-void SaveCharacter(std::vector<Player>& playerCharacters);
-void ChooseCharacter(std::vector<Player>& playerCharacters, Player player);
+Player ChooseCharacter(std::vector<Player>& playerCharacters);
 
 int main()
 {
@@ -100,7 +59,7 @@ void Menu()
     Player player;
 
     Player *pPlayer = &player;
-    Player *selectedPlayer;
+    Player selectedPlayer;
 
     do
     {
@@ -333,12 +292,13 @@ void DisplayPlayers(std::vector<Player>& playerCharacters)
     }
 }
 
-Player* ChooseCharacter(std::vector<Player>& playerCharacters)
+Player ChooseCharacter(std::vector<Player>& playerCharacters)
 {
     if(playerCharacters.empty())
     {
         std::cout << "Nie ma graczy do wybrania" << std::endl;
-        return nullptr;
+        return playerCharacters[0];
+        
     }
     else
     {
@@ -348,15 +308,8 @@ Player* ChooseCharacter(std::vector<Player>& playerCharacters)
         DisplayPlayers(playerCharacters);
 
         std::cin >> choice;
-
-        return &playerCharacters[choice-1];
+        std::cout << "Wybrano gracza #" << playerCharacters[choice-1].playerId << " " << playerCharacters[choice-1].name << std::endl;
+        return playerCharacters[choice-1];
     }
 }
-//konstruktory
-Player::Player()
-{
-}
 
-Character::Character()
-{
-}
