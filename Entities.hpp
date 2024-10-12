@@ -1,5 +1,5 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef ENTITIES_HPP
+#define ENTITIES_HPP
 #include <string>
 
 class Player;

@@ -4,7 +4,7 @@
 #include <vector>
 #include <limits>
 #include "Entities.hpp"
-
+#include "Game.hpp"
 
 
    /* int Attack(Character entity,Player player)
