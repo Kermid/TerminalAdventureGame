@@ -14,7 +14,7 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters);
 
 int main()
 {
-    
+   
     Menu();
     return 0;
 }
@@ -74,6 +74,7 @@ void Menu()
                     break;
                     case 2:
                         ChooseCharacter(playerCharacters);
+                        FirstLevel(selectedPlayer);
                     break;
                     default:
                          std::cout << "Wybierz opcje od 1-4" << std::endl;
