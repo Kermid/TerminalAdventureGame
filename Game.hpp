@@ -4,18 +4,22 @@
 #include "Items.hpp"
 #include <iostream>
 #include <string>
+#include <ctime>
+#include <vector>
 
 
-void Fight(Player& player,Character& enemy);
+void Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FirstLevel(Player& player,Character& enemy)
 {
     int choice;
+    std::vector<Enemy> listOfEnemies;
+
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
     std::cout << "W powietrzu czuc zapach gnijacych roslin, a ciche odglosy bulgoczacej wody budza niepokoj." << std::endl;
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "Masz przed sobą trzy siezki" << std::endl;
+    std::cout << "Masz przed soba trzy siezki" << std::endl;
     std::cout << "1 - Lewo" << std::endl;
     std::cout << "2 - Prosto" << std::endl;
     std::cout << "3 - Prawo" << std::endl;
@@ -25,7 +29,7 @@ void FirstLevel(Player& player,Character& enemy)
     {
         case 1:
             std::cout << "Wybrales pierwsza droge" << std::endl;
-                Fight(player,enemy);
+                Fight(player,listOfEnemies);
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
@@ -39,10 +43,24 @@ void Chest(Item item)
 {
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
 }
-void Fight(Player& player,Character& enemy)
+void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
-    Character("Szkielet",4,4,4,4,2,50,true);
-    std::cout << "Przeciwnik! Przed toba pojawil sie " << enemy.name << std::endl;
+    int random = RandomNum();
+    SpawnEnemy(random,listOfEnemies);
+    if(listOfEnemies.size() >= 1)
+    {
+        std::cout << "Przed toba pojawila sie grupa" << listOfEnemies[0].name << "ow"<< std::endl;
+    }
+    else if(listOfEnemies.size() < 1)
+    {
+        std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
+    }
+    
+    for(Enemy enemy : listOfEnemies)
+    {
+        std::cout << "#"<< enemy.EnemyId << " " << enemy.name << std::endl;
+    }
+    
 }
 
 #endif
