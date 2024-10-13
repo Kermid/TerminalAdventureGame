@@ -1,8 +1,12 @@
 #ifndef ENTITIES_HPP
 #define ENTITIES_HPP
 #include <string>
+#include "Entities.hpp"
+#include "Items.hpp"
+#include <iostream>
 
-class Player;
+
+
 class Character{
     public:
         std::string name;
@@ -14,6 +18,7 @@ class Character{
         int health;
         int mana;
         bool alive = true;
+        int Inventory[4][4];
         Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,bool alive)
         {
             this->name = name;
@@ -49,6 +54,7 @@ class Player : public Character{
             }
             Player();
 };
+
 //konstruktory
 Player::Player()
 {

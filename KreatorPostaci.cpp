@@ -5,36 +5,7 @@
 #include <limits>
 #include "Entities.hpp"
 #include "Game.hpp"
-
-
-   /* int Attack(Character entity,Player player)
-    {
-       return player.health -= entity.strenght + 2 - player.armor;
-    }
-    int Attack(Character entity,Character entity2)
-    {
-       return entity2.health -= entity.strenght + 2 - entity2.armor;
-    }
-    int Attack(Player player, Character entity)
-    {
-       return entity.health -= player.strenght + 2 - entity.armor;
-    }
-    bool Die(Player player)
-    {
-        if(player.health <= 0)
-        {
-            return true;
-        }
-    }
-    bool Die(Character entity)
-    {
-        if(entity.health <= 0)
-        {
-            return true;
-        }
-    }*/
-
-
+#include "Items.hpp"
 
 void Menu();
 void Create(Player& player,int playerIdCounter);
@@ -43,6 +14,7 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters);
 
 int main()
 {
+    
     Menu();
     return 0;
 }
