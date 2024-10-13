@@ -7,6 +7,8 @@ class Item
     public:
         std::string name;
         int cost;
+    
+
 };
 class Weapon : public Item
 {
@@ -16,9 +18,19 @@ class Weapon : public Item
         int agility;
         int stamina;
         int intelligence;
+        Weapon(std::string name,int damage,int strenght,int agility,int stamina,int intelligence)
+        {
+            this->name = name;
+            this->damage = damage;
+            this->strenght = strenght;
+            this->agility = agility;
+            this->stamina = stamina;
+            this->intelligence = intelligence;
+            this->cost = cost;
+        }
 
 };
-class Aromor : public Item
+class Armor : public Item
 {
     public:
         int armor;
@@ -26,5 +38,15 @@ class Aromor : public Item
         int agility;
         int stamina;
         int intelligence;
+         Armor(std::string name,int damage,int strenght,int agility,int stamina,int intelligence)
+        {
+            this->name = name;
+            this->armor = armor;
+            this->strenght = strenght;
+            this->agility = agility;
+            this->stamina = stamina;
+            this->intelligence = intelligence;
+            this->cost = cost;
+        }
 };
 #endif

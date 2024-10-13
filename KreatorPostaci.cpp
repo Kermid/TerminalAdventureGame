@@ -30,9 +30,8 @@ void Menu()
 
     Player player;
 
-    Player *pPlayer = &player;
     Player selectedPlayer;
-
+    Character character;
     do
     {
         std::cout << "1 - Nowa gra" << std::endl;
@@ -74,7 +73,8 @@ void Menu()
                     break;
                     case 2:
                         ChooseCharacter(playerCharacters);
-                        FirstLevel(selectedPlayer);
+                        FirstLevel(selectedPlayer,character);
+                        menuContinue = false;
                     break;
                     default:
                          std::cout << "Wybierz opcje od 1-4" << std::endl;
@@ -130,8 +130,10 @@ void Create(Player &player,int playerIdCounter)
     {
         if(playerClass >= 1 && playerClass <= 6)
     {
+
     while(playerClassBool)
     {
+
         switch (playerClass)
     {
     case 1:
@@ -192,6 +194,7 @@ void Create(Player &player,int playerIdCounter)
         player.intelligence = 5;
         player.armor = 1;
         player.health = 300;
+        player.mana = 50;
         int choicePoints;
     do
     {
@@ -203,6 +206,7 @@ void Create(Player &player,int playerIdCounter)
         std::cout << "3 - Inteligencja: " << player.intelligence << std::endl;
         std::cout << "4 - Wytrzymalosc: " << player.stamina << std::endl;
         std::cout << "5 - Zdrowie: " << player.health << std::endl;
+        std::cout << "6 - Mana: " << player.mana << std::endl;
 
         std::cin >> choicePoints;
          //obsluga blednego inputu 
@@ -233,6 +237,10 @@ void Create(Player &player,int playerIdCounter)
             break;
             case 5:
             player.health += 10;
+            playerStartPoints--;
+            break;
+            case 6:
+            player.mana += 5;
             playerStartPoints--;
             break;
         

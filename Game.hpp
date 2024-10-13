@@ -6,8 +6,8 @@
 #include <string>
 
 
-
-void FirstLevel(Player player)
+void Fight(Player& player,Character& enemy);
+void FirstLevel(Player& player,Character& enemy)
 {
     int choice;
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
@@ -15,7 +15,7 @@ void FirstLevel(Player player)
     std::cout << "W powietrzu czuc zapach gnijacych roslin, a ciche odglosy bulgoczacej wody budza niepokoj." << std::endl;
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "Masz przed sobą trzy sieżki" << std::endl;
+    std::cout << "Masz przed sobą trzy siezki" << std::endl;
     std::cout << "1 - Lewo" << std::endl;
     std::cout << "2 - Prosto" << std::endl;
     std::cout << "3 - Prawo" << std::endl;
@@ -25,7 +25,7 @@ void FirstLevel(Player player)
     {
         case 1:
             std::cout << "Wybrales pierwsza droge" << std::endl;
-
+                Fight(player,enemy);
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
@@ -35,4 +35,14 @@ void FirstLevel(Player player)
         break;
     }
 }
+void Chest(Item item)
+{
+    std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
+}
+void Fight(Player& player,Character& enemy)
+{
+    Character("Szkielet",4,4,4,4,2,50,true);
+    std::cout << "Przeciwnik! Przed toba pojawil sie " << enemy.name << std::endl;
+}
+
 #endif

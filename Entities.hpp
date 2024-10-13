@@ -14,7 +14,7 @@ class Character{
         int agility;
         int stamina;
         int intelligence;
-        int armor;
+        int armor = 0;
         int health;
         int mana;
         bool alive = true;
@@ -53,6 +53,11 @@ class Player : public Character{
                 this->alive = alive;
             }
             Player();
+};
+class Enemy : public Character
+{
+    public:
+        int EnemyId;
 };
 
 //konstruktory
