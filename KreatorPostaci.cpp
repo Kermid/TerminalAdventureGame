@@ -24,7 +24,7 @@ void Menu()
     int playerIdCounter = 0;
     std::vector<Player> playerCharacters;
 
-    int choice;
+    int choiceMenu;
 
     bool menuContinue = true;
 
@@ -39,7 +39,7 @@ void Menu()
         std::cout << "3 - Pokaz postacie" << std::endl;
         std::cout << "4 - Wyjdz z gry" << std::endl;
         
-        std::cin >> choice;
+        std::cin >> choiceMenu;
     //obsluga blednego inputu 
     if(std::cin.fail())
     {   //czyszczenie inputu
@@ -48,10 +48,9 @@ void Menu()
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         continue;
     }
-    switch(choice)
+    switch(choiceMenu)
     {
         case 1:
-        int choice;
             if(playerCharacters.empty())
             {
                 playerIdCounter++;
@@ -60,11 +59,11 @@ void Menu()
             }
             else
             {
-                int choice;
+                int choiceGame;
                 std::cout << "1 - Stworz nowa postac" << std::endl;
                 std::cout << "2 - Wybierz postac do gry" << std::endl;
-                std::cin >> choice;
-                switch(choice)
+                std::cin >> choiceGame;
+                switch(choiceGame)
                 {
                     case 1:
                          playerIdCounter++;
@@ -253,44 +252,5 @@ void Create(Player &player,int playerIdCounter)
     
     
 }
-void DisplayPlayers(std::vector<Player>& playerCharacters)
-{
-    int counter = 0;
-    if(playerCharacters.empty())
-    {
-        std::cout << "Nie ma jeszcze postaci." << std::endl;
-    }
-    else
-    {
-        std::cout << "Lista postaci:" << std::endl;
-        for(const Player player : playerCharacters)
-        {
-            counter++;
-            std::cout << "#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
-            std::cout << "S: " << player.strenght << " A: " << player.agility << " I: " << player.intelligence << " S: " << player.stamina << std::endl;
-            std::cout << "" << std::endl;
-        }
-    }
-}
 
-Player ChooseCharacter(std::vector<Player>& playerCharacters)
-{
-    if(playerCharacters.empty())
-    {
-        std::cout << "Nie ma graczy do wybrania" << std::endl;
-        return playerCharacters[0];
-        
-    }
-    else
-    {
-        int choice;
-
-        std::cout << "Wybierz numer gracza." << std::endl;
-        DisplayPlayers(playerCharacters);
-
-        std::cin >> choice;
-        std::cout << "Wybrano gracza #" << playerCharacters[choice-1].playerId << " " << playerCharacters[choice-1].name << std::endl;
-        return playerCharacters[choice-1];
-    }
-}
 

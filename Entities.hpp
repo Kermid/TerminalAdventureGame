@@ -99,4 +99,61 @@ void SpawnEnemy(int randomNum,std::vector<Enemy>& listOfEnemies)
     }
     
 }
+void DisplayEnemies(std::vector<Enemy>& listOfEnemies)
+{
+    for(Enemy enemy : listOfEnemies)
+    {
+        std::cout << "#" << enemy.EnemyId << " HP: " << enemy.health << std::endl;
+    }
+}
+Enemy ChooseEnemy(std::vector<Enemy>& listOfEnemies)
+{
+    int enemyChoice;
+    std::cout << "Wybierz przeciwnika." << std::endl;
+    DisplayEnemies(listOfEnemies);
+    std::cin >> enemyChoice;
+    std::cout << "Wybrano gracza #" << listOfEnemies[enemyChoice-1].playerId << " " << listOfEnemies[enemyChoice-1].name << std::endl;
+
+    return listOfEnemies[1];
+}
+void DisplayPlayers(std::vector<Player>& playerCharacters)
+{
+    int counter = 0;
+    if(playerCharacters.empty())
+    {
+        std::cout << "Nie ma jeszcze postaci." << std::endl;
+    }
+    else
+    {
+        std::cout << "Lista postaci:" << std::endl;
+        for(const Player player : playerCharacters)
+        {
+            counter++;
+            std::cout << "#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
+            std::cout << "S: " << player.strenght << " A: " << player.agility << " I: " << player.intelligence << " S: " << player.stamina << std::endl;
+            std::cout << "" << std::endl;
+        }
+    }
+}
+
+Player ChooseCharacter(std::vector<Player>& playerCharacters)
+{
+    if(playerCharacters.empty())
+    {
+        std::cout << "Nie ma graczy do wybrania" << std::endl;
+        return playerCharacters[0];
+        
+    }
+    else
+    {
+        int playerChoice;
+
+        std::cout << "Wybierz numer gracza." << std::endl;
+        DisplayPlayers(playerCharacters);
+
+        std::cin >> playerChoice;
+        std::cout << "Wybrano gracza #" << playerCharacters[playerChoice-1].playerId << " " << playerCharacters[playerChoice-1].name << std::endl;
+        return playerCharacters[playerChoice-1];
+    }
+}
 #endif

@@ -49,18 +49,13 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     SpawnEnemy(random,listOfEnemies);
     if(listOfEnemies.size() >= 1)
     {
-        std::cout << "Przed toba pojawila sie grupa" << listOfEnemies[0].name << "ow"<< std::endl;
+        std::cout << "Przed toba pojawila sie grupa " << listOfEnemies[0].name << "ow"<< std::endl;
     }
     else if(listOfEnemies.size() < 1)
     {
         std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
     }
-    
-    for(Enemy enemy : listOfEnemies)
-    {
-        std::cout << "#"<< enemy.EnemyId << " " << enemy.name << std::endl;
-    }
-    
+    ChooseEnemy(listOfEnemies);
 }
 
 #endif
