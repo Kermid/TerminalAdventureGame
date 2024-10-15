@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Kuba/Desktop/c++/KreatorPostaci",
-      "program": "c:/Users/Kuba/Desktop/c++/KreatorPostaci/build/Debug/outDebug",
+      "cwd": ".",
+      "program": "KreatorPostaci.exe",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -103,18 +103,18 @@ void DisplayEnemies(std::vector<Enemy>& listOfEnemies)
 {
     for(Enemy enemy : listOfEnemies)
     {
-        std::cout << "#" << enemy.EnemyId << " HP: " << enemy.health << std::endl;
+        std::cout << "#" << enemy.EnemyId << " " << enemy.name << " HP: " << enemy.health << std::endl;
     }
 }
-Enemy ChooseEnemy(std::vector<Enemy>& listOfEnemies)
+Enemy& ChooseEnemy(std::vector<Enemy>& listOfEnemies)
 {
     int enemyChoice;
     std::cout << "Wybierz przeciwnika." << std::endl;
     DisplayEnemies(listOfEnemies);
     std::cin >> enemyChoice;
-    std::cout << "Wybrano gracza #" << listOfEnemies[enemyChoice-1].playerId << " " << listOfEnemies[enemyChoice-1].name << std::endl;
+    std::cout << "Wybrano gracza #" << listOfEnemies[enemyChoice-1].EnemyId << " " << listOfEnemies[enemyChoice-1].name << std::endl;
 
-    return listOfEnemies[1];
+    return listOfEnemies[enemyChoice-1];
 }
 void DisplayPlayers(std::vector<Player>& playerCharacters)
 {

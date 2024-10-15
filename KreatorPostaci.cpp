@@ -7,6 +7,7 @@
 #include "Game.hpp"
 #include "Items.hpp"
 
+Player selectedPlayer;
 void Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);
@@ -28,9 +29,8 @@ void Menu()
 
     bool menuContinue = true;
 
-    Player player;
-
-    Player selectedPlayer;
+    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,5,50,50,true);
+    playerCharacters.push_back(player);
     Character character;
     do
     {
@@ -71,7 +71,7 @@ void Menu()
                          playerCharacters.push_back(player);
                     break;
                     case 2:
-                        ChooseCharacter(playerCharacters);
+                        selectedPlayer = ChooseCharacter(playerCharacters);
                         FirstLevel(selectedPlayer,character);
                         menuContinue = false;
                     break;
@@ -252,5 +252,3 @@ void Create(Player &player,int playerIdCounter)
     
     
 }
-
-

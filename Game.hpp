@@ -43,6 +43,12 @@ void Chest(Item item)
 {
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
 }
+void Attack(Player& player,Enemy& enemy)
+{
+    enemy.health -= (1 + player.strenght) - enemy.armor;
+    std::cout << "Zadajesz " << (1 + player.strenght) - enemy.armor << " obrazen przeciwnikowi"<< std::endl;
+    std::cout << "Zdrowie przeciwnika wynosi teraz: " << enemy.health << std::endl;
+}
 void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
     int random = RandomNum();
@@ -55,7 +61,15 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     {
         std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
     }
-    ChooseEnemy(listOfEnemies);
+    
+    
+    while (!listOfEnemies.empty())
+    {
+        Enemy& enemy = ChooseEnemy(listOfEnemies);
+        Attack(player,enemy);
+        
+    }
+    
 }
 
 #endif
