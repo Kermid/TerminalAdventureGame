@@ -20,7 +20,8 @@ class Character{
         int mana;
         bool alive = true;
         int Inventory[4][4];
-        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,bool alive)
+        int speed;
+        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive)
         {
             this->name = name;
             this->strenght = strenght;
@@ -29,6 +30,7 @@ class Character{
             this->intelligence = intelligence;
             this->armor = armor;
             this->health = health;
+            this->speed = speed;
             this->alive = alive;
         }
         Character();
@@ -59,7 +61,7 @@ class Enemy : public Character
 {
     public:
         int EnemyId;
-         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive)
+         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,int speed,bool alive)
             {
                 this->EnemyId = EnemyId;
                 this->name = name;
@@ -70,6 +72,7 @@ class Enemy : public Character
                 this->armor = armor;
                 this->health = health;
                 this->mana = mana;
+                this->speed = speed;
                 this->alive = alive;
             }
 };
@@ -81,7 +84,7 @@ Character::Character()
 {
 
 }
-int RandomNum()
+int RandomOfThree()
 {
     int randomNum;
     srand(time(NULL));
@@ -94,7 +97,7 @@ void SpawnEnemy(int randomNum,std::vector<Enemy>& listOfEnemies)
     for(int i = 0;i <= randomNum;i++)
     {
         id++;
-        Enemy enemy(id,"Szkielet",4,4,4,1,1,50,0,true);
+        Enemy enemy(id,"Szkielet",4,4,4,1,1,50,0,2,true);
         listOfEnemies.push_back(enemy);
     }
     

@@ -28,7 +28,14 @@ void FirstLevel(Player& player,Character& enemy)
     switch(choice)
     {
         case 1:
+
             std::cout << "Wybrales pierwsza droge" << std::endl;
+            std::cout << "Wkraczasz na zapomniany cmentarz.Krzywe,omszale nagrobki wyrastaja z grzaskiego gruntu,"  << std::endl;
+            std::cout << "a powykrecane drzewa splataja swoje galezie nad nimi, tworzac ponura kopule." << std::endl;
+            std::cout << "Metna woda zbiera sie w kaluzach wokol grobow, a mgla unosi sie nisko nad ziemia." << std::endl;
+            std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw, a powietrze jest ciezkie od zapachu zgnilizny i stechlizny." << std::endl;
+            std::cout << "Miejsce zdaje sie zapomniane przez czas, budzac niepokoj i tajemnice." << std::endl;
+
                 Fight(player,listOfEnemies);
         break;
         case 2:
@@ -46,13 +53,26 @@ void Chest(Item item)
 void Attack(Player& player,Enemy& enemy)
 {
     enemy.health -= (1 + player.strenght) - enemy.armor;
-    std::cout << "Zadajesz " << (1 + player.strenght) - enemy.armor << " obrazen przeciwnikowi"<< std::endl;
-    std::cout << "Zdrowie przeciwnika wynosi teraz: " << enemy.health << std::endl;
+    
+    if(enemy.health < (1 + player.strenght) - enemy.armor)
+    {
+        std::cout << "Pokonales przeciwnika!" << std::endl;
+    }
+    else
+    {
+        std::cout << "Zadajesz " << (1 + player.strenght) - enemy.armor << " obrazen przeciwnikowi"<< std::endl;
+        std::cout << "Zdrowie przeciwnika wynosi teraz: " << enemy.health << std::endl;
+    }
+    
 }
 void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
-    int random = RandomNum();
+    bool endFight = false;
+
+    int random = RandomOfThree();
+
     SpawnEnemy(random,listOfEnemies);
+
     if(listOfEnemies.size() >= 1)
     {
         std::cout << "Przed toba pojawila sie grupa " << listOfEnemies[0].name << "ow"<< std::endl;
@@ -63,11 +83,25 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     }
     
     
-    while (!listOfEnemies.empty())
+    while (endFight == false)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
         Attack(player,enemy);
-        
+        if(enemy.health <= 0)
+        {
+            std::cout << enemy.name << " zostal pokonany!" << std::endl;
+
+            listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemy](Enemy& e) {return e.EnemyId == enemy.EnemyId;}),listOfEnemies.end());
+        }
+        else
+        {
+            std::cout <<"Przeciwnik zyje.Walka trwa dalej!" << std::endl;
+        }
+        //checking if list is empty or player has died
+        if(listOfEnemies.empty() || player.health <= 0)
+        {
+            endFight = true;
+        }
     }
     
 }

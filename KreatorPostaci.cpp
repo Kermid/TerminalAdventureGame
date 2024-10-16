@@ -137,26 +137,72 @@ void Create(Player &player,int playerIdCounter)
     {
     case 1:
         player.playerClass = "Wojownik";
+        player.mana = 20;
+        player.health = 80;
+        player.armor = 3;
+        player.intelligence = 2;
+        player.agility = 3;
+        player.stamina = 7;
+        player.strenght = 7;
+        player.speed = 4;
         playerClassBool = false;
         break;
     case 2:
         player.playerClass = "Mag";
+        player.mana = 70;
+        player.health = 70;
+        player.armor = 1;
+        player.intelligence = 7;
+        player.stamina = 2;
+        player.agility = 2;
+        player.strenght = 2;
+        player.speed = 3;
         playerClassBool = false;
         break;
     case 3:
         player.playerClass = "Lotr";
+        player.mana = 20;
+        player.health = 75;
+        player.armor = 1;
+        player.intelligence = 3;
+        player.stamina = 3;
+        player.agility = 6;
+        player.strenght = 4;
+        player.speed = 6;
         playerClassBool = false;
     break;
     case 4:
         player.playerClass = "Berserker";
+        player.mana = 20;
+        player.health = 75;
+        player.armor = 0;
+        player.intelligence = 2;
+        player.stamina = 4;
+        player.stamina = 3;
+        player.strenght = 9;
+        player.speed = 4;
         playerClassBool = false;
     break;
     case 5:
         player.playerClass = "Nekromana";
+        player.mana = 70;
+        player.health = 70;
+        player.armor = 2;
+        player.intelligence = 7;
+        player.stamina = 3;
+        player.strenght = 2;
+        player.speed = 3;
         playerClassBool = false;
         break;
     case 6:
         player.playerClass = "Lowczy";
+        player.mana = 30;
+        player.health = 75;
+        player.armor = 1;
+        player.intelligence = 3;
+        player.stamina = 4;
+        player.strenght = 3;
+        player.speed = 5;
         playerClassBool = false;
         break;
     default:
@@ -186,14 +232,8 @@ void Create(Player &player,int playerIdCounter)
             std::cout << "Wybierz odpowiednia opcje" << std::endl;
         }
     }
+
         player.playerId = playerIdCounter;
-        player.strenght = 5;
-        player.agility = 5;
-        player.stamina = 5;
-        player.intelligence = 5;
-        player.armor = 1;
-        player.health = 300;
-        player.mana = 50;
         int choicePoints;
     do
     {
