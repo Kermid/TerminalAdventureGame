@@ -7,13 +7,15 @@
 #include <ctime>
 #include <vector>
 
-void Chest(Item item);
+void Chest(Weapon weapon);
+void Chest(Armor armor);
 void Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FirstLevel(Player& player,Character& enemy)
 {
     int choice;
     std::vector<Enemy> listOfEnemies;
-
+    Weapon weapon = GetWeapon();
+    Armor armor = GetArmor();
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
     std::cout << "W powietrzu czuc zapach gnijacych roslin, a ciche odglosy bulgoczacej wody budza niepokoj." << std::endl;
@@ -37,11 +39,11 @@ void FirstLevel(Player& player,Character& enemy)
             std::cout << "Miejsce zdaje sie zapomniane przez czas, budzac niepokoj i tajemnice." << std::endl;
 
                 Fight(player,listOfEnemies);
+                Chest(armor);
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
-            Weapon item = GetWeapon();
-            Chest(item);
+           Chest(weapon);
         break;
         case 3:
             std::cout << "Wybrales trzecia droge" << std::endl;
@@ -51,13 +53,13 @@ void FirstLevel(Player& player,Character& enemy)
 void Chest(Weapon weapon)
 {
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
-    std::cout << "W srodku znajduje sie: " << weapon << std::endl;
+    std::cout << "W srodku znajduje sie: " << weapon.name << std::endl;
     
 }
 void Chest(Armor armor)
 {
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
-    std::cout << "W srodku znajduje sie: " << armor << std::endl;
+    std::cout << "W srodku znajduje sie: " << armor.name << std::endl;
     
 }
 void Attack(Player& player,Enemy& enemy)

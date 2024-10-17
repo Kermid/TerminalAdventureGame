@@ -52,6 +52,7 @@ Weapon GetWeapon()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
+
     switch (random)
     {
     case 1:
@@ -88,8 +89,9 @@ Weapon GetWeapon()
         break;
     
     }
+    return Weapon("Szmaty",0,0,0,0,0);
 }
-Armor GetAromor()
+Armor GetArmor()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
@@ -130,5 +132,6 @@ Armor GetAromor()
         break;
     
     }
+    return Armor("Szmaty",0,0,0,0,0,0);
 }
 #endif
