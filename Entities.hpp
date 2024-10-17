@@ -91,16 +91,27 @@ int RandomOfThree()
     randomNum = rand() % 3;
     return randomNum;
 }
-void SpawnEnemy(int randomNum,std::vector<Enemy>& listOfEnemies)
+void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
     int id = 0;
     for(int i = 0;i <= randomNum;i++)
     {
         id++;
-        Enemy enemy(id,"Szkielet",4,4,4,1,1,50,0,2,true);
+        Enemy enemy(id,"Szkielet",3,4,4,1,1,50,0,2,true);
         listOfEnemies.push_back(enemy);
     }
     
+}
+void AnnounceEnemies(std::vector<Enemy>& listOfEnemies)
+{
+    if(listOfEnemies.size() >= 1)
+    {
+        std::cout << "Przed toba pojawila sie grupa " << listOfEnemies[0].name << "ow"<< std::endl;
+    }
+    else if(listOfEnemies.size() < 1)
+    {
+        std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
+    }
 }
 void DisplayEnemies(std::vector<Enemy>& listOfEnemies)
 {

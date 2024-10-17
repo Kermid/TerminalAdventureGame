@@ -7,7 +7,7 @@
 #include <ctime>
 #include <vector>
 
-
+void Chest(Item item);
 void Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FirstLevel(Player& player,Character& enemy)
 {
@@ -40,19 +40,34 @@ void FirstLevel(Player& player,Character& enemy)
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
+            Weapon item = GetWeapon();
+            Chest(item);
         break;
         case 3:
             std::cout << "Wybrales trzecia droge" << std::endl;
         break;
     }
 }
-void Chest(Item item)
+void Chest(Weapon weapon)
 {
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
+    std::cout << "W srodku znajduje sie: " << weapon << std::endl;
+    
+}
+void Chest(Armor armor)
+{
+    std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
+    std::cout << "W srodku znajduje sie: " << armor << std::endl;
+    
 }
 void Attack(Player& player,Enemy& enemy)
 {
-    enemy.health -= (1 + player.strenght) - enemy.armor;
+    int damage = (1 + player.strenght) - enemy.armor;
+    if(damage < 0)
+    {
+        std::cout << "Obrazenia nie moga byc ujemne" << std::endl;
+    }
+    enemy.health -= damage;
     
     if(enemy.health < (1 + player.strenght) - enemy.armor)
     {
@@ -65,22 +80,24 @@ void Attack(Player& player,Enemy& enemy)
     }
     
 }
+void EnemyAttack(Player& player,Enemy& enemy)
+{
+    int damage = (1 + enemy.strenght) - player.armor;
+    if(damage < 0)
+    {
+        std::cout << "Obrazenia nie moga byc ujemne" << std::endl;
+    }
+    player.health -= damage;
+    std::cout << "Otrzymujesz " << damage << " obrazen"<< std::endl;
+    std::cout << "Twoje zdrowie wynosi: " << player.health << std::endl;
+}
 void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
     bool endFight = false;
 
-    int random = RandomOfThree();
+    SpawnSkeletons(2,listOfEnemies);
 
-    SpawnEnemy(random,listOfEnemies);
-
-    if(listOfEnemies.size() >= 1)
-    {
-        std::cout << "Przed toba pojawila sie grupa " << listOfEnemies[0].name << "ow"<< std::endl;
-    }
-    else if(listOfEnemies.size() < 1)
-    {
-        std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
-    }
+    AnnounceEnemies(listOfEnemies);
     
     
     while (endFight == false)
@@ -97,6 +114,10 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
         {
             std::cout <<"Przeciwnik zyje.Walka trwa dalej!" << std::endl;
         }
+        for(Enemy& enemy : listOfEnemies)
+        {
+            EnemyAttack(player,enemy);
+        }
         //checking if list is empty or player has died
         if(listOfEnemies.empty() || player.health <= 0)
         {
@@ -105,5 +126,8 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     }
     
 }
+void CalculatingTurns(Player& player,std::vector<Enemy>& listofEnemies)
+{
 
+}
 #endif
