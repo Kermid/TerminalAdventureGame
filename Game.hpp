@@ -7,15 +7,14 @@
 #include <ctime>
 #include <vector>
 
-void Chest(Weapon weapon);
-void Chest(Armor armor);
+void Chest(Item item,Player& player);
 void Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FirstLevel(Player& player,Character& enemy)
 {
     int choice;
     std::vector<Enemy> listOfEnemies;
-    Weapon weapon = GetWeapon();
-    Armor armor = GetArmor();
+    Item itemArmor = GetArmor();
+    Item itemWeapon = GetWeapon();
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
     std::cout << "W powietrzu czuc zapach gnijacych roslin, a ciche odglosy bulgoczacej wody budza niepokoj." << std::endl;
@@ -39,27 +38,40 @@ void FirstLevel(Player& player,Character& enemy)
             std::cout << "Miejsce zdaje sie zapomniane przez czas, budzac niepokoj i tajemnice." << std::endl;
 
                 Fight(player,listOfEnemies);
-                Chest(armor);
+                Chest(itemWeapon,player);
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
-           Chest(weapon);
+            Chest(itemArmor,player);
         break;
         case 3:
             std::cout << "Wybrales trzecia droge" << std::endl;
         break;
     }
 }
-void Chest(Weapon weapon)
+void Chest(Item item,Player& player)
 {
+    int choiceTake;
     std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
-    std::cout << "W srodku znajduje sie: " << weapon.name << std::endl;
+    std::cout << "W srodku znajduje sie: " << item.name << std::endl;
+    std::cout << "Czy bierzesz " << item.name << "?" << std::endl;
+    std::cout << "1 - Tak" << std::endl;
+    std::cout << "2 - Nie" << std::endl;
     
-}
-void Chest(Armor armor)
-{
-    std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
-    std::cout << "W srodku znajduje sie: " << armor.name << std::endl;
+    std::cin >> choiceTake;
+    switch (choiceTake)
+    {
+    case 1:
+        player.Inventory.push_back(item);
+        CheckInventory(player);
+        break;
+    case 2:
+            std::cout << "Nie bierzesz " << item.name << std::endl;
+        break;
+    default:
+        std::cout << "Wybierz poprawna opcje." << std::endl;
+        break;
+    }
     
 }
 void Attack(Player& player,Enemy& enemy)

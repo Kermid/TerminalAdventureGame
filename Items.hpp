@@ -1,54 +1,34 @@
 #ifndef WEAPONS_HPP
 #define WEAPONS_HPP
 #include <iostream>
+#include "Entities.hpp"
 
 class Item
 {
     public:
         std::string name;
-        int cost;
-    
-
-};
-class Weapon : public Item
-{
-    public:
+        int armor;
         int damage;
         int strenght;
         int agility;
         int stamina;
         int intelligence;
-        Weapon(std::string name,int strenght,int agility,int stamina,int intelligence,int cost)
-        {
-            this->name = name;
-            this->strenght = strenght;
-            this->agility = agility;
-            this->stamina = stamina;
-            this->intelligence = intelligence;
-            this->cost = cost;
-        }
-
-};
-class Armor : public Item
-{
-    public:
-        int armor;
-        int strenght;
-        int agility;
-        int stamina;
-        int intelligence;
-         Armor(std::string name,int armor,int strenght,int agility,int stamina,int intelligence,int cost)
+        int cost;
+        Item(std::string name,int armor,int damage,int strenght,int agility,int stamina,int intelligence,int cost)
         {
             this->name = name;
             this->armor = armor;
+            this->damage = damage;
             this->strenght = strenght;
             this->agility = agility;
             this->stamina = stamina;
-            this->intelligence = intelligence;
+            this->intelligence= intelligence;
             this->cost = cost;
         }
+
 };
-Weapon GetWeapon()
+
+Item GetWeapon()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
@@ -56,42 +36,42 @@ Weapon GetWeapon()
     switch (random)
     {
     case 1:
-            return  Weapon("Krotki miecz",2,1,1,0,1);
+            return  Item("Krotki miecz",0,2,1,1,0,0,1);
             
         break;
     case 2:
-            return  Weapon("Maczuga",3,0,1,0,1);
+            return  Item("Maczuga",0,3,2,1,0,0,1);
             
         break;
     case 3:
-            return Weapon("Sztylet",2,2,0,0,1);
+            return Item("Sztylet",0,0,1,3,0,0,1);
              
         break;
     case 4:
-            return Weapon("Krotki miecz",2,2,0,0,1);
+            return Item("Krotki miecz",0,0,2,2,0,0,1);
             
         break;
     case 5:
-            return Weapon("Miecz Dlugi",4,0,1,0,2);
+            return Item("Dlugi miecz",0,0,4,0,1,0,2);
             
         break;
     case 6:
-            return Weapon("Krotki miecz",1,0,1,4,1);
+            return Item("Krotki miecz",0,0,1,0,1,4,1);
             
         break;
     case 7:
-            return Weapon("Wojenny topor",5,0,0,0,2);
+            return Item("Wojenny topor",0,0,5,0,0,0,2);
             
         break;
     case 8:
-            return Weapon("Kusza",3,0,3,0,2);
+            return Item("Kusza",0,0,3,0,3,0,2);
             
         break;
     
     }
-    return Weapon("Szmaty",0,0,0,0,0);
+    return Item("Patyk",0,1,0,0,0,0,0);
 }
-Armor GetArmor()
+Item GetArmor()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
@@ -99,39 +79,42 @@ Armor GetArmor()
     switch (random)
     {
     case 1:
-            return Armor("Szaty",1,0,0,1,3,1);
+            return Item("Szaty",1,0,0,0,1,3,1);
             
         break;
     case 2:
-            return Armor("Skorzana zbroja",2,0,3,2,0,1);
+            return Item("Skorzana zbroja",2,0,1,3,1,0,1);
             
         break;
     case 3:
-            return Armor("Kolczuga",3,3,0,2,0,1);
+            return Item("Kolczuga",3,0,3,1,2,0,1);
             
         break;
     case 4:
-            return Armor("Zbroja plytowa",4,3,0,4,0,1);
+            return Item("Zbroja plytowa",5,0,3,0,4,0,2);
             
         break;
     case 5:
-            return Armor("Kaptur",1,0,1,1,0,1);
+            return Item("Kaptur",1,0,0,2,2,2,2);
             
         break;
     case 6:
-            return Armor("Zelazny chelm",2,2,0,0,0,1);
+            return Item("Zelazny chelm",3,2,0,2,0,0,2);
            
         break;
     case 7:
-            return Armor("Kapelusz czarodzieja",1,0,0,1,2,1);
+            return Item("Kapelusz czarodzieja",1,0,0,0,2,5,1);
             
         break;
     case 8:
-            return Armor("Buty",1,1,1,1,1,1);
+            return Item("Buty",1,1,1,1,1,1,1);
             
         break;
     
     }
-    return Armor("Szmaty",0,0,0,0,0,0);
+    return Item("Szmaty",0,0,0,0,0,0,0);
 }
+
+ 
+
 #endif

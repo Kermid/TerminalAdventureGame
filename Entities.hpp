@@ -18,8 +18,8 @@ class Character{
         int armor = 0;
         int health;
         int mana;
+        std::vector<Item> Inventory;
         bool alive = true;
-        int Inventory[4][4];
         int speed;
         Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive)
         {
@@ -40,6 +40,7 @@ class Player : public Character{
             std::string gender;
             std::string playerClass;
             int playerId;
+            std::vector<Item> Inventory;
             Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive)
             {
                 this->name = name;
@@ -146,10 +147,10 @@ void DisplayPlayers(std::vector<Player>& playerCharacters)
             std::cout << "#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
             std::cout << "S: " << player.strenght << " A: " << player.agility << " I: " << player.intelligence << " S: " << player.stamina << std::endl;
             std::cout << "" << std::endl;
+            
         }
     }
 }
-
 Player ChooseCharacter(std::vector<Player>& playerCharacters)
 {
     if(playerCharacters.empty())
@@ -168,6 +169,16 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters)
         std::cin >> playerChoice;
         std::cout << "Wybrano gracza #" << playerCharacters[playerChoice-1].playerId << " " << playerCharacters[playerChoice-1].name << std::endl;
         return playerCharacters[playerChoice-1];
+    }
+}
+void CheckInventory(Player& player)
+{
+    int counter = 1;
+    for(Item item : player.Inventory)
+    {   
+        std::cout << "#" << counter << " " << item.name << std::endl;
+        std::cout << "" << counter << " " << item.name << std::endl;
+        counter++;
     }
 }
 #endif
