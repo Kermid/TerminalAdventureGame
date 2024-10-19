@@ -8,20 +8,20 @@
 #include "Items.hpp"
 
 Player selectedPlayer;
-void Menu();
+Player& Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);
 Player ChooseCharacter(std::vector<Player>& playerCharacters);
 
 int main()
 {
-   
-    Menu();
+    Player player = Menu();
+    FirstLevel(player);
     
     return 0;
 }
 
-void Menu()
+Player& Menu()
 {
     int playerIdCounter = 0;
     std::vector<Player> playerCharacters;
@@ -30,8 +30,9 @@ void Menu()
 
     bool menuContinue = true;
 
-    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,5,50,50,true);
+    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true);
     playerCharacters.push_back(player);
+
     Character character;
     do
     {
@@ -72,8 +73,7 @@ void Menu()
                          playerCharacters.push_back(player);
                     break;
                     case 2:
-                        selectedPlayer = ChooseCharacter(playerCharacters);
-                        FirstLevel(selectedPlayer,character);
+                        return selectedPlayer = ChooseCharacter(playerCharacters);
                         menuContinue = false;
                     break;
                     default:
@@ -98,7 +98,7 @@ void Menu()
     }
     }while(menuContinue);
 
-
+    
 }
 void Create(Player &player,int playerIdCounter)
 {

@@ -8,16 +8,17 @@
 #include <vector>
 
 void Chest(Item item,Player& player);
-void Fight(Player& player,std::vector<Enemy>& listOfEnemies);
-void FirstLevel(Player& player,Character& enemy)
+int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
+void FirstLevel(Player& player)
 {
     int choice;
+    int outcome;
     std::vector<Enemy> listOfEnemies;
     Item itemArmor = GetArmor();
     Item itemWeapon = GetWeapon();
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
-    std::cout << "W powietrzu czuc zapach gnijacych roslin, a ciche odglosy bulgoczacej wody budza niepokoj." << std::endl;
+    std::cout << "W powietrzu czuc zapach gnijacych roslin." << std::endl;
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
     std::cout << "Masz przed soba trzy siezki" << std::endl;
@@ -34,18 +35,32 @@ void FirstLevel(Player& player,Character& enemy)
             std::cout << "Wkraczasz na zapomniany cmentarz.Krzywe,omszale nagrobki wyrastaja z grzaskiego gruntu,"  << std::endl;
             std::cout << "a powykrecane drzewa splataja swoje galezie nad nimi, tworzac ponura kopule." << std::endl;
             std::cout << "Metna woda zbiera sie w kaluzach wokol grobow, a mgla unosi sie nisko nad ziemia." << std::endl;
-            std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw, a powietrze jest ciezkie od zapachu zgnilizny i stechlizny." << std::endl;
-            std::cout << "Miejsce zdaje sie zapomniane przez czas, budzac niepokoj i tajemnice." << std::endl;
+            std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest w oddali" << std::endl;
+            std::cout << "Miejsce zdaje sie zapomniane przez czas." << std::endl;
 
-                Fight(player,listOfEnemies);
-                Chest(itemWeapon,player);
+                 outcome = Fight(player,listOfEnemies);
+                if(outcome == 1)
+                {
+                    Chest(itemWeapon,player);
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
+                
         break;
         case 2:
             std::cout << "Wybrales druga droge" << std::endl;
+            std::cout << "Przeszukujesz ruiny starego drewnianego domu." << std::endl;
+            std::cout << "Wlasciciele dawno sie stad wyniesli, jednak mozliwe, ze zostawili za soba czesc swojego majatku." << std::endl;
             Chest(itemArmor,player);
+            CheckInventory(player);
         break;
         case 3:
             std::cout << "Wybrales trzecia droge" << std::endl;
+            std::cout << "Pod drzewem lezy szkielet, wydaje sie ze moze znajdowac sie tutaj cos ciekawego." << std::endl;
+            Chest(itemWeapon,player);
+            CheckInventory(player);
         break;
     }
 }
@@ -79,7 +94,7 @@ void Attack(Player& player,Enemy& enemy)
     int damage = (1 + player.strenght) - enemy.armor;
     if(damage < 0)
     {
-        std::cout << "Obrazenia nie moga byc ujemne" << std::endl;
+        damage = 0;
     }
     enemy.health -= damage;
     
@@ -99,13 +114,13 @@ void EnemyAttack(Player& player,Enemy& enemy)
     int damage = (1 + enemy.strenght) - player.armor;
     if(damage < 0)
     {
-        std::cout << "Obrazenia nie moga byc ujemne" << std::endl;
+        damage = 0;
     }
     player.health -= damage;
     std::cout << "Otrzymujesz " << damage << " obrazen"<< std::endl;
     std::cout << "Twoje zdrowie wynosi: " << player.health << std::endl;
 }
-void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
+int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
     bool endFight = false;
 
@@ -123,6 +138,13 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
             std::cout << enemy.name << " zostal pokonany!" << std::endl;
 
             listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemy](Enemy& e) {return e.EnemyId == enemy.EnemyId;}),listOfEnemies.end());
+
+            //Po zabiciu id jest aktualizowane
+
+            for(Enemy& enemy : listOfEnemies)
+            {
+                enemy.EnemyId--;
+            }
         }
         else
         {
@@ -133,15 +155,22 @@ void Fight(Player& player, std::vector<Enemy>& listOfEnemies)
             EnemyAttack(player,enemy);
         }
         //checking if list is empty or player has died
-        if(listOfEnemies.empty() || player.health <= 0)
+        if(listOfEnemies.empty())
         {
             endFight = true;
+            return 1;
+        }
+        else if(player.health <= 0)
+        {
+            endFight = true;
+            return 0;
         }
     }
-    
+    return 2;
 }
 void CalculatingTurns(Player& player,std::vector<Enemy>& listofEnemies)
 {
 
 }
+
 #endif
