@@ -105,7 +105,7 @@ Item GetArmor()
             
         break;
     case 6:
-            return Item("Zelazny chelm",3,2,0,2,0,0,2,"Armor");
+            return Item("Zelazny chelm",3,0,2,0,0,0,2,"Armor");
            
         break;
     case 7:

@@ -22,9 +22,8 @@ void FirstLevel(Player& player)
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
     std::cout << "Masz przed soba trzy siezki" << std::endl;
-    std::cout << "1 - Lewo" << std::endl;
-    std::cout << "2 - Prosto" << std::endl;
-    std::cout << "3 - Prawo" << std::endl;
+    std::cout << "1 - Lewo  2 - Prosto  3 - Prawo" << std::endl;
+    std::cout << "" << std::endl;
     
     std::cin >> choice;
     switch(choice)
@@ -38,7 +37,7 @@ void FirstLevel(Player& player)
             std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest w oddali" << std::endl;
             std::cout << "Miejsce zdaje sie zapomniane przez czas." << std::endl;
 
-                 outcome = Fight(player,listOfEnemies);
+                outcome = Fight(player,listOfEnemies);
                 if(outcome == 1)
                 {
                     Chest(itemWeapon,player);
@@ -57,21 +56,39 @@ void FirstLevel(Player& player)
             CheckInventory(player);
         break;
         case 3:
+            int choice;
             std::cout << "Wybrales trzecia droge" << std::endl;
             std::cout << "Pod drzewem lezy szkielet, wydaje sie ze moze znajdowac sie tutaj cos ciekawego." << std::endl;
-            Chest(itemWeapon,player);
-            CheckInventory(player);
+            std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
+            std::cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                Chest(itemWeapon,player);
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                CheckInventory(player);
+                break;
+            
+            default:
+                break;
+            }
+            
         break;
     }
 }
 void Chest(Item item,Player& player)
 {
     int choiceTake;
-    std::cout << "Udalo ci sie znalesc skrzynie" << std::endl;
+    std::cout << "****** Udalo ci sie znalesc skrzynie ******" << std::endl;
     std::cout << "W srodku znajduje sie: " << item.name << std::endl;
     std::cout << "Czy bierzesz " << item.name << "?" << std::endl;
-    std::cout << "1 - Tak" << std::endl;
-    std::cout << "2 - Nie" << std::endl;
+    std::cout << "1 - Tak  2 - Nie" << std::endl;
+    std::cout << "" << std::endl;
     
     std::cin >> choiceTake;
     switch (choiceTake)

@@ -164,6 +164,9 @@ void EquipItem(Player& player,Item& item)
         player.stamina += item.stamina;
         player.armor += item.armor;
 
+        int newHealth = (item.stamina + player.stamina) * 10;
+        player.health = newHealth;
+        
     }
     else if(item.type == "Armor")
     {
@@ -182,8 +185,16 @@ void EquipItem(Player& player,Item& item)
         player.intelligence += item.intelligence;
         player.stamina += item.stamina;
         player.armor += item.armor;
+        
+        int newHealth = (item.stamina + player.stamina) * 10;
+        player.health = newHealth;
+        
     }
     
+}
+void UnEquip(Player& player,Item& item)
+{
+
 }
 void DisplayPlayers(std::vector<Player>& playerCharacters)
 {
@@ -227,42 +238,58 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters)
 }
 void CheckInventory(Player& player)
 {
+    int actionChoice;
+    Item chosenItem;
     bool InventoryContinue = true;
-    do
+    while(InventoryContinue)
     {
+    std::cout << "****** TWOJ STATYSTYKI ******" << std::endl;
+    std::cout << "|Nazwa gracza: " << player.name << std::endl;
+    std::cout << "|Zdrowie: " << player.health << std::endl;
+    std::cout << "|Mana: " << player.mana << std::endl;
+    std::cout << "|Sila: " << player.strenght << std::endl;
+    std::cout << "|Zrecznosc: " << player.agility << std::endl;
+    std::cout << "|Inteligencja: " << player.intelligence << std::endl;
+    std::cout << "|Pancerz: " << player.armor << std::endl;
+    std::cout << "|Zloto: " << std::endl;
 
-    
     int counter = 1;
+
     std::cout << "****** TWOJ EKWIPUNEK ******" << std::endl;
+
     for(Item item : player.Inventory)
     {   
-        std::cout << "#" << counter << " " << item.name << std::endl;
+        std::cout << "|#" << counter << " " << item.name << std::endl;
         counter++;
     }
+
+    std::cout << "1 - Sprawdz przedmiot  2 - Zaloz przedmiot  3 - Wyjdz z ekwipunku" << std::endl;
+
+    std::cin >> actionChoice;
     
-    int choiceEquip;
-    std::cout << "Czy chcesz zalozyc ktorys z przedmiotow?" << std::endl;
-    std::cout << "1 - Tak" << std::endl;
-    std::cout << "2 - Nie" << std::endl;
-    std::cin >> choiceEquip;
-    Item chosenItem;
-    switch (choiceEquip)
+
+        
+   
+    switch (actionChoice)
     {
     case 1:
 
         chosenItem = ChooseItem(player.Inventory);
-        EquipItem(player,chosenItem);
-
-        break;
+        std::cout << chosenItem.name << " Sila: " << chosenItem.strenght << " Zrecznosc: " << chosenItem.agility << " Wytrzymalosc: " << chosenItem.stamina << " Inteligencja: " << chosenItem.intelligence << std::endl;
+        std::cout << "" << std::endl;
+        
+    break;
     case 2:
-            std::cout << "Niewlasciwa opcja" << std::endl;
-        break;
-    
+        chosenItem = ChooseItem(player.Inventory);
+        EquipItem(player,chosenItem);
+    break;
+    case 3:
+        InventoryContinue = false;
+    break;
     default:
         std::cout << "Niewlasciwa opcja" << std::endl;
-        break;
+    break;
     }
-    
-    }while(InventoryContinue);
+    }
 }
 #endif
