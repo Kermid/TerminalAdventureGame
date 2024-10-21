@@ -8,14 +8,16 @@
 #include <vector>
 
 void Chest(Item item,Player& player);
+void CentreSecond(Player& player);
+void LeftSecond(Player& player);
+void Trap(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FirstLevel(Player& player)
 {
     int choice;
     int outcome;
     std::vector<Enemy> listOfEnemies;
-    Item itemArmor = GetArmor();
-    Item itemWeapon = GetWeapon();
+    
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
     std::cout << "W powietrzu czuc zapach gnijacych roslin." << std::endl;
@@ -40,7 +42,12 @@ void FirstLevel(Player& player)
                 outcome = Fight(player,listOfEnemies);
                 if(outcome == 1)
                 {
-                    Chest(itemWeapon,player);
+                    Chest(GetArmor(),player);
+                    Chest(GetArmor(),player);
+                    Chest(GetArmor(),player);
+                    Chest(GetWeapon(),player);
+                    CheckInventory(player);
+                    LeftSecond(player);
                 }
                 else if(outcome == 0)
                 {
@@ -49,23 +56,48 @@ void FirstLevel(Player& player)
                 
         break;
         case 2:
+            int choiceSecond;
+
             std::cout << "Wybrales druga droge" << std::endl;
-            std::cout << "Przeszukujesz ruiny starego drewnianego domu." << std::endl;
+            std::cout << "Dotarles do ruin starego drewnianego domu." << std::endl;
             std::cout << "Wlasciciele dawno sie stad wyniesli, jednak mozliwe, ze zostawili za soba czesc swojego majatku." << std::endl;
-            Chest(itemArmor,player);
-            CheckInventory(player);
+            std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
+
+            std::cin >> choiceSecond;
+
+            switch (choiceSecond)
+            {
+            case 1:
+                Trap(player);
+                Chest(GetArmor(),player);
+                break;
+            case 2:
+                CentreSecond(player);
+                break;
+            case 3:
+                CheckInventory(player);
+                break;
+            
+            default:
+                std::cout << "Niewlasciwa opcja" << std::endl;
+                break;
+            }
+            
+            
         break;
         case 3:
-            int choice;
+            int choiceThird;
+
             std::cout << "Wybrales trzecia droge" << std::endl;
             std::cout << "Pod drzewem lezy szkielet, wydaje sie ze moze znajdowac sie tutaj cos ciekawego." << std::endl;
             std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
-            std::cin >> choice;
 
-            switch (choice)
+            std::cin >> choiceThird;
+
+            switch (choiceThird)
             {
             case 1:
-                Chest(itemWeapon,player);
+                Chest(GetWeapon(),player);
                 break;
             case 2:
                 
@@ -95,7 +127,6 @@ void Chest(Item item,Player& player)
     {
     case 1:
         player.Inventory.push_back(item);
-        CheckInventory(player);
         break;
     case 2:
             std::cout << "Nie bierzesz " << item.name << std::endl;
@@ -113,17 +144,11 @@ void Attack(Player& player,Enemy& enemy)
     {
         damage = 0;
     }
-    enemy.health -= damage;
+    enemy.currentHealth -= damage;
     
-    if(enemy.health < (1 + player.strenght) - enemy.armor)
-    {
-        std::cout << "Pokonales przeciwnika!" << std::endl;
-    }
-    else
-    {
-        std::cout << "Zadajesz " << (1 + player.strenght) - enemy.armor << " obrazen przeciwnikowi"<< std::endl;
-        std::cout << "Zdrowie przeciwnika wynosi teraz: " << enemy.health << std::endl;
-    }
+    std::cout << "Zadajesz " << damage << " obrazen przeciwnikowi"<< std::endl;
+    DisplayCurrentHealth(enemy);
+    
     
 }
 void EnemyAttack(Player& player,Enemy& enemy)
@@ -133,15 +158,15 @@ void EnemyAttack(Player& player,Enemy& enemy)
     {
         damage = 0;
     }
-    player.health -= damage;
+    player.currentHealth -= damage;
     std::cout << "Otrzymujesz " << damage << " obrazen"<< std::endl;
-    std::cout << "Twoje zdrowie wynosi: " << player.health << std::endl;
+    DisplayCurrentHealth(player);
 }
 int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
 {
     bool endFight = false;
 
-    SpawnSkeletons(2,listOfEnemies);
+    SpawnSkeletons(RandomNumber(2),listOfEnemies);
 
     AnnounceEnemies(listOfEnemies);
     
@@ -150,7 +175,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
         Attack(player,enemy);
-        if(enemy.health <= 0)
+        if(enemy.currentHealth <= 0)
         {
             std::cout << enemy.name << " zostal pokonany!" << std::endl;
 
@@ -177,7 +202,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
             endFight = true;
             return 1;
         }
-        else if(player.health <= 0)
+        else if(player.currentHealth <= 0)
         {
             endFight = true;
             return 0;
@@ -186,8 +211,54 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     return 2;
 }
 void CalculatingTurns(Player& player,std::vector<Enemy>& listofEnemies)
+
 {
 
 }
+void Trap(Player& player)
+{
+    std::cout << "Idac natafiasz na pulapke!" << std::endl;
+    bool dodge = Dodge(player);
+    if(dodge)
+    {
+        std::cout << "Udalo ci sie uniknac pulapki" << std::endl;
+    }
+    else if (!dodge)
+    {
+        player.currentHealth -= 5;
+        DisplayCurrentHealth(player);
+    }
+    
+}
+void LeftSecond(Player& player)
+{
+    int choice;
+    int outcome;
+    std::vector<Enemy> listOfEnemiesLeftSecond;
+    std::cout << "Przechodzisz dalej w glab cmentarza.Po walce rozgladasz sie po po okolicy" << std::endl;
+    std::cout << "Na wprost przed toba widnieje wejscie do krypty z ktorej dochodza niezbyt glosne odglosy poruszania sie jakiejs istoty." << std::endl;
+    std::cout << "Po prawej widac zarosnieta brame, i biegnaca przez nia sciezka." << std::endl;
+    std::cout << "Masz przed soba dwie siezki" << std::endl;
+    std::cout << "1 - Wejdz do krypty  2 - Prawo" << std::endl;
+    std::cin >> choice;
 
+    switch (choice)
+            {
+            case 1:
+                Trap(player);
+                Fight(player,listOfEnemiesLeftSecond);
+                break;
+            case 2:
+                Trap(player);
+                CentreSecond(player);
+                break;
+            default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+                break;
+            }
+}
+void CentreSecond(Player& player)
+{
+
+}
 #endif

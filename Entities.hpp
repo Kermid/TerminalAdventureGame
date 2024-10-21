@@ -16,6 +16,7 @@ class Character{
         int intelligence;
         int armor = 0;
         int health;
+        int currentHealth;
         int mana;
         std::vector<Item> Inventory;
         Item equippedWeapons[2];
@@ -42,7 +43,7 @@ class Player : public Character{
             std::string playerClass;
             int playerId;
             std::vector<Item> Inventory;
-            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive)
+            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth)
             {
                 this->name = name;
                 this->playerId = playerId;
@@ -56,6 +57,7 @@ class Player : public Character{
                 this->health = health;
                 this->mana = mana;
                 this->alive = alive;
+                this->currentHealth = currenHealth;
             }
             Player();
 };
@@ -63,7 +65,7 @@ class Enemy : public Character
 {
     public:
         int EnemyId;
-         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,int speed,bool alive)
+         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,int speed,bool alive,int currentHealth)
             {
                 this->EnemyId = EnemyId;
                 this->name = name;
@@ -76,6 +78,7 @@ class Enemy : public Character
                 this->mana = mana;
                 this->speed = speed;
                 this->alive = alive;
+                this->currentHealth = currentHealth;
             }
 };
 Player::Player()
@@ -86,11 +89,12 @@ Character::Character()
 {
 
 }
-int RandomOfThree()
+
+int RandomNumber(int number)
 {
     int randomNum;
     srand(time(NULL));
-    randomNum = rand() % 3;
+    randomNum = (rand() % number) + 1;
     return randomNum;
 }
 void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
@@ -98,7 +102,17 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",1,4,4,1,1,50,0,2,true);
+        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",2,4,4,1,2,50,0,2,true,50);
+        listOfEnemies.push_back(enemy);
+    }
+    
+}
+void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    
+    for(int i = 0;i < randomNum;i++)
+    {
+        Enemy enemy(listOfEnemies.size() + 1,"Wilk",1,4,4,1,0,30,0,2,true,30);
         listOfEnemies.push_back(enemy);
     }
     
@@ -118,7 +132,7 @@ void DisplayEnemies(std::vector<Enemy>& listOfEnemies)
 {
     for(Enemy enemy : listOfEnemies)
     {
-        std::cout << "#" << enemy.EnemyId << " " << enemy.name << " HP: " << enemy.health << std::endl;
+        std::cout << "#" << enemy.EnemyId << " " << enemy.name << " HP: " << enemy.currentHealth << "/"<< enemy.health << std::endl;
     }
 }
 Enemy& ChooseEnemy(std::vector<Enemy>& listOfEnemies)
@@ -145,6 +159,21 @@ Item ChooseItem(std::vector<Item>& listOfItems)
     
     return listOfItems[playerChoice-1];
 }
+void UnEquip(Player& player,Item& item)
+{
+
+        player.agility -= item.agility;
+        player.strenght -= item.strenght;
+        player.intelligence -= item.intelligence;
+        player.stamina -= item.stamina;
+        player.armor -= item.armor;
+
+        int newHealth = player.stamina * 10;
+        player.health = newHealth;
+
+        int newMana = player.intelligence * 10;
+        player.mana = newMana;
+}
 void EquipItem(Player& player,Item& item)
 {
     if(item.type == "Weapon")
@@ -156,7 +185,8 @@ void EquipItem(Player& player,Item& item)
         std::cout << "2 - Drugorzedna" << std::endl;
 
         std::cin >> WeaponChoice;
-
+        
+        UnEquip(player,player.equippedWeapons[WeaponChoice-1]);
         player.equippedWeapons[WeaponChoice-1] = item;
         player.agility += item.agility;
         player.strenght += item.strenght;
@@ -164,8 +194,17 @@ void EquipItem(Player& player,Item& item)
         player.stamina += item.stamina;
         player.armor += item.armor;
 
-        int newHealth = (item.stamina + player.stamina) * 10;
-        player.health = newHealth;
+        int newHealth = player.stamina * 10;
+        player.health =  newHealth;
+
+        int newMana = player.intelligence * 10;
+        player.mana = newMana;
+        
+        if(item.stamina > 0)
+        {
+            player.currentHealth += item.stamina * 10;
+        }
+        
         
     }
     else if(item.type == "Armor")
@@ -179,23 +218,29 @@ void EquipItem(Player& player,Item& item)
         std::cout << "4 - Nogi" << std::endl;
 
         std::cin >> ArmorChoice;
-        player.equippedArmor[ArmorChoice-1];
+
+        UnEquip(player,player.equippedWeapons[ArmorChoice-1]);
+        player.equippedArmor[ArmorChoice-1] = item;
         player.agility += item.agility;
         player.strenght += item.strenght;
         player.intelligence += item.intelligence;
         player.stamina += item.stamina;
         player.armor += item.armor;
-        
-        int newHealth = (item.stamina + player.stamina) * 10;
+
+        int newHealth = player.stamina * 10;
         player.health = newHealth;
-        
+
+        int newMana = player.intelligence * 10;
+        player.mana = newMana;
+
+        if(item.stamina > 0)
+        {
+            player.currentHealth += item.stamina * 10;
+        }
     }
     
 }
-void UnEquip(Player& player,Item& item)
-{
 
-}
 void DisplayPlayers(std::vector<Player>& playerCharacters)
 {
     int counter = 0;
@@ -245,7 +290,8 @@ void CheckInventory(Player& player)
     {
     std::cout << "****** TWOJ STATYSTYKI ******" << std::endl;
     std::cout << "|Nazwa gracza: " << player.name << std::endl;
-    std::cout << "|Zdrowie: " << player.health << std::endl;
+    std::cout << "|Zdrowie maksymalne: " << player.health << std::endl;
+    std::cout << "|Zdrowie aktualne: " << player.currentHealth << std::endl;
     std::cout << "|Mana: " << player.mana << std::endl;
     std::cout << "|Sila: " << player.strenght << std::endl;
     std::cout << "|Zrecznosc: " << player.agility << std::endl;
@@ -263,7 +309,7 @@ void CheckInventory(Player& player)
         counter++;
     }
 
-    std::cout << "1 - Sprawdz przedmiot  2 - Zaloz przedmiot  3 - Wyjdz z ekwipunku" << std::endl;
+    std::cout << "1 - Sprawdz przedmiot  2 - Zaloz przedmiot  3 - Sprawdz noszony ekwipunek 4 - Wyjdz z ekwipunku" << std::endl;
 
     std::cin >> actionChoice;
     
@@ -284,6 +330,15 @@ void CheckInventory(Player& player)
         EquipItem(player,chosenItem);
     break;
     case 3:
+        std::cout << " ****** NOSZONY EKWIPUNEK ******" << std::endl;
+        std::cout << " |Bron pierwszorzedna: " << player.equippedWeapons[0].name << std::endl;
+        std::cout << " |Bron Drugorzedna: " << player.equippedWeapons[1].name << std::endl;
+        std::cout << " |Glowa: " << player.equippedArmor[0].name << std::endl;
+        std::cout << " |Tors: " << player.equippedArmor[1].name << std::endl;
+        std::cout << " |Rece: " << player.equippedArmor[2].name << std::endl;
+        std::cout << " |Noga: " << player.equippedArmor[3].name << std::endl;
+    break;
+    case 4:
         InventoryContinue = false;
     break;
     default:
@@ -292,4 +347,39 @@ void CheckInventory(Player& player)
     }
     }
 }
+bool Dodge(Player& player)
+{
+    int dodgeValue = player.agility + 5;
+    std::cout << "UNIK: " << dodgeValue << std::endl;
+    int random = RandomNumber(100);
+    if(dodgeValue >= random)
+    {
+        std::cout << " SZANSA NA TRAFIENIE PULAKI: " << random << std::endl;
+        return true;
+    }
+    else if ( dodgeValue <= random)
+    {
+        std::cout << random << std::endl;
+        return false;
+    }
+    return false;
+}
+void DisplayCurrentHealth(Player& player)
+{
+    std::cout << "Twoje zdrowie wynosi teraz: " << player.currentHealth << "/" << player.health << std::endl;
+}
+void DisplayCurrentHealth(Enemy& enemy)
+{
+    if(enemy.currentHealth < 0)
+    {
+        enemy.currentHealth = 0;
+        std::cout << "Zdrowie przciwnika wynosi: " << enemy.currentHealth << "/" << enemy.health << std::endl;
+    }
+    else
+    {
+        std::cout << "Zdrowie przciwnika wynosi: " << enemy.currentHealth << "/" << enemy.health << std::endl;
+    }
+    
+}
+
 #endif

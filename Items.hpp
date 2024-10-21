@@ -81,7 +81,7 @@ Item GetArmor()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
-
+    
     switch (random)
     {
     case 1:

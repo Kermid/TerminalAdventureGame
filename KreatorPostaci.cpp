@@ -6,12 +6,14 @@
 #include "Entities.hpp"
 #include "Game.hpp"
 #include "Items.hpp"
+#include <windows.h>
 
 Player selectedPlayer;
 Player& Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);
 Player ChooseCharacter(std::vector<Player>& playerCharacters);
+
 
 int main()
 {
@@ -30,7 +32,7 @@ Player& Menu()
 
     bool menuContinue = true;
 
-    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true);
+    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50);
     playerCharacters.push_back(player);
 
     Character character;
@@ -146,6 +148,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 4;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
         break;
     case 2:
@@ -158,6 +161,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 3;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
         break;
     case 3:
@@ -170,6 +174,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 6;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
     break;
     case 4:
@@ -182,6 +187,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 4;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
     break;
     case 5:
@@ -193,6 +199,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 3;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
         break;
     case 6:
@@ -204,6 +211,7 @@ void Create(Player &player,int playerIdCounter)
         player.speed = 5;
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
+        player.currentHealth = player.health;
         playerClassBool = false;
         break;
     default:
@@ -287,3 +295,4 @@ void Create(Player &player,int playerIdCounter)
     
     
 }
+
