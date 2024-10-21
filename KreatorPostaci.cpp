@@ -32,7 +32,7 @@ Player& Menu()
 
     bool menuContinue = true;
 
-    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50);
+    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50,50);
     playerCharacters.push_back(player);
 
     Character character;
@@ -149,6 +149,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
         break;
     case 2:
@@ -162,6 +163,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
         break;
     case 3:
@@ -175,6 +177,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
     break;
     case 4:
@@ -188,6 +191,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
     break;
     case 5:
@@ -200,6 +204,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
         break;
     case 6:
@@ -212,6 +217,7 @@ void Create(Player &player,int playerIdCounter)
         player.health = 10 * player.stamina;
         player.mana = 10 * player.intelligence;
         player.currentHealth = player.health;
+        player.currentMana = player.mana;
         playerClassBool = false;
         break;
     default:

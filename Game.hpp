@@ -2,6 +2,7 @@
 #define GAME_HPP
 #include "Entities.hpp"
 #include "Items.hpp"
+#include "Spells.hpp"
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -13,7 +14,7 @@ void LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
-
+void FightingInterface(Player& player,Enemy& enemy);
 void FirstLevel(Player& player)
 {
     int choice;
@@ -44,9 +45,6 @@ void FirstLevel(Player& player)
                 outcome = Fight(player,listOfEnemies);
                 if(outcome == 1)
                 {
-                    Chest(GetArmor(),player);
-                    Chest(GetArmor(),player);
-                    Chest(GetArmor(),player);
                     Chest(GetWeapon(),player);
                     CheckInventory(player);
                     LeftSecond(player);
@@ -176,7 +174,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
     while (endFight == false)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
-        Attack(player,enemy);
+        FightingInterface(player,enemy);
         if(enemy.currentHealth <= 0)
         {
             std::cout << enemy.name << " zostal pokonany!" << std::endl;
@@ -262,5 +260,132 @@ void LeftSecond(Player& player)
 void CentreSecond(Player& player)
 {
 
+}
+void FightingInterface(Player& player,Enemy& enemy)
+{
+    int choice;
+    int classType;
+    if(player.playerClass == "Wojownik")
+    {
+        classType = 1;
+    }
+    else if(player.playerClass == "Mag")
+    {
+        classType = 2;
+    }
+    else if(player.playerClass == "Lotr")
+    {
+        classType = 3;
+    }
+    else if(player.playerClass == "Berserker")
+    {
+        classType = 4;
+    }
+    else if(player.playerClass == "Nekromanta")
+    {
+        classType = 5;
+    }
+    else if(player.playerClass == "Lowczy")
+    {
+        classType = 6;
+    }
+
+    switch (classType)
+    {
+    case 1:
+        std::cout << "1 - Atak 2 - Silny atak" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            strongAttack(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+    case 2:
+        std::cout << "1 - Atak 2 - Kula ognia" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            fireBall(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+    case 3:
+        std::cout << "1 - Atak 2 - Podstepny atak" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            sinisterStrike(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+        
+    case 4:
+        std::cout << "1 - Atak 2 - Silny atak" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            strongAttack(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+        break;
+    case 5:
+        std::cout << "1 - Atak 2 - Kula ognia" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            fireBall(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+    case 6:
+        std::cout << "1 - Atak 2 - Salwa lowcy" << std::endl;
+        std::cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            Attack(player,enemy);
+            break;
+        case 2:
+            hunterShot(player,enemy);
+            break;
+        default:
+            break;
+        }
+        break;
+    default:
+        break;
+    }
 }
 #endif

@@ -18,12 +18,13 @@ class Character{
         int health;
         int currentHealth;
         int mana;
+        int currentMana;
         std::vector<Item> Inventory;
         Item equippedWeapons[2];
         Item equippedArmor[4]; 
         bool alive = true;
         int speed;
-        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive)
+        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive,int currentMana)
         {
             this->name = name;
             this->strenght = strenght;
@@ -34,6 +35,7 @@ class Character{
             this->health = health;
             this->speed = speed;
             this->alive = alive;
+            this->currentMana = currentMana;
         };
         Character();
 };
@@ -43,7 +45,7 @@ class Player : public Character{
             std::string playerClass;
             int playerId;
             std::vector<Item> Inventory;
-            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth)
+            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth,int currentMana)
             {
                 this->name = name;
                 this->playerId = playerId;
@@ -58,6 +60,7 @@ class Player : public Character{
                 this->mana = mana;
                 this->alive = alive;
                 this->currentHealth = currenHealth;
+                this->currentMana = currentMana;
             }
             Player();
 };
@@ -65,7 +68,7 @@ class Enemy : public Character
 {
     public:
         int EnemyId;
-         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,int speed,bool alive,int currentHealth)
+         Enemy(int EnemyId,std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,int speed,bool alive,int currentHealth,int currentMana)
             {
                 this->EnemyId = EnemyId;
                 this->name = name;
@@ -79,6 +82,7 @@ class Enemy : public Character
                 this->speed = speed;
                 this->alive = alive;
                 this->currentHealth = currentHealth;
+                this->currentMana = currentMana;
             }
 };
 Player::Player()
@@ -89,7 +93,6 @@ Character::Character()
 {
 
 }
-
 int RandomNumber(int number)
 {
     int randomNum;
@@ -102,7 +105,7 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",2,4,4,1,2,50,0,2,true,50);
+        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",2,4,4,1,2,50,30,2,true,50,30);
         listOfEnemies.push_back(enemy);
     }
     
@@ -112,7 +115,7 @@ void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Wilk",1,4,4,1,0,30,0,2,true,30);
+        Enemy enemy(listOfEnemies.size() + 1,"Wilk",1,4,4,1,0,30,0,2,2,true,30);
         listOfEnemies.push_back(enemy);
     }
     
