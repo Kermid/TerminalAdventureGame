@@ -122,11 +122,11 @@ void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
 }
 void AnnounceEnemies(std::vector<Enemy>& listOfEnemies)
 {
-    if(listOfEnemies.size() >= 1)
+    if(listOfEnemies.size() > 1)
     {
         std::cout << "Przed toba pojawila sie grupa " << listOfEnemies[0].name << "ow"<< std::endl;
     }
-    else if(listOfEnemies.size() < 1)
+    else if(listOfEnemies.size() == 1)
     {
         std::cout << "Przed toba pojawila sie " << listOfEnemies[0].name << std::endl;
     }
@@ -166,7 +166,7 @@ void DisplayPlayers(std::vector<Player>& playerCharacters)
         {
             counter++;
             std::cout << "#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
-            std::cout << "S: " << player.strenght << " A: " << player.agility << " I: " << player.intelligence << " S: " << player.stamina << std::endl;
+            std::cout << "Sila: " << player.strenght << " Zrecznosc: " << player.agility << " Inteligecja: " << player.intelligence << " Stamina: " << player.stamina << std::endl;
             std::cout << "" << std::endl;
             
         }
@@ -195,16 +195,16 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters)
 bool Dodge(Player& player)
 {
     int dodgeValue = player.agility + 5;
-    std::cout << "UNIK: " << dodgeValue << std::endl;
+    std::cout << "WARTOSC UNIKU: " << dodgeValue << std::endl;
     int random = RandomNumber(100);
     if(dodgeValue >= random)
     {
-        std::cout << " SZANSA NA TRAFIENIE PULAKI: " << random << std::endl;
+        std::cout << "SZANSA NA TRAFIENIE PULAKI: " << random << std::endl;
         return true;
     }
     else if ( dodgeValue <= random)
     {
-        std::cout << random << std::endl;
+        std::cout << " SZANSA NA TRAFIENIE PULAKI: "<< random << std::endl;
         return false;
     }
     return false;
@@ -328,9 +328,8 @@ void CheckInventory(Player& player)
     {
     std::cout << "****** TWOJ STATYSTYKI ******" << std::endl;
     std::cout << "|Nazwa gracza: " << player.name << std::endl;
-    std::cout << "|Zdrowie maksymalne: " << player.health << std::endl;
-    std::cout << "|Zdrowie aktualne: " << player.currentHealth << std::endl;
-    std::cout << "|Mana: " << player.mana << std::endl;
+    std::cout << "|Zdrowie : " << player.currentHealth << "/" << player.health << std::endl;
+    std::cout << "|Mana : " << player.currentMana << "/" << player.mana << std::endl;
     std::cout << "|Sila: " << player.strenght << std::endl;
     std::cout << "|Zrecznosc: " << player.agility << std::endl;
     std::cout << "|Inteligencja: " << player.intelligence << std::endl;
@@ -369,12 +368,12 @@ void CheckInventory(Player& player)
     break;
     case 3:
         std::cout << " ****** NOSZONY EKWIPUNEK ******" << std::endl;
-        std::cout << " |Bron pierwszorzedna: " << player.equippedWeapons[0].name << std::endl;
-        std::cout << " |Bron Drugorzedna: " << player.equippedWeapons[1].name << std::endl;
-        std::cout << " |Glowa: " << player.equippedArmor[0].name << std::endl;
-        std::cout << " |Tors: " << player.equippedArmor[1].name << std::endl;
-        std::cout << " |Rece: " << player.equippedArmor[2].name << std::endl;
-        std::cout << " |Noga: " << player.equippedArmor[3].name << std::endl;
+        std::cout << "|Bron pierwszorzedna: " << player.equippedWeapons[0].name << std::endl;
+        std::cout << "|Bron Drugorzedna: " << player.equippedWeapons[1].name << std::endl;
+        std::cout << "|Glowa: " << player.equippedArmor[0].name << std::endl;
+        std::cout << "|Tors: " << player.equippedArmor[1].name << std::endl;
+        std::cout << "|Rece: " << player.equippedArmor[2].name << std::endl;
+        std::cout << "|Noga: " << player.equippedArmor[3].name << std::endl;
     break;
     case 4:
         InventoryContinue = false;

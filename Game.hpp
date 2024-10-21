@@ -146,7 +146,7 @@ void Attack(Player& player,Enemy& enemy)
     }
     enemy.currentHealth -= damage;
     
-    std::cout << "Zadajesz " << damage << " obrazen przeciwnikowi"<< std::endl;
+    std::cout << "NORMALNY ATAK: " << damage << std::endl;
     DisplayCurrentHealth(enemy);
     
     
@@ -160,6 +160,7 @@ void EnemyAttack(Player& player,Enemy& enemy)
     }
     player.currentHealth -= damage;
     std::cout << "Otrzymujesz " << damage << " obrazen"<< std::endl;
+    std::cout << "" << std::endl;
     DisplayCurrentHealth(player);
 }
 int Fight(Player& player, std::vector<Enemy>& listOfEnemies)

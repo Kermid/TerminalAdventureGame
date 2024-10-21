@@ -297,7 +297,8 @@ void Create(Player &player,int playerIdCounter)
             break;
         }
     } while (playerStartPoints > 0);
-    
+    player.currentMana = player.mana;
+    player.currentHealth = player.health;
     
     
 }
