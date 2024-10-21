@@ -11,7 +11,9 @@ void Chest(Item item,Player& player);
 void CentreSecond(Player& player);
 void LeftSecond(Player& player);
 void Trap(Player& player);
+void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
+
 void FirstLevel(Player& player)
 {
     int choice;

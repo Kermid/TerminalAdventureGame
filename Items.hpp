@@ -1,7 +1,9 @@
-#ifndef WEAPONS_HPP
-#define WEAPONS_HPP
-#include <iostream>
+#ifndef ITEMS_HPP
+#define ITEMS_HPP
 #include "Entities.hpp"
+#include <iostream>
+#include <vector>
+
 
 
 class Item
@@ -28,12 +30,10 @@ class Item
             this->cost = cost;
             this->type = type;
         };
-        Item();
+        Item() : name(""), strenght(0), agility(0), stamina(0), intelligence(0), armor(0), type("") {};
 
 };
-Item::Item()
-{
-}
+
 Item GetWeapon()
 {
     srand(time(NULL));
@@ -120,7 +120,16 @@ Item GetArmor()
     }
     return Item("Szmaty",0,0,0,0,0,0,0,"Armor");
 }
+Item ChooseItem(std::vector<Item>& listOfItems)
+{
+    std::cout << "Wybierz numer przedmiotu." << std::endl;
 
- 
+    int playerChoice;
+
+    std::cin >> playerChoice;
+    
+    return listOfItems[playerChoice-1];
+}
+
 
 #endif
