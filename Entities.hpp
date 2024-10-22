@@ -243,10 +243,6 @@ void EquipItem(Player& player,Item& item)
 
         std::cin >> WeaponChoice;
 
-        
-        std::cout << "SILA" << player.equippedWeapons[WeaponChoice-1].strenght << std::endl;
-        std::cout << "NAZWA" << player.equippedWeapons[WeaponChoice-1].name << std::endl;
-
         //zabezpieczenie przed odjeciem 
         if(player.equippedWeapons[WeaponChoice-1].name != "")
         {
@@ -317,8 +313,8 @@ void CheckInventory(Player& player)
     
     while(InventoryContinue)
     {
-        
-    std::cout << "****** TWOJ STATYSTYKI ******" << std::endl;
+
+    std::cout << "****** TWOJE STATYSTYKI ******" << std::endl;
     std::cout << "|Nazwa gracza: " << player.name << std::endl;
     std::cout << "|Zdrowie : " << player.currentHealth << "/" << player.health << std::endl;
     std::cout << "|Mana : " << player.currentMana << "/" << player.mana << std::endl;
@@ -337,7 +333,7 @@ void CheckInventory(Player& player)
         std::cout << "|#" << counter << " " << item.name << std::endl;
         counter++;
     }
-
+    std::cout << "_______________________________________________________________________________________________" << std::endl;
     std::cout << "1 - Sprawdz przedmiot  2 - Zaloz przedmiot  3 - Sprawdz noszony ekwipunek 4 - Wyjdz z ekwipunku" << std::endl;
 
     std::cin >> actionChoice;

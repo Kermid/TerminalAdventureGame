@@ -9,63 +9,92 @@ bool MagicalCriticalStrike(Player& player);
 bool CriticalStrike(Player& player);
 void strongAttack(Player& player,Enemy& enemy)
 {
-    if(!CriticalStrike(player))
+    int manaCost = 10;
+    if(player.currentMana >= manaCost)
     {
-        int damage = (10 + player.strenght) - enemy.armor;
-        player.currentMana -= 10;
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
-        std::cout << "KRYTYCZNY SILNY ATAK: " << damage << std::endl;
+        std::cout << "SILNY ATAK: " << damage << std::endl;
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (10 + player.strenght) - enemy.armor;
-        player.currentMana -= 10;
+        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
         std::cout << "KRYTYCZNY SILNY ATAK: " << damage << std::endl;
     }
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
 }
 void fireBall(Player& player,Enemy& enemy)
 {
-    if(!MagicalCriticalStrike(player))
+    int manaCost = 10;
+    if(player.currentMana >= manaCost)
     {
-        int damage = (10 + player.intelligence);
+        if(!MagicalCriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.intelligence);
         player.currentMana -= 10;
         enemy.currentHealth -= damage;
         std::cout << "KULA OGNIA: " << damage << std::endl;
     }
     else if(MagicalCriticalStrike(player))
     {
-        int damage = 2 * (10 + player.intelligence);
+        int damage = 2 * (RandomNumber(10) + player.intelligence);
         player.currentMana -= 10;
         enemy.currentHealth -= damage;
-        std::cout << "KULA OGNIA: " << damage << std::endl;
+        std::cout << "KRYTYCZNA KULA OGNIA: " << damage << std::endl;
     }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
     
 }
 void sinisterStrike(Player& player,Enemy& enemy)
 {   
-     if(!CriticalStrike(player))
+    int manaCost = 5;
+    if(player.currentMana >= manaCost)
     {
-        int damage = (3 + player.agility) - enemy.armor;
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(3) + player.agility) - enemy.armor;
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
         std::cout << "PODSTEPNY CIOS: " << damage << std::endl;
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (3 + player.agility) - enemy.armor;
+        int damage = 2 * (RandomNumber(3) + player.agility) - enemy.armor;
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
         std::cout << "KRYTYCZNY PODSTEPNY CIOS: " << damage << std::endl;
     }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
     
 }
 void hunterShot(Player& player,Enemy& enemy)
 {
-    
-     if(!CriticalStrike(player))
+    int manaCost = 10;
+    if(player.currentMana >= manaCost)
     {
-        int damage = (3 + player.agility + (player.strenght/2)) - enemy.armor;
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(3) + player.agility + (player.strenght/2)) - enemy.armor;
         player.currentMana -= 10;
         std::cout << "SALWA LOWCY 1: " << damage << std::endl;
         enemy.currentHealth -= damage;
@@ -74,13 +103,19 @@ void hunterShot(Player& player,Enemy& enemy)
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (3 + player.agility + (player.strenght/2)) - enemy.armor;
+        int damage = 2 * (RandomNumber(3) + player.agility + (player.strenght/2)) - enemy.armor;
         player.currentMana -= 10;
         std::cout << " KRYTYCZNA SALWA LOWCY 1: " << damage << std::endl;
         enemy.currentHealth -= damage;
         std::cout << "KRYTYCZNA SALWA LOWCY 2: " << damage << std::endl;
         enemy.currentHealth -= damage;
     }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
 }
 bool Dodge(Player& player)
 {
@@ -94,7 +129,7 @@ bool Dodge(Player& player)
     }
     else if ( dodgeValue <= random)
     {
-        std::cout << " SZANSA NA TRAFIENIE PULAKI: "<< random << std::endl;
+        std::cout << "SZANSA NA TRAFIENIE PULAKI: "<< random << std::endl;
         return false;
     }
     return false;
