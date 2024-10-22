@@ -54,7 +54,7 @@ Item GetWeapon()
              
         break;
     case 4:
-            return Item("Krotki miecz",0,0,2,2,0,0,1,"Weapon");
+            return Item("Luk",0,0,2,2,0,0,1,"Weapon");
             
         break;
     case 5:
@@ -62,7 +62,7 @@ Item GetWeapon()
             
         break;
     case 6:
-            return Item("Krotki miecz",0,0,1,0,1,4,1,"Weapon");
+            return Item("Kostur",0,0,1,0,1,4,1,"Weapon");
             
         break;
     case 7:

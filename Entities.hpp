@@ -192,23 +192,6 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters)
         return playerCharacters[playerChoice-1];
     }
 }
-bool Dodge(Player& player)
-{
-    int dodgeValue = player.agility + 5;
-    std::cout << "WARTOSC UNIKU: " << dodgeValue << std::endl;
-    int random = RandomNumber(100);
-    if(dodgeValue >= random)
-    {
-        std::cout << "SZANSA NA TRAFIENIE PULAKI: " << random << std::endl;
-        return true;
-    }
-    else if ( dodgeValue <= random)
-    {
-        std::cout << " SZANSA NA TRAFIENIE PULAKI: "<< random << std::endl;
-        return false;
-    }
-    return false;
-}
 void DisplayCurrentHealth(Player& player)
 {
     std::cout << "Twoje zdrowie wynosi teraz: " << player.currentHealth << "/" << player.health << std::endl;

@@ -36,11 +36,12 @@ void FirstLevel(Player& player)
         case 1:
 
             std::cout << "Wybrales pierwsza droge" << std::endl;
+            std::cout << " " << std::endl;
             std::cout << "Wkraczasz na zapomniany cmentarz.Krzywe,omszale nagrobki wyrastaja z grzaskiego gruntu,"  << std::endl;
             std::cout << "a powykrecane drzewa splataja swoje galezie nad nimi, tworzac ponura kopule." << std::endl;
             std::cout << "Metna woda zbiera sie w kaluzach wokol grobow, a mgla unosi sie nisko nad ziemia." << std::endl;
-            std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest w oddali" << std::endl;
-            std::cout << "Miejsce zdaje sie zapomniane przez czas." << std::endl;
+            std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest lisci w oddali" << std::endl;
+            std::cout << " " << std::endl;
 
                 outcome = Fight(player,listOfEnemies);
                 if(outcome == 1)
@@ -59,8 +60,10 @@ void FirstLevel(Player& player)
             int choiceSecond;
 
             std::cout << "Wybrales druga droge" << std::endl;
+            std::cout << " " << std::endl;
             std::cout << "Dotarles do ruin starego drewnianego domu." << std::endl;
             std::cout << "Wlasciciele dawno sie stad wyniesli, jednak mozliwe, ze zostawili za soba czesc swojego majatku." << std::endl;
+            std::cout << " " << std::endl;
             std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
 
             std::cin >> choiceSecond;
@@ -139,28 +142,41 @@ void Chest(Item item,Player& player)
 }
 void Attack(Player& player,Enemy& enemy)
 {
-    int damage = (1 + player.strenght) - enemy.armor;
-    if(damage < 0)
+    
+    if(!CriticalStrike(player))
     {
-        damage = 0;
+        int damage = (1 + player.strenght) - enemy.armor;
+        std::cout << "NORMALNY ATAK: " << damage << std::endl;
+        enemy.currentHealth -= damage;
     }
-    enemy.currentHealth -= damage;
-    
-    std::cout << "NORMALNY ATAK: " << damage << std::endl;
+    else if(CriticalStrike(player))
+    {
+        int damage = 2 * (1 + player.strenght) - enemy.armor;
+        std::cout << "TRAFIENIE KRYTYCZNE: " << damage << std::endl;
+        enemy.currentHealth -= damage;
+    }
+
     DisplayCurrentHealth(enemy);
-    
-    
+
 }
 void EnemyAttack(Player& player,Enemy& enemy)
 {
-    int damage = (1 + enemy.strenght) - player.armor;
-    if(damage < 0)
+    
+    if(CriticalStrike(enemy))
     {
-        damage = 0;
+        int damage = 2 * (1 + enemy.strenght) - player.armor;
+        std::cout << "ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "" << std::endl;
+        player.currentHealth -= damage;
     }
-    player.currentHealth -= damage;
-    std::cout << "Otrzymujesz " << damage << " obrazen"<< std::endl;
-    std::cout << "" << std::endl;
+    else
+    {
+        int damage = (1 + enemy.strenght) - player.armor;
+        std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "" << std::endl;
+        player.currentHealth -= damage;
+    }
+
     DisplayCurrentHealth(player);
 }
 int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
@@ -260,7 +276,22 @@ void LeftSecond(Player& player)
 }
 void CentreSecond(Player& player)
 {
-
+    int choice;
+    
+    switch (choice)
+            {
+            case 1:
+                Trap(player);
+                Fight(player,listOfEnemiesLeftSecond);
+                break;
+            case 2:
+                Trap(player);
+                CentreSecond(player);
+                break;
+            default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+                break;
+            }
 }
 void FightingInterface(Player& player,Enemy& enemy)
 {
@@ -294,7 +325,7 @@ void FightingInterface(Player& player,Enemy& enemy)
     switch (classType)
     {
     case 1:
-        std::cout << "1 - Atak 2 - Silny atak" << std::endl;
+        std::cout << "1 - Atak 2 - Silny atak" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -309,7 +340,7 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 2:
-        std::cout << "1 - Atak 2 - Kula ognia" << std::endl;
+        std::cout << "1 - Atak 2 - Kula ognia" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -324,7 +355,7 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 3:
-        std::cout << "1 - Atak 2 - Podstepny atak" << std::endl;
+        std::cout << "1 - Atak 2 - Podstepny atak" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -340,7 +371,7 @@ void FightingInterface(Player& player,Enemy& enemy)
         break;
         
     case 4:
-        std::cout << "1 - Atak 2 - Silny atak" << std::endl;
+        std::cout << "1 - Atak 2 - Silny atak" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -356,7 +387,7 @@ void FightingInterface(Player& player,Enemy& enemy)
         break;
         break;
     case 5:
-        std::cout << "1 - Atak 2 - Kula ognia" << std::endl;
+        std::cout << "1 - Atak 2 - Kula ognia" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -371,7 +402,7 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 6:
-        std::cout << "1 - Atak 2 - Salwa lowcy" << std::endl;
+        std::cout << "1 - Atak 2 - Salwa lowcy" << " MANA: "<< player.currentMana << std::endl;
         std::cin >> choice;
         switch (choice)
         {
