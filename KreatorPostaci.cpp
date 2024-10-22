@@ -32,10 +32,9 @@ Player& Menu()
 
     bool menuContinue = true;
 
-    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50,50);
+    Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50,50,0);
     playerCharacters.push_back(player);
 
-    Character character;
     do
     {
         std::cout << "1 - Nowa gra" << std::endl;
@@ -299,7 +298,7 @@ void Create(Player &player,int playerIdCounter)
     } while (playerStartPoints > 0);
     player.currentMana = player.mana;
     player.currentHealth = player.health;
-    
+    player.gold = 0;
     
 }
 

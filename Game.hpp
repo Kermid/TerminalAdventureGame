@@ -277,7 +277,7 @@ void LeftSecond(Player& player)
 void CentreSecond(Player& player)
 {
     int choice;
-    
+    std::vector<Enemy> listOfEnemiesLeftSecond;
     switch (choice)
             {
             case 1:
@@ -325,7 +325,8 @@ void FightingInterface(Player& player,Enemy& enemy)
     switch (classType)
     {
     case 1:
-        std::cout << "1 - Atak 2 - Silny atak" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -340,7 +341,8 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 2:
-        std::cout << "1 - Atak 2 - Kula ognia" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -355,7 +357,8 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 3:
-        std::cout << "1 - Atak 2 - Podstepny atak" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Podstepny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -371,7 +374,8 @@ void FightingInterface(Player& player,Enemy& enemy)
         break;
         
     case 4:
-        std::cout << "1 - Atak 2 - Silny atak" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -387,7 +391,8 @@ void FightingInterface(Player& player,Enemy& enemy)
         break;
         break;
     case 5:
-        std::cout << "1 - Atak 2 - Kula ognia" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {
@@ -402,7 +407,8 @@ void FightingInterface(Player& player,Enemy& enemy)
         }
         break;
     case 6:
-        std::cout << "1 - Atak 2 - Salwa lowcy" << " MANA: "<< player.currentMana << std::endl;
+        std::cout << "_______________________________________" << std::endl;
+        std::cout << "|1 - Atak |2 - Salwa lowcy" << " |Mana: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
         std::cin >> choice;
         switch (choice)
         {

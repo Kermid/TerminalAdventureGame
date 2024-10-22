@@ -71,8 +71,6 @@ void hunterShot(Player& player,Enemy& enemy)
         enemy.currentHealth -= damage;
         std::cout << "SALWA LOWCY 2: " << damage << std::endl;
         enemy.currentHealth -= damage;
-        std::cout << "SALWA LOWCY 3: " << damage << std::endl;
-        enemy.currentHealth -= damage;
     }
     else if(CriticalStrike(player))
     {
@@ -81,8 +79,6 @@ void hunterShot(Player& player,Enemy& enemy)
         std::cout << " KRYTYCZNA SALWA LOWCY 1: " << damage << std::endl;
         enemy.currentHealth -= damage;
         std::cout << "KRYTYCZNA SALWA LOWCY 2: " << damage << std::endl;
-        enemy.currentHealth -= damage;
-        std::cout << "KRYTYCZNA SALWA LOWCY 3: " << damage << std::endl;
         enemy.currentHealth -= damage;
     }
 }

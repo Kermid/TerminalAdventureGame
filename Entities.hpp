@@ -23,8 +23,9 @@ class Character{
         Item equippedWeapons[2];
         Item equippedArmor[4]; 
         bool alive = true;
+        int gold;
         int speed;
-        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive,int currentMana)
+        Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive,int currentMana,int gold)
         {
             this->name = name;
             this->strenght = strenght;
@@ -36,6 +37,7 @@ class Character{
             this->speed = speed;
             this->alive = alive;
             this->currentMana = currentMana;
+            this->gold = gold;
         };
         Character();
 };
@@ -45,7 +47,7 @@ class Player : public Character{
             std::string playerClass;
             int playerId;
             std::vector<Item> Inventory;
-            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth,int currentMana)
+            Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth,int currentMana,int gold)
             {
                 this->name = name;
                 this->playerId = playerId;
@@ -61,6 +63,7 @@ class Player : public Character{
                 this->alive = alive;
                 this->currentHealth = currenHealth;
                 this->currentMana = currentMana;
+                this->gold = gold;
             }
             Player();
 };
@@ -109,6 +112,10 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
         listOfEnemies.push_back(enemy);
     }
     
+}
+void SpawnMage(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",1,4,4,1,0,30,0,2,2,true,30);
 }
 void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
@@ -307,8 +314,10 @@ void CheckInventory(Player& player)
     int actionChoice;
     Item chosenItem;
     bool InventoryContinue = true;
+    
     while(InventoryContinue)
     {
+        
     std::cout << "****** TWOJ STATYSTYKI ******" << std::endl;
     std::cout << "|Nazwa gracza: " << player.name << std::endl;
     std::cout << "|Zdrowie : " << player.currentHealth << "/" << player.health << std::endl;
@@ -317,7 +326,7 @@ void CheckInventory(Player& player)
     std::cout << "|Zrecznosc: " << player.agility << std::endl;
     std::cout << "|Inteligencja: " << player.intelligence << std::endl;
     std::cout << "|Pancerz: " << player.armor << std::endl;
-    std::cout << "|Zloto: " << std::endl;
+    std::cout << "|Zloto: " << player.gold << std::endl;
 
     int counter = 1;
 
@@ -333,9 +342,6 @@ void CheckInventory(Player& player)
 
     std::cin >> actionChoice;
     
-
-        
-   
     switch (actionChoice)
     {
     case 1:
