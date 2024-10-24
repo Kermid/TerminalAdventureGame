@@ -66,6 +66,7 @@ class Player : public Character{
                 this->gold = gold;
             }
             Player();
+           
 };
 class Enemy : public Character
 {

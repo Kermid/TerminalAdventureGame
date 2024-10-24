@@ -15,6 +15,7 @@ void Trap(Player& player);
 void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FightingInterface(Player& player,Enemy& enemy);
+void HealingShrine(Player& player);
 void FirstLevel(Player& player)
 {
     int choice;
@@ -27,7 +28,7 @@ void FirstLevel(Player& player)
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
     std::cout << "Masz przed soba trzy siezki" << std::endl;
-    std::cout << "1 - Lewo  2 - Prosto  3 - Prawo" << std::endl;
+    std::cout << "1 - Lewo  2 - Prosto  3 - Prawo 4 - Sprawdz ekwipunek" << std::endl;
     std::cout << "" << std::endl;
     
     std::cin >> choice;
@@ -103,7 +104,7 @@ void FirstLevel(Player& player)
                 Chest(GetWeapon(),player);
                 break;
             case 2:
-                
+                HealingShrine(player);
                 break;
             case 3:
                 CheckInventory(player);
@@ -113,6 +114,9 @@ void FirstLevel(Player& player)
                 break;
             }
             
+        break;
+        case 4:
+            CheckInventory(player);
         break;
     }
 }
@@ -277,23 +281,80 @@ void LeftSecond(Player& player)
 void CentreSecond(Player& player)
 {
     int choice;
-    std::vector<Enemy> listOfEnemiesLeftSecond;
+    int outcome;
+    std::vector<Enemy> listOfEnemiesCentreSecond;
+    std::cout << "Idziesz dalej w glab mrocznego bagna nie napotkujac wiekszego oporu od mieszkancow tej krainy." << std::endl;
+    std::cout << "Jedna wzgledny spokoj z czasem zaczyna zamienac sie w niepokoj." << std::endl;
+    std::cout << "Starozytne drzewa obrasta mech, spogladanie dalej otrudnia rowniez gesta mgla, ktora ani troche sie nie zmniejszyla." << std::endl;
+    std::cout << "Masz przed soba trzy siezki" << std::endl;
+    std::cout << "1 - Prawo  2 - Przed siebie 3 - Lewo  4 - Sprawdz ekwipunek" << std::endl;
+    std::cin >> choice;
     switch (choice)
             {
             case 1:
                 Trap(player);
-                Fight(player,listOfEnemiesLeftSecond);
+                outcome = Fight(player,listOfEnemiesCentreSecond);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    CheckInventory(player);
+                    LeftSecond(player);
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
                 break;
             case 2:
                 Trap(player);
-                CentreSecond(player);
+                outcome = Fight(player,listOfEnemiesCentreSecond);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    CheckInventory(player);
+                    LeftSecond(player);
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
+                
                 break;
+            case 3:
+                outcome = Fight(player,listOfEnemiesCentreSecond);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    CheckInventory(player);
+                    LeftSecond(player);
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
+                break;
+            case 4:
+                CheckInventory(player);
+                break:
             default:
             std::cout << "Nie prawidlowy wybor" << std::endl;
                 break;
             }
 }
+void LeftThird(Player& player)
+{
+
+}
+void CentreThird(Player& player)
+{
+
+}
+void RightThird(Player& player)
+{
+
+}
 void FightingInterface(Player& player,Enemy& enemy)
+
 {
     int choice;
     int classType;
@@ -425,5 +486,13 @@ void FightingInterface(Player& player,Enemy& enemy)
     default:
         break;
     }
+}
+void HealingShrine(Player& player)
+{
+    std::cout << "Napotykasz swiete leczace miejsce." << std::endl;
+    std::cout << "W tej okolicy to jeden z nielicznych sposobow, aby dodac sobie troche sil." << std::endl;
+    player.currentHealth += 10;
+    player.currentMana += 20;
+
 }
 #endif
