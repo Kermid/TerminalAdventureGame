@@ -344,8 +344,17 @@ void CheckInventory(Player& player)
     case 1:
 
         chosenItem = ChooseItem(player.Inventory);
-        std::cout << chosenItem.name << " Sila: " << chosenItem.strenght << " Zrecznosc: " << chosenItem.agility << " Wytrzymalosc: " << chosenItem.stamina << " Inteligencja: " << chosenItem.intelligence << std::endl;
-        std::cout << "" << std::endl;
+        if(chosenItem.type == "Mikstura")
+        {
+            std::cout << chosenItem.name <<std::endl;
+            std::cout << "" << std::endl;
+        }
+        else
+        {
+            std::cout << chosenItem.name << " Sila: " << chosenItem.strenght << " Zrecznosc: " << chosenItem.agility << " Wytrzymalosc: " << chosenItem.stamina << " Inteligencja: " << chosenItem.intelligence << std::endl;
+            std::cout << "" << std::endl;
+        }
+        
         
     break;
     case 2:

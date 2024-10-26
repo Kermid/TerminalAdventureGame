@@ -26,12 +26,17 @@ class Item
             this->strenght = strenght;
             this->agility = agility;
             this->stamina = stamina;
-            this->intelligence= intelligence;
+            this->intelligence = intelligence;
             this->cost = cost;
             this->type = type;
         };
         Item() : name(""), strenght(0), agility(0), stamina(0), intelligence(0), armor(0), type("") {};
-
+        Item(std::string name,int cost)
+        {
+            this->name = name;
+            this->cost = cost;
+            type = "Mikstura";
+        };
 };
 
 Item GetWeapon()
