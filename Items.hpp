@@ -35,7 +35,7 @@ class Item
         {
             this->name = name;
             this->cost = cost;
-            type = "Mikstura";
+            type = "Mikstura Leczaca";
         };
 };
 

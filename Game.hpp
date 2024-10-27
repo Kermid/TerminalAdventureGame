@@ -141,7 +141,7 @@ void Chest(Item item,Player& player)
     while(itemTaking)
     {
         counter = 1;
-         for(Item itemChest : chest)
+         for(Item& itemChest : chest)
     {
         std::cout << "|#" << counter << " " << itemChest.name << std::endl;
         counter++;

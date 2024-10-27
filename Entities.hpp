@@ -266,7 +266,7 @@ void EquipItem(Player& player,Item& item)
         if(item.stamina > 0)
         {
             player.currentHealth += item.stamina * 10;
-        }
+        }        
         
         
     }
@@ -306,12 +306,25 @@ void EquipItem(Player& player,Item& item)
     }
     
 }
+void UseHealingPotion(Item item,Player& player)
+{
+    player.currentHealth += 10;
+    
+    for(int i = 0;i <= player.Inventory.size();i++)
+    {
+        if(player.Inventory[i].type == "Mikstura Leczaca")
+        {
+
+            break;
+        }
+    }
+}
 void CheckInventory(Player& player)
 {
     int actionChoice;
     Item chosenItem;
     bool InventoryContinue = true;
-    
+    int potionUse;
     while(InventoryContinue)
     {
 
@@ -344,10 +357,24 @@ void CheckInventory(Player& player)
     case 1:
 
         chosenItem = ChooseItem(player.Inventory);
-        if(chosenItem.type == "Mikstura")
+        if(chosenItem.type == "Mikstura Leczaca")
         {
-            std::cout << chosenItem.name <<std::endl;
+            std::cout << chosenItem.name << std::endl;
+            std::cout << "1 - Uzyj 2 - Odloz" << std::endl;
+            std::cin >> potionUse;
             std::cout << "" << std::endl;
+            switch (potionUse)
+            {
+            case 1:
+                UseHealingPotion(chosenItem,player);
+                break;
+            case 2:
+                
+                break;
+            default:
+                std::cout << "Niepoprawna opcja" << std::endl;
+                break;
+            }
         }
         else
         {
@@ -379,4 +406,5 @@ void CheckInventory(Player& player)
     }
     }
 }
+
 #endif
