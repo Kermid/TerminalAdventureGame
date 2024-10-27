@@ -231,13 +231,15 @@ void UnEquip(Player& player,Item& item)
 
         int newMana = player.intelligence * 10;
         player.mana = newMana;
+
+        
 }
 void EquipItem(Player& player,Item& item)
 {
     if(item.type == "Weapon")
     {
         int WeaponChoice;
-
+        
         std::cout << "Czy chcesz uzywac tej broni jako pierwszorzednej czy drugorzednej?" << std::endl;
         std::cout << "1 - Pierwszorzedna" << std::endl;
         std::cout << "2 - Drugorzedna" << std::endl;
@@ -247,6 +249,7 @@ void EquipItem(Player& player,Item& item)
         //zabezpieczenie przed odjeciem 
         if(player.equippedWeapons[WeaponChoice-1].name != "")
         {
+            player.Inventory.push_back();
             UnEquip(player,player.equippedWeapons[WeaponChoice-1]);
         }
 
@@ -267,7 +270,15 @@ void EquipItem(Player& player,Item& item)
         {
             player.currentHealth += item.stamina * 10;
         }        
-        
+       
+        for(int i = 0;i <= player.Inventory.size();i++)
+        {
+            if(player.Inventory[i].name == item.name)
+            {
+                player.Inventory.erase(player.Inventory.begin() + i);
+                break;
+            }
+        }
         
     }
     else if(item.type == "Armor")
@@ -303,18 +314,55 @@ void EquipItem(Player& player,Item& item)
         {
             player.currentHealth += item.stamina * 10;
         }
+        for(int i = 0;i <= player.Inventory.size();i++)
+        {
+            if(player.Inventory[i].name == item.name)
+            {
+                player.Inventory.erase(player.Inventory.begin() + i);
+                break;
+            }
+        }
     }
     
 }
 void UseHealingPotion(Item item,Player& player)
 {
-    player.currentHealth += 10;
+    
+    if(player.health - player.currentHealth < 10)
+    {
+        player.currentHealth += player.health - player.currentHealth;
+    }
+    else
+    {
+        player.currentHealth += 10;
+    }
     
     for(int i = 0;i <= player.Inventory.size();i++)
     {
         if(player.Inventory[i].type == "Mikstura Leczaca")
         {
-
+            player.Inventory.erase(player.Inventory.begin() + i);
+            break;
+        }
+    }
+}
+void UseManaPotion(Item item,Player& player)
+{
+    
+    if(player.mana- player.currentMana < 10)
+    {
+        player.currentMana += player.mana- player.currentMana;
+    }
+    else
+    {
+        player.currentMana += 10;
+    }
+    
+    for(int i = 0;i <= player.Inventory.size();i++)
+    {
+        if(player.Inventory[i].type == "Mikstura Many")
+        {
+            player.Inventory.erase(player.Inventory.begin() + i);
             break;
         }
     }
@@ -367,6 +415,25 @@ void CheckInventory(Player& player)
             {
             case 1:
                 UseHealingPotion(chosenItem,player);
+                break;
+            case 2:
+                
+                break;
+            default:
+                std::cout << "Niepoprawna opcja" << std::endl;
+                break;
+            }
+        }
+        else if(chosenItem.type == "Mikstura Many")
+        {
+            std::cout << chosenItem.name << std::endl;
+            std::cout << "1 - Uzyj 2 - Odloz" << std::endl;
+            std::cin >> potionUse;
+            std::cout << "" << std::endl;
+            switch (potionUse)
+            {
+            case 1:
+                UseManaPotion(chosenItem,player);
                 break;
             case 2:
                 

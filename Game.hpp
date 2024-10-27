@@ -50,7 +50,6 @@ void FirstLevel(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetWeapon(),player);
-                    CheckInventory(player);
                     LeftSecond(player);
                     
                 }
@@ -62,66 +61,81 @@ void FirstLevel(Player& player)
         break;
         case 2:
             int choiceSecond;
-
+            bool SecondContinue = true;
+            
             std::cout << "Wybrales druga droge" << std::endl;
             std::cout << " " << std::endl;
             std::cout << "Dotarles do ruin starego drewnianego domu." << std::endl;
             std::cout << "Wlasciciele dawno sie stad wyniesli, jednak mozliwe, ze zostawili za soba czesc swojego majatku." << std::endl;
-            std::cout << " " << std::endl;
-            std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
-
-            std::cin >> choiceSecond;
-
-            switch (choiceSecond)
+            while(SecondContinue)
             {
-            case 1:
-                Trap(player);
-                Chest(GetArmor(),player);
+                std::cout << " " << std::endl;
+                std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
+
+                std::cin >> choiceSecond;
+
+                switch (choiceSecond)
+                {
+                case 1:
+                    Trap(player);
+                    Chest(GetArmor(),player);
+                    SecondContinue = false;
+                    CentreSecond(player);
                 break;
-            case 2:
-                CentreSecond(player);
+                case 2:
+                    SecondContinue = false;
+                    CentreSecond(player);
                 break;
-            case 3:
-                CheckInventory(player);
+                case 3:
+                    CheckInventory(player);
                 break;
             
-            default:
-                std::cout << "Niewlasciwa opcja" << std::endl;
+                default:
+                    std::cout << "Niewlasciwa opcja" << std::endl;
                 break;
+                }
+            
             }
             
             
         break;
         case 3:
             int choiceThird;
-
+            bool continueThird = true;
             std::cout << "Wybrales trzecia droge" << std::endl;
             std::cout << "Pod drzewem lezy szkielet, wydaje sie ze moze znajdowac sie tutaj cos ciekawego." << std::endl;
-            std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
-
-            std::cin >> choiceThird;
-
-            switch (choiceThird)
+            while(continueThird)
             {
-            case 1:
-                Chest(GetWeapon(),player);
+                std::cout << " " << std::endl;
+                std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
+
+                std::cin >> choiceThird;
+
+                switch (choiceThird)
+                {
+                case 1:
+                    Chest(GetWeapon(),player);
+                    RightThird(player);
                 break;
-            case 2:
-                HealingShrine(player);
-                RightThird(player);
+                case 2:
+                    HealingShrine(player);
+                    RightThird(player);
                 break;
-            case 3:
-                CheckInventory(player);
+                case 3:
+                    CheckInventory(player);
                 break;
             
-            default:
+                default:
+                    std::cout << "Niewlasciwa opcja" << std::endl;
                 break;
+                }
             }
-            
         break;
         case 4:
             CheckInventory(player);
         break;
+            
+            
     }
 }
 void Chest(Item item,Player& player)
@@ -130,11 +144,13 @@ void Chest(Item item,Player& player)
     int choiceItem;
     int counter;
     bool itemTaking = true;
-    Item mikstura = Item("Mikstura uzdrawiajaca",2);
-
+    Item healthPotion = Item("Mikstura Leczaca",2);
+    Item manaPotion = Item("Mikstura Many",2);
     std::vector<Item> chest;
     chest.push_back(item);
-    chest.push_back(mikstura);
+    chest.push_back(healthPotion);
+    chest.push_back(manaPotion);
+    
     std::cout << "****** Udalo ci sie znalesc skrzynie ******" << std::endl;
     std::cout << "Czy bierzesz ktorys z przedmiotow?" << std::endl;
 

@@ -35,8 +35,17 @@ class Item
         {
             this->name = name;
             this->cost = cost;
-            type = "Mikstura Leczaca";
+            if(name == "Mikstura Leczaca")
+            {
+                type = "Mikstura Leczaca";
+            }
+            else if(name == "Mikstura Many")
+            {
+                type = "Mikstura Many";
+            }
+            
         };
+       
 };
 
 Item GetWeapon()
