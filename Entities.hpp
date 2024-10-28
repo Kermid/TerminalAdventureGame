@@ -149,16 +149,29 @@ void DisplayEnemies(std::vector<Enemy>& listOfEnemies)
 Enemy& ChooseEnemy(std::vector<Enemy>& listOfEnemies)
 {
     int enemyChoice;
+    
+    while(true)
+    {
+        std::cout << "Wybierz przeciwnika." << std::endl;
 
-    std::cout << "Wybierz przeciwnika." << std::endl;
+        DisplayEnemies(listOfEnemies);
+    
+        std::cin >> enemyChoice;
+        
+            if(enemyChoice > 0 && enemyChoice <= listOfEnemies.size())
+            {
+                std::cout << "Wybrano gracza #" << listOfEnemies[enemyChoice-1].EnemyId << " " << listOfEnemies[enemyChoice-1].name << std::endl;
+                return listOfEnemies[enemyChoice-1];
+                break;
+            }
+            else
+            {
+                std::cout << "Nieprawidlowy numer przeciwnika!" << std::endl;
+            }
+    }
+    
 
-    DisplayEnemies(listOfEnemies);
-
-    std::cin >> enemyChoice;
-
-    std::cout << "Wybrano gracza #" << listOfEnemies[enemyChoice-1].EnemyId << " " << listOfEnemies[enemyChoice-1].name << std::endl;
-
-    return listOfEnemies[enemyChoice-1];
+    
 }
 void DisplayPlayers(std::vector<Player>& playerCharacters)
 {
@@ -249,7 +262,7 @@ void EquipItem(Player& player,Item& item)
         //zabezpieczenie przed odjeciem 
         if(player.equippedWeapons[WeaponChoice-1].name != "")
         {
-            player.Inventory.push_back();
+            
             UnEquip(player,player.equippedWeapons[WeaponChoice-1]);
         }
 

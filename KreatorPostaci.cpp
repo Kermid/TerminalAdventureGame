@@ -18,7 +18,11 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters);
 int main()
 {
     Player player = Menu();
-    FirstLevel(player);
+    
+    if(FirstLevel(player) == 1)
+    {
+        Town();
+    }
     
     return 0;
 }

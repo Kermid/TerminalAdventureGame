@@ -16,14 +16,19 @@ void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
 void FightingInterface(Player& player,Enemy& enemy);
 void HealingShrine(Player& player);
-void RightThird(Player& player);
-void LeftThird(Player& player);
-void FirstLevel(Player& player)
+int RightThird(Player& player);
+int LeftThird(Player& player);
+int CentreThird(Player& player);
+int FirstLevel(Player& player)
 {
     int choice;
     int outcome;
+
     std::vector<Enemy> listOfEnemies;
-    
+
+    //case 2 jest tutaj bo sie psuje jak jest w switch
+
+    bool SecondContinue = true;
     std::cout << "Wkraczasz do ponurych bagien, gdzie ziemia jest miekka i lepka, a kazdy krok wpada w glebokie bloto." << std::endl;
     std::cout << "Woda stoi w kaluzach, a gesta mgla spowija wszystko wokol, ograniczajac widocznosc." << std::endl;
     std::cout << "W powietrzu czuc zapach gnijacych roslin." << std::endl;
@@ -61,13 +66,13 @@ void FirstLevel(Player& player)
         break;
         case 2:
             int choiceSecond;
-            bool SecondContinue = true;
             
             std::cout << "Wybrales druga droge" << std::endl;
             std::cout << " " << std::endl;
             std::cout << "Dotarles do ruin starego drewnianego domu." << std::endl;
             std::cout << "Wlasciciele dawno sie stad wyniesli, jednak mozliwe, ze zostawili za soba czesc swojego majatku." << std::endl;
-            while(SecondContinue)
+
+           while(SecondContinue)
             {
                 std::cout << " " << std::endl;
                 std::cout << "1 - Przeszukaj okolice  2 - Idz dalej  3 - Sprawdz ekwipunek" << std::endl;
@@ -79,12 +84,12 @@ void FirstLevel(Player& player)
                 case 1:
                     Trap(player);
                     Chest(GetArmor(),player);
-                    SecondContinue = false;
                     CentreSecond(player);
+                    SecondContinue = false;
                 break;
                 case 2:
-                    SecondContinue = false;
                     CentreSecond(player);
+                    SecondContinue = false;
                 break;
                 case 3:
                     CheckInventory(player);
@@ -96,14 +101,17 @@ void FirstLevel(Player& player)
                 }
             
             }
-            
-            
+
         break;
+
         case 3:
             int choiceThird;
             bool continueThird = true;
+
             std::cout << "Wybrales trzecia droge" << std::endl;
+            std::cout << " " << std::endl;
             std::cout << "Pod drzewem lezy szkielet, wydaje sie ze moze znajdowac sie tutaj cos ciekawego." << std::endl;
+
             while(continueThird)
             {
                 std::cout << " " << std::endl;
@@ -111,15 +119,17 @@ void FirstLevel(Player& player)
 
                 std::cin >> choiceThird;
 
-                switch (choiceThird)
+                switch(choiceThird)
                 {
                 case 1:
                     Chest(GetWeapon(),player);
                     RightThird(player);
+                    continueThird = false;
                 break;
                 case 2:
                     HealingShrine(player);
                     RightThird(player);
+                    continueThird = false;
                 break;
                 case 3:
                     CheckInventory(player);
@@ -129,11 +139,12 @@ void FirstLevel(Player& player)
                     std::cout << "Niewlasciwa opcja" << std::endl;
                 break;
                 }
-            }
+           }
+
         break;
-        case 4:
+       /*case 4:
             CheckInventory(player);
-        break;
+        break;*/ 
             
             
     }
@@ -325,122 +336,248 @@ void LeftSecond(Player& player)
 {
     int choice;
     int outcome;
+    bool continueSecond = true;
     std::vector<Enemy> listOfEnemiesLeftSecond;
     std::cout << "Przechodzisz dalej w glab cmentarza.Po walce rozgladasz sie po po okolicy" << std::endl;
     std::cout << "Na wprost przed toba widnieje wejscie do krypty z ktorej dochodza niezbyt glosne odglosy poruszania sie jakiejs istoty." << std::endl;
     std::cout << "Po prawej widac zarosnieta brame, i biegnaca przez nia sciezka." << std::endl;
-    std::cout << "Masz przed soba dwie siezki" << std::endl;
-    std::cout << "1 - Wejdz do krypty  2 - Prawo" << std::endl;
-    std::cin >> choice;
+    while(continueSecond)
+    {
+        std::cout << "Masz przed soba dwie siezki" << std::endl;
+        std::cout << "1 - Wejdz do krypty  2 - Prawo 3 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
 
-    switch (choice)
+            switch (choice)
             {
             case 1:
                 Trap(player);
-                Fight(player,listOfEnemiesLeftSecond);
+                outcome = Fight(player,listOfEnemiesLeftSecond);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    CentreSecond(player);
+                    
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
+                continueSecond = false;
                 break;
             case 2:
                 Trap(player);
+                
                 CentreSecond(player);
+                continueSecond = false;
                 break;
+            case 3:
+                CheckInventory(player);
+                
+            break;
             default:
             std::cout << "Nie prawidlowy wybor" << std::endl;
                 break;
             }
+    }
+    
 }
 void CentreSecond(Player& player)
 {
     int choice;
     int outcome;
+    bool continueThird = true;
     std::vector<Enemy> listOfEnemiesCentreSecond;
     std::cout << "Idziesz dalej w glab mrocznego bagna nie napotkujac wiekszego oporu od mieszkancow tej krainy." << std::endl;
     std::cout << "Jedna wzgledny spokoj z czasem zaczyna zamienac sie w niepokoj." << std::endl;
     std::cout << "Starozytne drzewa obrasta mech, spogladanie dalej otrudnia rowniez gesta mgla, ktora ani troche sie nie zmniejszyla." << std::endl;
-    std::cout << "Masz przed soba trzy siezki" << std::endl;
-    std::cout << "1 - Lewo  2 - Przed siebie 3 - Prawo  4 - Sprawdz ekwipunek" << std::endl;
-    std::cin >> choice;
-    switch (choice)
+    while(continueThird)
+    {
+        std::cout << "Masz przed soba trzy siezki" << std::endl;
+        std::cout << "1 - Lewo  2 - Przed siebie 3 - Prawo  4 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
+        switch (choice)
             {
             case 1:
+                //mageskeleton
                 Trap(player);
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
                     Chest(GetWeapon(),player);
-                    CheckInventory(player);
                     LeftThird(player);
                 }
                 else if(outcome == 0)
                 {
                     std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
                 }
                 break;
-            case 2:
+                case 2:
+                //wolves
                 Trap(player);
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
                     Chest(GetWeapon(),player);
-                    CheckInventory(player);
-                    LeftSecond(player);
+                    CentreThird(player);
                 }
                 else if(outcome == 0)
                 {
                     std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
                 }
                 
                 break;
-            case 3:
+                case 3:
+                //skeletons
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
                     Chest(GetWeapon(),player);
-                    CheckInventory(player);
-                    LeftSecond(player);
+                    RightThird(player);
                 }
                 else if(outcome == 0)
                 {
                     std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
                 }
                 break;
-            case 4:
+                case 4:
                 CheckInventory(player);
                 break;
-            default:
-            std::cout << "Nie prawidlowy wybor" << std::endl;
+                default:
+                std::cout << "Nie prawidlowy wybor" << std::endl;
                 break;
             }
+        }
+    
 }
-void LeftThird(Player& player)
+int LeftThird(Player& player)
 {
     int choice;
     int outcome;
-    std::vector<Enemy> listOfEnemiesCentreSecond;
-    std::cout << "Idziesz dalej w glab mrocznego bagna nie napotkujac wiekszego oporu od mieszkancow tej krainy." << std::endl;
-    std::cout << "Jedna wzgledny spokoj z czasem zaczyna zamienac sie w niepokoj." << std::endl;
-    std::cout << "Starozytne drzewa obrasta mech, spogladanie dalej otrudnia rowniez gesta mgla, ktora ani troche sie nie zmniejszyla." << std::endl;
-    std::cout << "Masz przed soba trzy siezki" << std::endl;
-    std::cout << "1 - Lewo  2 - Przed siebie 3 - Prawo  4 - Sprawdz ekwipunek" << std::endl;
-    std::cin >> choice;
-    
-    switch (choice)
+    bool continueThird = true;
+    std::vector<Enemy> listOfEnemiesLeftThird;
+    std::cout << "Przed toba pojawia sie grupa przeciwnikow." << std::endl;
+    std::cout << "Bagna zaczynaja powoli ustepowac i przed toba zaczyna sie mniej mokry kawalek lasu" << std::endl;
+    while(continueThird)
     {
-    case 1:
-        /* code */
-        break;
+        std::cout << "Masz przed soba trzy siezki" << std::endl;
+        std::cout << "1 - Lewo  2 - Prawo  3- Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
     
-    default:
+        switch (choice)
+        {
+            case 1:
+            HealingShrine(player);
+            outcome = Fight(player,listOfEnemiesLeftThird);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    return 1;
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
+                }
+            break;
+            case 2:
+            CentreThird(player);
+            continueThird = false;
+            break;
+            case 3:
+            CheckInventory(player);
+            break;
+            default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+            break;
+        }
+    }
+    
+}
+int CentreThird(Player& player)
+{
+    int choice;
+    int outcome;
+    bool continueThird = true;
+    std::vector<Enemy> listOfEnemiesCentreThird;
+    std::cout << "Przed toba pojawia sie grupa przeciwnikow." << std::endl;
+    std::cout << "Bagna zaczynaja powoli ustepowac i przed toba zaczyna sie mniej mokry kawalek lasu" << std::endl;
+    while(continueThird)
+    {
+        std::cout << "Masz przed soba trzy siezki" << std::endl;
+        std::cout << "1 - Miasto 2 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
+    
+        switch (choice)
+        {
+            case 1:
+            outcome = Fight(player,listOfEnemiesCentreThird);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    return 1;
+                    
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
+                }
         break;
+        case 2:
+            CheckInventory(player);
+        break;
+        default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+        break;
+        }
     }
 }
-void CentreThird(Player& player)
+int RightThird(Player& player)
 {
-
+     int choice;
+    int outcome;
+    bool continueThird = true;
+    std::vector<Enemy> listOfEnemiesRightThird;
+    std::cout << "Przed toba pojawia sie grupa przeciwnikow." << std::endl;
+    std::cout << "Bagna zaczynaja powoli ustepowac i przed toba zaczyna sie mniej mokry kawalek lasu" << std::endl;
+    while(continueThird)
+    {
+        std::cout << "Masz przed soba trzy siezki" << std::endl;
+        std::cout << "1 - Idz przed siebie  2 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
+    
+        switch (choice)
+        {
+            case 1:
+                outcome = Fight(player,listOfEnemiesRightThird);
+                if(outcome == 1)
+                {
+                    Chest(GetWeapon(),player);
+                    return 1;
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                    continueThird = false;
+                }
+        break;
+        case 2:
+            CheckInventory(player);
+        break;
+        case 3:
+            
+        break;
+        default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+        break;
+        }
+    }
+    return 0;
 }
-void RightThird(Player& player)
-{
 
-}
 void FightingInterface(Player& player,Enemy& enemy)
 
 {
@@ -581,6 +718,10 @@ void HealingShrine(Player& player)
     std::cout << "W tej okolicy to jeden z nielicznych sposobow, aby dodac sobie troche sil." << std::endl;
     player.currentHealth += 10;
     player.currentMana += 20;
+
+}
+void Town()
+{
 
 }
 #endif
