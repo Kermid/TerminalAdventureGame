@@ -9,8 +9,8 @@
 #include <vector>
 
 void Chest(Item item,Player& player);
-void CentreSecond(Player& player);
-void LeftSecond(Player& player);
+int CentreSecond(Player& player);
+int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
@@ -55,7 +55,7 @@ int FirstLevel(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
-                    LeftSecond(player);
+                    return LeftSecond(player);
                     
                 }
                 else if(outcome == 0)
@@ -84,11 +84,11 @@ int FirstLevel(Player& player)
                 case 1:
                     Trap(player);
                     Chest(GetArmorFirstLevel(),player);
-                    CentreSecond(player);
+                    return CentreSecond(player);
                     SecondContinue = false;
                 break;
                 case 2:
-                    CentreSecond(player);
+                    return CentreSecond(player);
                     SecondContinue = false;
                 break;
                 case 3:
@@ -190,7 +190,6 @@ void Chest(Item item,Player& player)
                 
                 chest.erase(chest.begin() + (choiceItem - 1));
 
-                std::cout << "Przedmiot zostal dodany do ekwipunku." << std::endl;
             }
             else
             {
@@ -330,7 +329,7 @@ void Trap(Player& player)
     }
     
 }
-void LeftSecond(Player& player)
+int LeftSecond(Player& player)
 {
     int choice;
     int outcome;
@@ -353,7 +352,7 @@ void LeftSecond(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
-                    CentreSecond(player);
+                    return CentreSecond(player);
                     
                 }
                 else if(outcome == 0)
@@ -365,7 +364,7 @@ void LeftSecond(Player& player)
             case 2:
                 Trap(player);
                 
-                CentreSecond(player);
+                return CentreSecond(player);
                 continueSecond = false;
                 break;
             case 3:
@@ -379,7 +378,7 @@ void LeftSecond(Player& player)
     }
     
 }
-void CentreSecond(Player& player)
+int CentreSecond(Player& player)
 {
     int choice;
     int outcome;
@@ -402,7 +401,7 @@ void CentreSecond(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
-                    LeftThird(player);
+                    return LeftThird(player);
                 }
                 else if(outcome == 0)
                 {
@@ -417,7 +416,7 @@ void CentreSecond(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
-                    CentreThird(player);
+                    return CentreThird(player);
                 }
                 else if(outcome == 0)
                 {
@@ -432,7 +431,7 @@ void CentreSecond(Player& player)
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
-                    RightThird(player);
+                    return RightThird(player);
                 }
                 else if(outcome == 0)
                 {
@@ -481,14 +480,20 @@ int LeftThird(Player& player)
                 }
             break;
             case 2:
-            CentreThird(player);
+
+            return CentreThird(player);
             continueThird = false;
+
             break;
             case 3:
+
             CheckInventory(player);
+
             break;
             default:
+
             std::cout << "Nie prawidlowy wybor" << std::endl;
+
             break;
         }
     }
@@ -555,6 +560,7 @@ int RightThird(Player& player)
                 {
                     Chest(GetWeaponFirstLevel(),player);
                     return 1;
+                    
                 }
                 else if(outcome == 0)
                 {

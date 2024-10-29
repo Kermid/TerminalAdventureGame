@@ -100,7 +100,6 @@ Character::Character()
 int RandomNumber(int number)
 {
     int randomNum;
-    srand(time(NULL));
     randomNum = (rand() % number) + 1;
     return randomNum;
 }

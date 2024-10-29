@@ -50,7 +50,7 @@ class Item
 
 Item GetWeaponFirstLevel()
 {
-    srand(time(NULL));
+    
     int random = (rand() % 8) + 1;
 
     switch (random)
@@ -93,7 +93,7 @@ Item GetWeaponFirstLevel()
 }
 Item GetArmorFirstLevel()
 {
-    srand(time(NULL));
+    
     int random = (rand() % 8) + 1;
     
     switch (random)
