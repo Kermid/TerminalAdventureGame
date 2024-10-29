@@ -35,7 +35,7 @@ int FirstLevel(Player& player)
     std::cout << "Musisz uwazac, bo w bagnach wszystko wydaje sie niebezpieczne, a droga przed toba jest zdradliwa." << std::endl;
     std::cout << "" << std::endl;
     std::cout << "Masz przed soba trzy siezki" << std::endl;
-    std::cout << "1 - Lewo  2 - Prosto  3 - Prawo 4 - Sprawdz ekwipunek" << std::endl;
+    std::cout << "1 - Lewo  2 - Prosto  3 - Prawo " << std::endl;
     std::cout << "" << std::endl;
     
     std::cin >> choice;
@@ -54,7 +54,7 @@ int FirstLevel(Player& player)
                 outcome = Fight(player,listOfEnemies);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     LeftSecond(player);
                     
                 }
@@ -83,7 +83,7 @@ int FirstLevel(Player& player)
                 {
                 case 1:
                     Trap(player);
-                    Chest(GetArmor(),player);
+                    Chest(GetArmorFirstLevel(),player);
                     CentreSecond(player);
                     SecondContinue = false;
                 break;
@@ -122,7 +122,7 @@ int FirstLevel(Player& player)
                 switch(choiceThird)
                 {
                 case 1:
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     RightThird(player);
                     continueThird = false;
                 break;
@@ -142,9 +142,7 @@ int FirstLevel(Player& player)
            }
 
         break;
-       /*case 4:
-            CheckInventory(player);
-        break;*/ 
+        
             
             
     }
@@ -354,7 +352,7 @@ void LeftSecond(Player& player)
                 outcome = Fight(player,listOfEnemiesLeftSecond);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     CentreSecond(player);
                     
                 }
@@ -403,7 +401,7 @@ void CentreSecond(Player& player)
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     LeftThird(player);
                 }
                 else if(outcome == 0)
@@ -418,7 +416,7 @@ void CentreSecond(Player& player)
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     CentreThird(player);
                 }
                 else if(outcome == 0)
@@ -433,7 +431,7 @@ void CentreSecond(Player& player)
                 outcome = Fight(player,listOfEnemiesCentreSecond);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetArmorFirstLevel(),player);
                     RightThird(player);
                 }
                 else if(outcome == 0)
@@ -473,7 +471,7 @@ int LeftThird(Player& player)
             outcome = Fight(player,listOfEnemiesLeftThird);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetArmorFirstLevel(),player);
                     return 1;
                 }
                 else if(outcome == 0)
@@ -516,7 +514,7 @@ int CentreThird(Player& player)
             outcome = Fight(player,listOfEnemiesCentreThird);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetArmorFirstLevel(),player);
                     return 1;
                     
                 }
@@ -555,7 +553,7 @@ int RightThird(Player& player)
                 outcome = Fight(player,listOfEnemiesRightThird);
                 if(outcome == 1)
                 {
-                    Chest(GetWeapon(),player);
+                    Chest(GetWeaponFirstLevel(),player);
                     return 1;
                 }
                 else if(outcome == 0)
@@ -577,7 +575,6 @@ int RightThird(Player& player)
     }
     return 0;
 }
-
 void FightingInterface(Player& player,Enemy& enemy)
 
 {
@@ -720,8 +717,5 @@ void HealingShrine(Player& player)
     player.currentMana += 20;
 
 }
-void Town()
-{
 
-}
 #endif

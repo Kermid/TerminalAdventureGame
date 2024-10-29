@@ -6,6 +6,7 @@
 #include "Entities.hpp"
 #include "Game.hpp"
 #include "Items.hpp"
+#include "town.hpp"
 #include <windows.h>
 
 Player selectedPlayer;

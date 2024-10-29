@@ -48,7 +48,7 @@ class Item
        
 };
 
-Item GetWeapon()
+Item GetWeaponFirstLevel()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
@@ -91,7 +91,7 @@ Item GetWeapon()
     }
     return Item("Patyk",0,1,0,0,0,0,0,"Weapon");
 }
-Item GetArmor()
+Item GetArmorFirstLevel()
 {
     srand(time(NULL));
     int random = (rand() % 8) + 1;
@@ -133,6 +133,92 @@ Item GetArmor()
     
     }
     return Item("Szmaty",0,0,0,0,0,0,0,"Armor");
+}
+Item GetWeaponSecondLevel()
+{
+    srand(time(NULL));
+    int random = (rand() % 8) + 1;
+
+    switch (random)
+    {
+    case 1:
+            return  Item("Krotki miecz II",0,4,2,2,0,0,3,"Weapon");
+            
+        break;
+    case 2:
+            return  Item("Maczuga II",0,5,4,2,0,0,3,"Weapon");
+            
+        break;
+    case 3:
+            return Item("Sztylet II",0,2,2,6,0,0,3,"Weapon");
+             
+        break;
+    case 4:
+            return Item("Luk II",0,5,4,4,0,0,3,"Weapon");
+            
+        break;
+    case 5:
+            return Item("Dlugi miecz II",0,5,7,0,3,0,5,"Weapon");
+            
+        break;
+    case 6:
+            return Item("Kostur II",0,1,2,0,2,7,5,"Weapon");
+            
+        break;
+    case 7:
+            return Item("Wojenny topor II",0,9,9,0,0,0,5,"Weapon");
+            
+        break;
+    case 8:
+            return Item("Kusza II",0,8,5,0,5,0,5,"Weapon");
+            
+        break;
+    
+    }
+    return Item("Patyk II",0,2,0,0,0,0,0,"Weapon");
+}
+Item GetArmorSecondLevel()
+{
+    srand(time(NULL));
+    int random = (rand() % 8) + 1;
+    
+    switch (random)
+    {
+    case 1:
+            return Item("Szaty II",3,0,0,0,2,6,3,"Armor");
+            
+        break;
+    case 2:
+            return Item("Skorzana zbroja II",4,0,2,6,2,0,3,"Armor");
+            
+        break;
+    case 3:
+            return Item("Kolczuga II",3,0,3,2,2,0,3,"Armor");
+            
+        break;
+    case 4:
+            return Item("Zbroja plytowa II",10,0,2,0,4,0,6,"Armor");
+            
+        break;
+    case 5:
+            return Item("Kaptur II",2,0,0,3,3,3,3,"Armor");
+            
+        break;
+    case 6:
+            return Item("Zelazny chelm II",5,0,4,0,0,0,3,"Armor");
+           
+        break;
+    case 7:
+            return Item("Kapelusz czarodzieja II",2,0,0,0,3,8,1,"Armor");
+            
+        break;
+    case 8:
+            return Item("Buty II",2,2,2,2,2,2,2,"Armor");
+            
+        break;
+    
+    }
+    return Item("Szmaty",1,0,0,0,0,0,2,"Armor");
 }
 Item ChooseItem(std::vector<Item>& listOfItems)
 {
