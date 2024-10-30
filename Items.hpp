@@ -136,7 +136,7 @@ Item GetArmorFirstLevel()
 }
 Item GetWeaponSecondLevel()
 {
-    srand(time(NULL));
+    
     int random = (rand() % 8) + 1;
 
     switch (random)
@@ -179,7 +179,7 @@ Item GetWeaponSecondLevel()
 }
 Item GetArmorSecondLevel()
 {
-    srand(time(NULL));
+    
     int random = (rand() % 8) + 1;
     
     switch (random)
@@ -219,6 +219,14 @@ Item GetArmorSecondLevel()
     
     }
     return Item("Szmaty",1,0,0,0,0,0,2,"Armor");
+}
+Item getHealthPotion()
+{
+    return Item("Mikstura Leczaca",2);
+}
+Item getManaPotion()
+{
+    return Item("Mikstura Many",2);
 }
 Item ChooseItem(std::vector<Item>& listOfItems)
 {

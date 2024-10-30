@@ -52,38 +52,98 @@ void Buy(Player& player,std::vector<Item>& shopItemList)
     bool buyContinue = true;
     int counter = 1;
     int buyingStop;
+    int choiceItem;
     while(buyContinue)
     {
         counter = 1;
         std::cout << "Witaj w sklepie ze zbrojami!" << std::endl;
         std::cout << "Oferta sprzedawcy!" << std::endl;
         std::cout << "" << std::endl;
+
         for(Item item : shopItemList)
         {
             std::cout << "|#" << counter << " " << item.name << std::endl;
             counter++;
-            std::cout << "__________________________________________________________________________________________________" << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
             std::cout << "|Pancerz: " << item.armor << " Sila:  " << item.strenght << " Wytrzymalosc:  " << item.stamina << std::endl;
             std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
         }
 
         std::cout << "|Zloto: " << player.gold << std::endl;
+        std::cout << "-----------------------------------------" << std::endl;
         std::cout << "1 - Kup 2 - Zakoncz kupowanie" << std::endl;
+
         std::cin >> buyingStop;
+
         if(buyingStop == 2)
         {
             break;
         }
         std::cout << "Ktory przedmiot chcesz kupic?" << std::endl;
 
-        int choiceItem;
+        
         std::cin >> choiceItem;
-
+        
         if (choiceItem > 0 && choiceItem <= shopItemList.size())
         {
 
             player.gold -= shopItemList[choiceItem - 1].cost;
+            player.Inventory.push_back(shopItemList[choiceItem - 1]);
             shopItemList.erase(shopItemList.begin() + (choiceItem - 1));
+            
+
+        }
+        else
+        {
+            std::cout << "Niepoprawny numer przedmiotu." << std::endl;
+        }
+    }
+}
+void BuyPotion(Player& player,std::vector<Item>& shopItemList)
+{
+    bool buyContinue = true;
+    int counter = 1;
+    int buyingStop;
+    int choiceItem;
+    while(buyContinue)
+    {
+        counter = 1;
+        std::cout << "Witaj w sklepie ze zbrojami!" << std::endl;
+        std::cout << "Oferta sprzedawcy!" << std::endl;
+        std::cout << "" << std::endl;
+
+        for(Item item : shopItemList)
+        {
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|#" << counter << " " << item.name << std::endl;
+            counter++;
+            std::cout << "| Koszt: " << item.cost << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
+        }
+
+        std::cout << "|Zloto: " << player.gold << std::endl;
+        std::cout << "-----------------------------------------" << std::endl;
+        std::cout << "1 - Kup 2 - Zakoncz kupowanie" << std::endl;
+
+        std::cin >> buyingStop;
+
+        if(buyingStop == 2)
+        {
+            break;
+        }
+        std::cout << "Ktory przedmiot chcesz kupic?" << std::endl;
+
+        
+        std::cin >> choiceItem;
+        
+        if (choiceItem > 0 && choiceItem <= shopItemList.size())
+        {
+
+            player.gold -= shopItemList[choiceItem - 1].cost;
+            player.Inventory.push_back(shopItemList[choiceItem - 1]);
+            shopItemList.erase(shopItemList.begin() + (choiceItem - 1));
+            
 
         }
         else
@@ -95,65 +155,106 @@ void Buy(Player& player,std::vector<Item>& shopItemList)
 void potionShop(Player& player)
 {
     std::vector<Item> shopkeepersItems;
-    for(int i = 0; i < 3;i++)
-    {
-        
-    }
-    for(int i = 0; i < 3;i++)
-    {
-        
-    }
-
-}
-void weaponShop(Player& player)
-{
-    std::vector<Item> shopkeepersItems;
-    for(int i = 0; i < 3;i++)
-    {
-        
-    }
-    for(int i = 0; i < 3;i++)
-    {
-        
-    }
-}
-void armorShop(Player& player)
-{
+    int Choice;
     int counter;
-    bool armorShopContinue = true;
-    std::vector<Item> shopkeepersItems;
-    for(int i = 0; i < 2;i++)
+    for(int i = 0; i < 3;i++)
     {
-        shopkeepersItems.push_back(GetArmorSecondLevel());
+        shopkeepersItems.push_back(getHealthPotion());
     }
-    for(int i = 0; i < 4;i++)
+    for(int i = 0; i < 3;i++)
     {
-        shopkeepersItems.push_back(GetArmorFirstLevel());
+        shopkeepersItems.push_back(getManaPotion());
     }
-    while(armorShopContinue)
+     while(true)
     {   
         counter = 1;
-        int Choice;
-        std::cout << "Witaj w sklepie ze zbrojami!" << std::endl;
+        std::cout << "Witaj w sklepie z bronia!" << std::endl;
         std::cout << "Oferta sprzedawcy!" << std::endl;
         std::cout << "" << std::endl;
         for(Item item : shopkeepersItems)
         {
             std::cout << "|#" << counter << " " << item.name << std::endl;
             counter++;
-            std::cout << "__________________________________________________________________________________________________" << std::endl;
-            std::cout << "|Pancerz: " << item.armor << " Sila:  " << item.strenght << " Wytrzymalosc:  " << item.stamina << std::endl;
-            std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
         }
         std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+
         std::cin >> Choice;
-        if (std::cin.fail()) 
+
+        if(std::cin.fail()) 
         {
             std::cin.clear(); 
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Nieprawidlowa opcja!" << std::endl;
-            continue;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+            std::cout << "Nieprawidlowa opcja! Wprowadz liczbe od 1 do 3." << std::endl;
+            continue; 
         }
+        
+        if(Choice == 3)
+        {   
+            break;
+        }
+
+        switch (Choice)
+        {
+        case 1:
+            BuyPotion(player,shopkeepersItems);
+        break;
+        case 2:
+            SellPotion(player,player.Inventory);
+        break;
+        default:
+        std::cout << "Nieprawidlowa opcja!" << std::endl;
+            break;
+        }
+    }
+}
+void weaponShop(Player& player)
+{
+    int counter;
+    int Choice;
+    std::vector<Item> shopkeepersItems;
+
+    for(int i = 0; i < 2;i++)
+    {
+        shopkeepersItems.push_back(GetWeaponSecondLevel());
+    }
+
+    for(int i = 0; i < 2;i++)
+    {
+        shopkeepersItems.push_back(GetWeaponFirstLevel());
+    }
+
+    while(true)
+    {   
+        counter = 1;
+        std::cout << "Witaj w sklepie z bronia!" << std::endl;
+        std::cout << "Oferta sprzedawcy!" << std::endl;
+        std::cout << "" << std::endl;
+        for(Item item : shopkeepersItems)
+        {
+            std::cout << "|#" << counter << " " << item.name << std::endl;
+            counter++;
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|Obrazenia: " << item.damage << " Sila:  " << item.strenght << " Wytrzymalosc:  " << item.stamina << std::endl;
+            std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
+        }
+        std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+
+        std::cin >> Choice;
+
+        if(std::cin.fail()) 
+        {
+            std::cin.clear(); 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+            std::cout << "Nieprawidlowa opcja! Wprowadz liczbe od 1 do 3." << std::endl;
+            continue; 
+        }
+        
+        if(Choice == 3)
+        {   
+            break;
+        }
+
         switch (Choice)
         {
         case 1:
@@ -162,8 +263,67 @@ void armorShop(Player& player)
         case 2:
             Sell(player,player.Inventory);
         break;
-        case 3:
-            armorShopContinue = false;
+        default:
+        std::cout << "Nieprawidlowa opcja!" << std::endl;
+            break;
+        }
+    }
+}
+void armorShop(Player& player)
+{
+    int counter;
+    int Choice;
+    std::vector<Item> shopkeepersItems;
+
+    for(int i = 0; i < 2;i++)
+    {
+        shopkeepersItems.push_back(GetArmorSecondLevel());
+    }
+
+    for(int i = 0; i < 3;i++)
+    {
+        shopkeepersItems.push_back(GetArmorFirstLevel());
+    }
+
+    while(true)
+    {   
+        counter = 1;
+        std::cout << "Witaj w sklepie ze zbrojami!" << std::endl;
+        std::cout << "Oferta sprzedawcy!" << std::endl;
+        std::cout << "" << std::endl;
+        for(Item item : shopkeepersItems)
+        {
+            std::cout << "|#" << counter << " " << item.name << std::endl;
+            counter++;
+            std::cout << "-----------------------------------------" << std::endl;
+            std::cout << "|Pancerz: " << item.armor << " Sila:  " << item.strenght << " Wytrzymalosc:  " << item.stamina << std::endl;
+            std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
+            std::cout << "-----------------------------------------" << std::endl;
+        }
+        std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+
+        std::cin >> Choice;
+
+        if(std::cin.fail()) 
+        {
+            std::cin.clear(); 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+            std::cout << "Nieprawidlowa opcja! Wprowadz liczbe od 1 do 3." << std::endl;
+            continue; 
+        }
+        
+        if(Choice == 3)
+        {   
+            break;
+        }
+
+        switch (Choice)
+        {
+        case 1:
+            Buy(player,shopkeepersItems);
+        break;
+        case 2:
+            Sell(player,player.Inventory);
         break;
         default:
         std::cout << "Nieprawidlowa opcja!" << std::endl;
@@ -180,11 +340,13 @@ void Town(Player& player)
 {
     bool townContinue = true;
     int townChoice;
-    std::cout << "***** Dotarles do miasta! *****" << std::endl;
-    std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Zadania 5 - Regiony " << std::endl;
     std::cin >> townChoice;
     while(townContinue)
     {
+        std::cout << "***** Miasto Bagienna przystan! *****" << std::endl;
+        std::cout << "" << std::endl;
+        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Zadania 5 - Regiony " << std::endl;
+        std::cin >> townChoice;
         switch(townChoice)
         {
             case 1:
@@ -203,7 +365,7 @@ void Town(Player& player)
             regions(player);
             break;
             default:
-                std::cout << "Nie prawidlowa opcja!" << std::endl;
+                std::cout << "Nieprawidlowa opcja!" << std::endl;
             break;
         }
     }

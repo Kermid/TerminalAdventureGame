@@ -49,7 +49,7 @@ Player& Menu()
         std::cout << "4 - Wyjdz z gry" << std::endl;
         
         std::cin >> choiceMenu;
-    //obsluga blednego inputu 
+        //obsluga blednego inputu 
     if(std::cin.fail())
     {   //czyszczenie inputu
         std::cin.clear();
