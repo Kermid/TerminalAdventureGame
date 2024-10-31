@@ -253,8 +253,9 @@ void EquipItem(Player& player,Item& item)
         int WeaponChoice;
         
         std::cout << "Czy chcesz uzywac tej broni jako pierwszorzednej czy drugorzednej?" << std::endl;
-        std::cout << "1 - Pierwszorzedna" << std::endl;
-        std::cout << "2 - Drugorzedna" << std::endl;
+        std::cout << "__________________________________" << std::endl;
+        std::cout << "1 - Pierwszorzedna 2 - Drugorzedna" << std::endl;
+        std::cout << "" << std::endl;
 
         std::cin >> WeaponChoice;
 
@@ -263,6 +264,7 @@ void EquipItem(Player& player,Item& item)
         {
             
             UnEquip(player,player.equippedWeapons[WeaponChoice-1]);
+            player.Inventory.push_back(player.equippedWeapons[WeaponChoice-1]);
         }
 
         player.equippedWeapons[WeaponChoice-1] = item;
@@ -298,17 +300,20 @@ void EquipItem(Player& player,Item& item)
         int ArmorChoice;
 
         std::cout << "Na co chcesz zalozyc ten przedmiot?" << std::endl;
-        std::cout << "1 - Glowa" << std::endl;
-        std::cout << "2 - Tors" << std::endl;
-        std::cout << "3 - Rece" << std::endl;
-        std::cout << "4 - Nogi" << std::endl;
+        std::cout << "__________" << std::endl;
+        std::cout << "|1 - Glowa" << std::endl;
+        std::cout << "|2 - Tors" << std::endl;
+        std::cout << "|3 - Rece" << std::endl;
+        std::cout << "|4 - Nogi" << std::endl;
 
         std::cin >> ArmorChoice;
 
         if(player.equippedArmor[ArmorChoice-1].name != "")
         {
             UnEquip(player,player.equippedArmor[ArmorChoice-1]);
+            player.Inventory.push_back(player.equippedArmor[ArmorChoice-1]);
         }
+
         player.equippedArmor[ArmorChoice-1] = item;
         player.agility += item.agility;
         player.strenght += item.strenght;

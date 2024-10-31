@@ -159,9 +159,9 @@ void Chest(Item item,Player& player)
     chest.push_back(item);
     chest.push_back(healthPotion);
     chest.push_back(manaPotion);
-    
+    std::cout << "-------------------------------------------" << std::endl;
     std::cout << "****** Udalo ci sie znalesc skrzynie ******" << std::endl;
-    std::cout << "Czy bierzesz ktorys z przedmiotow?" << std::endl;
+    std::cout << "-------------------------------------------" << std::endl;
 
     while(itemTaking)
     {
@@ -171,8 +171,8 @@ void Chest(Item item,Player& player)
         std::cout << "|#" << counter << " " << itemChest.name << std::endl;
         counter++;
     }
-    
-    std::cout << "1 - Wez przedmiot  2 - Wez wszystko 3 - Odejdz" << std::endl;
+    std::cout << "_________________________________________________" << std::endl;
+    std::cout << "|1 - Wez przedmiot  |2 - Wez wszystko |3 - Odejdz" << std::endl;
     std::cout << "" << std::endl;
     
     std::cin >> choiceTake;
@@ -228,13 +228,17 @@ void Attack(Player& player,Enemy& enemy)
     if(!CriticalStrike(player))
     {
         int damage = (1 + player.strenght) - enemy.armor;
+        std::cout << "----------------" << std::endl;
         std::cout << "NORMALNY ATAK: " << damage << std::endl;
+        std::cout << "----------------" << std::endl;
         enemy.currentHealth -= damage;
     }
     else if(CriticalStrike(player))
     {
         int damage = 2 * (1 + player.strenght) - enemy.armor;
+        std::cout << "----------------------" << std::endl;
         std::cout << "TRAFIENIE KRYTYCZNE: " << damage << std::endl;
+        std::cout << "----------------------" << std::endl;
         enemy.currentHealth -= damage;
     }
 
@@ -247,14 +251,17 @@ void EnemyAttack(Player& player,Enemy& enemy)
     if(CriticalStrike(enemy))
     {
         int damage = 2 * (1 + enemy.strenght) - player.armor;
-        std::cout << "ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
-        std::cout << "" << std::endl;
+        std::cout << "------------------------------" << std::endl;
+        std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "------------------------------" << std::endl;
         player.currentHealth -= damage;
     }
     else
     {
         int damage = (1 + enemy.strenght) - player.armor;
+        std::cout << "------------------------------" << std::endl;
         std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "------------------------------" << std::endl;
         std::cout << "" << std::endl;
         player.currentHealth -= damage;
     }
@@ -276,8 +283,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
         FightingInterface(player,enemy);
         if(enemy.currentHealth <= 0)
         {
-            std::cout << enemy.name << " zostal pokonany!" << std::endl;
-
+            
             listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemy](Enemy& e) {return e.EnemyId == enemy.EnemyId;}),listOfEnemies.end());
 
             //Po zabiciu id jest aktualizowane
@@ -286,10 +292,6 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
             {
                 enemy.EnemyId--;
             }
-        }
-        else
-        {
-            std::cout <<"Przeciwnik zyje.Walka trwa dalej!" << std::endl;
         }
         for(Enemy& enemy : listOfEnemies)
         {
@@ -316,11 +318,12 @@ void CalculatingTurns(Player& player,std::vector<Enemy>& listofEnemies)
 }
 void Trap(Player& player)
 {
+    std::cout << "__________________________" << std::endl;
     std::cout << "Idac natafiasz na pulapke!" << std::endl;
     bool dodge = Dodge(player);
     if(dodge)
-    {
-        std::cout << "Udalo ci sie uniknac pulapki" << std::endl;
+    {   std::cout << "_____________________________" << std::endl;
+        std::cout << "Udalo ci sie uniknac pulapki!" << std::endl;
     }
     else if (!dodge)
     {
@@ -341,7 +344,8 @@ int LeftSecond(Player& player)
     while(continueSecond)
     {
         std::cout << "Masz przed soba dwie siezki" << std::endl;
-        std::cout << "1 - Wejdz do krypty  2 - Prawo 3 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "______________________________________________________" << std::endl;
+        std::cout << "|1 - Wejdz do krypty |2 - Prawo |3 - Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
 
             switch (choice)
@@ -390,7 +394,8 @@ int CentreSecond(Player& player)
     while(continueThird)
     {
         std::cout << "Masz przed soba trzy siezki" << std::endl;
-        std::cout << "1 - Lewo  2 - Przed siebie 3 - Prawo  4 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "_______________________________________________________________" << std::endl;
+        std::cout << "|1 - Lewo  |2 - Przed siebie |3 - Prawo  |4 - Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
         switch (choice)
             {
@@ -460,7 +465,8 @@ int LeftThird(Player& player)
     while(continueThird)
     {
         std::cout << "Masz przed soba trzy siezki" << std::endl;
-        std::cout << "1 - Lewo  2 - Prawo  3- Sprawdz ekwipunek" << std::endl;
+        std::cout << "____________________________________________" << std::endl;
+        std::cout << "|1 - Lewo  |2 - Prawo  |3- Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
     
         switch (choice)
@@ -510,7 +516,8 @@ int CentreThird(Player& player)
     while(continueThird)
     {
         std::cout << "Masz przed soba trzy siezki" << std::endl;
-        std::cout << "1 - Miasto 2 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "__________________________________" << std::endl;
+        std::cout << "|1 - Miasto |2 - Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
     
         switch (choice)
@@ -549,7 +556,8 @@ int RightThird(Player& player)
     while(continueThird)
     {
         std::cout << "Masz przed soba trzy siezki" << std::endl;
-        std::cout << "1 - Idz przed siebie  2 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "_____________________________________________" << std::endl;
+        std::cout << "|1 - Idz przed siebie  |2 - Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
     
         switch (choice)
@@ -719,6 +727,8 @@ void HealingShrine(Player& player)
 {
     std::cout << "Napotykasz swiete leczace miejsce." << std::endl;
     std::cout << "W tej okolicy to jeden z nielicznych sposobow, aby dodac sobie troche sil." << std::endl;
+    std::cout << player.currentHealth << "/" << player.health << std::endl;
+    std::cout << player.currentMana << "/" << player.mana << std::endl;
     player.currentHealth += 10;
     player.currentMana += 20;
 

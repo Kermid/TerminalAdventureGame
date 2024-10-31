@@ -199,7 +199,7 @@ void potionShop(Player& player)
             BuyPotion(player,shopkeepersItems);
         break;
         case 2:
-            SellPotion(player,player.Inventory);
+            Sell(player,player.Inventory);
         break;
         default:
         std::cout << "Nieprawidlowa opcja!" << std::endl;

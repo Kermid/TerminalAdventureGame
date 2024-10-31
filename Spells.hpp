@@ -114,22 +114,20 @@ void hunterShot(Player& player,Enemy& enemy)
     else
     {
         std::cout << "**** BRAK MANY ****"<< std::endl;
+        std::cout << "" << std::endl;
     }
     
 }
 bool Dodge(Player& player)
 {
-    int dodgeValue = player.agility + 5;
-    std::cout << "WARTOSC UNIKU: " << dodgeValue << std::endl;
+    int dodgeValue = player.agility + 15;
     int random = RandomNumber(100);
     if(dodgeValue >= random)
     {
-        std::cout << "SZANSA NA TRAFIENIE PULAKI: " << random << std::endl;
         return true;
     }
     else if ( dodgeValue <= random)
     {
-        std::cout << "SZANSA NA TRAFIENIE PULAKI: "<< random << std::endl;
         return false;
     }
     return false;
