@@ -22,12 +22,15 @@ void Sell(Player& player,std::vector<Item>& listOfItems)
             counter++;
         }
         std::cout << "|Zloto: " << player.gold << std::endl;
+        std::cout << "-------------------------------------" << std::endl;
         std::cout << "1 - Sprzedaj 2 - Zakoncz sprzedawanie" << std::endl;
+        std::cout << "-------------------------------------" << std::endl;
         std::cin >> sellingStop;
         if(sellingStop == 2)
         {
             break;
         }
+        std::cout << "--------------------------------" << std::endl;
         std::cout << "Ktory przedmiot chcesz sprzedac?" << std::endl;
 
         int choiceItem;
@@ -73,7 +76,7 @@ void Buy(Player& player,std::vector<Item>& shopItemList)
         std::cout << "|Zloto: " << player.gold << std::endl;
         std::cout << "-----------------------------------------" << std::endl;
         std::cout << "1 - Kup 2 - Zakoncz kupowanie" << std::endl;
-
+        std::cout << "-----------------------------------------" << std::endl;
         std::cin >> buyingStop;
 
         if(buyingStop == 2)
@@ -125,7 +128,7 @@ void BuyPotion(Player& player,std::vector<Item>& shopItemList)
         std::cout << "|Zloto: " << player.gold << std::endl;
         std::cout << "-----------------------------------------" << std::endl;
         std::cout << "1 - Kup 2 - Zakoncz kupowanie" << std::endl;
-
+        std::cout << "-----------------------------------------" << std::endl;
         std::cin >> buyingStop;
 
         if(buyingStop == 2)
@@ -176,7 +179,9 @@ void potionShop(Player& player)
             std::cout << "|#" << counter << " " << item.name << std::endl;
             counter++;
         }
+        std::cout << "----------------------------------------"<< std::endl;
         std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
 
         std::cin >> Choice;
 
@@ -238,7 +243,9 @@ void weaponShop(Player& player)
             std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
             std::cout << "-----------------------------------------" << std::endl;
         }
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
 
         std::cin >> Choice;
 
@@ -300,7 +307,9 @@ void armorShop(Player& player)
             std::cout << "|Zrecznosc: " << item.agility << " Inteligencja:  " << item.intelligence << " Koszt: " << item.cost << std::endl;
             std::cout << "-----------------------------------------" << std::endl;
         }
+        std::cout << "----------------------------------------" << std::endl;
         std::cout << "1 - Kup 2 - Sprzedaj 3 - Wyjdz ze Sklepu" << std::endl;
+        std::cout << "----------------------------------------" << std::endl;
 
         std::cin >> Choice;
 
@@ -343,9 +352,11 @@ void Town(Player& player)
     std::cin >> townChoice;
     while(townContinue)
     {
+        
         std::cout << "***** Miasto Bagienna przystan! *****" << std::endl;
-        std::cout << "" << std::endl;
-        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Zadania 5 - Regiony " << std::endl;
+        std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
+        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Zadania 5 - Regiony  6 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
         std::cin >> townChoice;
         switch(townChoice)
         {
@@ -362,7 +373,10 @@ void Town(Player& player)
                 
             break;
             case 5:
-            regions(player);
+                regions(player);
+            break;
+            case 6:
+                CheckInventory(player);
             break;
             default:
                 std::cout << "Nieprawidlowa opcja!" << std::endl;

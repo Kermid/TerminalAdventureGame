@@ -7,6 +7,7 @@
 #include "Game.hpp"
 #include "Items.hpp"
 #include "town.hpp"
+#include "Spells.hpp"
 #include <windows.h>
 
 Player selectedPlayer;

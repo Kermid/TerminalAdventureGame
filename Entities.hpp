@@ -7,6 +7,7 @@
 #include <vector>
 
 
+
 class Character{
     public:
         std::string name;
@@ -88,6 +89,7 @@ class Enemy : public Character
                 this->currentHealth = currentHealth;
                 this->currentMana = currentMana;
             }
+       
 };
 Player::Player()
 {
@@ -108,21 +110,21 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",2,4,4,1,2,50,30,2,true,50,30);
+        Enemy enemy(listOfEnemies.size() + 1,"Szkielet",3,4,4,1,2,50,30,2,true,50,30);
         listOfEnemies.push_back(enemy);
     }
     
 }
 void SpawnMage(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
-    Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",1,4,4,1,0,30,0,2,2,true,30);
+    Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",4,4,4,8,3,40,50,2,true,40,50);
 }
 void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Wilk",1,4,4,1,0,30,0,2,2,true,30);
+        Enemy enemy(listOfEnemies.size() + 1,"Wilk",2,7,4,1,0,30,20,6,true,30,20);
         listOfEnemies.push_back(enemy);
     }
     

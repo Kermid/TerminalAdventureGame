@@ -1,6 +1,5 @@
 #ifndef ITEMS_HPP
 #define ITEMS_HPP
-#include "Entities.hpp"
 #include <iostream>
 #include <vector>
 

@@ -13,7 +13,7 @@ int CentreSecond(Player& player);
 int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
-int Fight(Player& player,std::vector<Enemy>& listOfEnemies);
+int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight);
 void FightingInterface(Player& player,Enemy& enemy);
 void HealingShrine(Player& player);
 int RightThird(Player& player);
@@ -51,7 +51,7 @@ int FirstLevel(Player& player)
             std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest lisci w oddali" << std::endl;
             std::cout << " " << std::endl;
 
-                outcome = Fight(player,listOfEnemies);
+                outcome = Fight(player,listOfEnemies,"Skeletons");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -245,6 +245,41 @@ void Attack(Player& player,Enemy& enemy)
     DisplayCurrentHealth(enemy);
 
 }
+void AttackMage(Player& player,Enemy& enemy)
+{
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 20)
+    {
+        if(CriticalStrike(enemy))
+        {
+            int damage = 2 * (1 + enemy.strenght) - player.armor;
+            std::cout << "------------------------------" << std::endl;
+            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "------------------------------" << std::endl;
+            player.currentHealth -= damage;
+        }
+        else
+        {
+            int damage = (1 + enemy.strenght) - player.armor;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "" << std::endl;
+            player.currentHealth -= damage;
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        fireBallEnemy(player,enemy);
+    }
+    
+    
+    
+    
+
+}
 void EnemyAttack(Player& player,Enemy& enemy)
 {
     
@@ -268,11 +303,23 @@ void EnemyAttack(Player& player,Enemy& enemy)
 
     DisplayCurrentHealth(player);
 }
-int Fight(Player& player, std::vector<Enemy>& listOfEnemies)
+int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight)
 {
     bool endFight = false;
 
-    SpawnSkeletons(RandomNumber(2),listOfEnemies);
+    if(typeOfFight == "Skeletons")
+    {
+        SpawnSkeletons(RandomNumber(2),listOfEnemies);
+    }
+    else if(typeOfFight == "Wolves")
+    {
+        SpawnWolves(RandomNumber(4),listOfEnemies);
+    }
+    else if(typeOfFight == "Skeleton Mage")
+    {
+        SpawnMage(RandomNumber(1),listOfEnemies);
+    }
+    
 
     AnnounceEnemies(listOfEnemies);
     
@@ -352,7 +399,7 @@ int LeftSecond(Player& player)
             {
             case 1:
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesLeftSecond);
+                outcome = Fight(player,listOfEnemiesLeftSecond,"Skeletons");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -402,7 +449,7 @@ int CentreSecond(Player& player)
             case 1:
                 //mageskeleton
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesCentreSecond);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeleton Mage");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -417,7 +464,7 @@ int CentreSecond(Player& player)
                 case 2:
                 //wolves
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesCentreSecond);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Wolves");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -432,7 +479,7 @@ int CentreSecond(Player& player)
                 break;
                 case 3:
                 //skeletons
-                outcome = Fight(player,listOfEnemiesCentreSecond);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeletons");
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -473,7 +520,7 @@ int LeftThird(Player& player)
         {
             case 1:
             HealingShrine(player);
-            outcome = Fight(player,listOfEnemiesLeftThird);
+            outcome = Fight(player,listOfEnemiesLeftThird,"Wolves");
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -523,7 +570,7 @@ int CentreThird(Player& player)
         switch (choice)
         {
             case 1:
-            outcome = Fight(player,listOfEnemiesCentreThird);
+            outcome = Fight(player,listOfEnemiesCentreThird,"Skeletons");
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -563,7 +610,7 @@ int RightThird(Player& player)
         switch (choice)
         {
             case 1:
-                outcome = Fight(player,listOfEnemiesRightThird);
+                outcome = Fight(player,listOfEnemiesRightThird,"Skeletons");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);

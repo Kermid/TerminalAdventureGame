@@ -1,8 +1,9 @@
 #ifndef SPELLS_HPP
 #define SPELLS_HPP
-#include "Entities.hpp"
 #include "iostream"
 #include "vector"
+#include "Entities.hpp"
+
 
 bool MagicalCriticalStrike(Enemy& enemy);
 bool MagicalCriticalStrike(Player& player);
@@ -203,5 +204,37 @@ bool MagicalCriticalStrike(Enemy& enemy)
         return false;
     }
     return false;
+}
+void fireBallEnemy(Player& player,Enemy& enemy)
+{
+    int manaCost = 10;
+    if(enemy.currentMana >= manaCost)
+    {
+        if(!MagicalCriticalStrike(enemy))
+    {
+        int damage = (RandomNumber(10) + enemy.intelligence);
+        enemy.currentMana -= 10;
+        player.currentHealth -= damage;
+        std::cout << "-----------------------" << std::endl;
+        std::cout << "KULA OGNIA PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "-----------------------" << std::endl;
+    }
+    else if(MagicalCriticalStrike(enemy))
+    {
+        int damage = 2 * (RandomNumber(10) + enemy.intelligence);
+        enemy.currentMana -= 10;
+        player.currentHealth -= damage;
+        std::cout << "-----------------------------------" << std::endl;
+        std::cout << "KRYTYCZNA KULA OGNIA PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "-----------------------------------" << std::endl;
+    }
+    }
+    else
+    {   std::cout << "--------------------" << std::endl;
+        std::cout << "**** PRZECIWNIKOWKI BRAKUJE MANY ****"<< std::endl;
+        std::cout << "--------------------" << std::endl;
+    }
+    
+    
 }
 #endif 
