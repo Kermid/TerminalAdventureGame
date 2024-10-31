@@ -254,7 +254,7 @@ void Create(Player &player,int playerIdCounter)
         std::cout << "|Wybierz plec  |" << std::endl;
         std::cout << "|1 - Mezczyzna |" << std::endl;
         std::cout << "|2 - Kobieta   |" << std::endl;
-        std::cout << "----------------" << std::endl;
+        std::cout << "---------------" << std::endl;
 
         std::cin >> temp;
 
@@ -283,13 +283,13 @@ void Create(Player &player,int playerIdCounter)
     do
     {
         std::cout << "-------------------------------------" << std::endl;
-        std::cout << "| Rozdysponuj punkty postaci.       |" << std::endl;
-        std::cout << "| Zdrowie: " << player.health << " Mana: " << player.mana << "              |" << std::endl;
-        std::cout << "| Ilosc punktow: " << playerStartPoints << "                  |" << std::endl;
-        std::cout << "| 1 - Sila: " << player.strenght << "                       |" << std::endl;
-        std::cout << "| 2 - Zrecznosc: " << player.agility << "                  |" << std::endl;
-        std::cout << "| 3 - Inteligencja: " << player.intelligence << "               |" << std::endl;
-        std::cout << "| 4 - Wytrzymalosc: " << player.stamina << "               |" << std::endl;
+        std::cout << "| Rozdysponuj punkty postaci.       " << std::endl;
+        std::cout << "| Zdrowie: " << player.health << " Mana: " << player.mana << std::endl;
+        std::cout << "| Ilosc punktow: " << playerStartPoints << std::endl;
+        std::cout << "| 1 - Sila: " << player.strenght << std::endl;
+        std::cout << "| 2 - Zrecznosc: " << player.agility << std::endl;
+        std::cout << "| 3 - Inteligencja: " << player.intelligence << std::endl;
+        std::cout << "| 4 - Wytrzymalosc: " << player.stamina << std::endl;
         std::cout << "-------------------------------------" << std::endl;
         std::cin >> choicePoints;
          //obsluga blednego inputu 

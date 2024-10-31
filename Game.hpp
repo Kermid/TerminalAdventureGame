@@ -259,9 +259,9 @@ void EnemyAttack(Player& player,Enemy& enemy)
     else
     {
         int damage = (1 + enemy.strenght) - player.armor;
-        std::cout << "------------------------------" << std::endl;
+        std::cout << "-------------------" << std::endl;
         std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
-        std::cout << "------------------------------" << std::endl;
+        std::cout << "-------------------" << std::endl;
         std::cout << "" << std::endl;
         player.currentHealth -= damage;
     }

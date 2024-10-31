@@ -181,13 +181,14 @@ void DisplayPlayers(std::vector<Player>& playerCharacters)
     }
     else
     {
-        std::cout << "Lista postaci:" << std::endl;
+        std::cout << "-------------------------------------------------------------" << std::endl;
+        std::cout << "|Lista postaci:" << std::endl;
         for(const Player player : playerCharacters)
         {
             counter++;
-            std::cout << "#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
-            std::cout << "Sila: " << player.strenght << " Zrecznosc: " << player.agility << " Inteligecja: " << player.intelligence << " Stamina: " << player.stamina << std::endl;
-            std::cout << "" << std::endl;
+            std::cout << "|#" << counter << " Imie: " << player.name << " Klasa: "<< player.playerClass << " Plec: " << player.gender << " Zdrowie: " << player.health << std::endl;
+            std::cout << "|Sila: " << player.strenght << " Zrecznosc: " << player.agility << " Inteligecja: " << player.intelligence << " Stamina: " << player.stamina << std::endl;
+            std::cout << "-------------------------------------------------------------" << std::endl;
             
         }
     }

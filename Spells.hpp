@@ -17,14 +17,18 @@ void strongAttack(Player& player,Enemy& enemy)
         int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
+        std::cout << "--------------" << std::endl;
         std::cout << "SILNY ATAK: " << damage << std::endl;
+        std::cout << "--------------" << std::endl;
     }
     else if(CriticalStrike(player))
     {
         int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
+        std::cout << "-----------------------" << std::endl;
         std::cout << "KRYTYCZNY SILNY ATAK: " << damage << std::endl;
+        std::cout << "-----------------------" << std::endl;
     }
     }
     else 
@@ -70,14 +74,18 @@ void sinisterStrike(Player& player,Enemy& enemy)
         int damage = (RandomNumber(3) + player.agility) - enemy.armor;
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
+        std::cout << "------------------" << std::endl;
         std::cout << "PODSTEPNY CIOS: " << damage << std::endl;
+        std::cout << "------------------" << std::endl;
     }
     else if(CriticalStrike(player))
     {
         int damage = 2 * (RandomNumber(3) + player.agility) - enemy.armor;
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
+        std::cout << "---------------------------" << std::endl;
         std::cout << "KRYTYCZNY PODSTEPNY CIOS: " << damage << std::endl;
+        std::cout << "---------------------------" << std::endl;
     }
     }
     else
@@ -96,18 +104,26 @@ void hunterShot(Player& player,Enemy& enemy)
     {
         int damage = (RandomNumber(3) + player.agility + (player.strenght/2)) - enemy.armor;
         player.currentMana -= 10;
+        std::cout << "-----------------" << std::endl;
         std::cout << "SALWA LOWCY 1: " << damage << std::endl;
+        std::cout << "-----------------" << std::endl;
         enemy.currentHealth -= damage;
+        std::cout << "-----------------" << std::endl;
         std::cout << "SALWA LOWCY 2: " << damage << std::endl;
+        std::cout << "-----------------" << std::endl;
         enemy.currentHealth -= damage;
     }
     else if(CriticalStrike(player))
     {
         int damage = 2 * (RandomNumber(3) + player.agility + (player.strenght/2)) - enemy.armor;
         player.currentMana -= 10;
+        std::cout << "-----------------------------" << std::endl;
         std::cout << " KRYTYCZNA SALWA LOWCY 1: " << damage << std::endl;
+        std::cout << "-----------------------------" << std::endl;
         enemy.currentHealth -= damage;
+        std::cout << "-----------------------------" << std::endl;
         std::cout << "KRYTYCZNA SALWA LOWCY 2: " << damage << std::endl;
+        std::cout << "-----------------------------" << std::endl;
         enemy.currentHealth -= damage;
     }
     }
