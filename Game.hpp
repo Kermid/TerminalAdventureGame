@@ -156,9 +156,18 @@ void Chest(Item item,Player& player)
     Item healthPotion = Item("Mikstura Leczaca",2);
     Item manaPotion = Item("Mikstura Many",2);
     std::vector<Item> chest;
+    
     chest.push_back(item);
-    chest.push_back(healthPotion);
-    chest.push_back(manaPotion);
+
+    for(int i = 0; i < RandomNumber(2);i++)
+    {
+        chest.push_back(healthPotion);
+    }
+    for(int i = 0; i < RandomNumber(2);i++)
+    {
+        chest.push_back(manaPotion);
+    }
+    
     std::cout << "-------------------------------------------" << std::endl;
     std::cout << "****** Udalo ci sie znalesc skrzynie ******" << std::endl;
     std::cout << "-------------------------------------------" << std::endl;
@@ -318,6 +327,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     else if(typeOfFight == "Skeleton Mage")
     {
         SpawnMage(RandomNumber(1),listOfEnemies);
+        SpawnSkeletons(RandomNumber(1),listOfEnemies);
     }
     
 
@@ -342,7 +352,15 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
         }
         for(Enemy& enemy : listOfEnemies)
         {
-            EnemyAttack(player,enemy);
+            
+            if(enemy.name == "Szkielet Mag")
+            {
+                AttackMage(player,enemy);
+            }
+            else
+            {
+                EnemyAttack(player,enemy);
+            }
         }
         //checking if list is empty or player has died
         if(listOfEnemies.empty())

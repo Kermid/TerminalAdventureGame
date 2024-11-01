@@ -117,7 +117,12 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
 }
 void SpawnMage(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
-    Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",4,4,4,8,3,40,50,2,true,40,50);
+    for(int i = 0;i < randomNum;i++)
+    {
+         Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",4,4,4,8,3,40,50,2,true,40,50);
+         listOfEnemies.push_back(enemy);
+    }
+   
 }
 void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
