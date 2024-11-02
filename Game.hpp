@@ -19,6 +19,7 @@ void HealingShrine(Player& player);
 int RightThird(Player& player);
 int LeftThird(Player& player);
 int CentreThird(Player& player);
+int Crypt(Player& player);
 int FirstLevel(Player& player)
 {
     int choice;
@@ -254,7 +255,7 @@ void Attack(Player& player,Enemy& enemy)
     DisplayCurrentHealth(enemy);
 
 }
-void AttackMage(Player& player,Enemy& enemy)
+void ActionMage(Player& player,Enemy& enemy)
 {
     int random = RandomNumber(30);
     if (random >= 0 && random < 20)
@@ -283,11 +284,57 @@ void AttackMage(Player& player,Enemy& enemy)
     {
         fireBallEnemy(player,enemy);
     }
-    
-    
-    
-    
 
+}
+void ActionSkeletonWarrior(Player& player,Enemy& enemy)
+{
+    bool endOfHardnening = false;
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 10)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(CriticalStrike(enemy))
+        {
+            int damage = 2 * (1 + enemy.strenght) - player.armor;
+            std::cout << "------------------------------" << std::endl;
+            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "------------------------------" << std::endl;
+            player.currentHealth -= damage;
+        }
+        else
+        {
+            int damage = (1 + enemy.strenght) - player.armor;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "" << std::endl;
+            player.currentHealth -= damage;
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+       strongAttackEnemy(player,enemy);
+    }
+    else if(random >= 10 && random < 20)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        hardeningEnemy(enemy);
+    }
 }
 void EnemyAttack(Player& player,Enemy& enemy)
 {
@@ -329,7 +376,10 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
         SpawnMage(RandomNumber(1),listOfEnemies);
         SpawnSkeletons(RandomNumber(1),listOfEnemies);
     }
-    
+    else if(typeOfFight == "Skeleton Warrior")
+    {
+        SpawnWarriorSkeleton(listOfEnemies);
+    }
 
     AnnounceEnemies(listOfEnemies);
     
@@ -355,7 +405,11 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
             
             if(enemy.name == "Szkielet Mag")
             {
-                AttackMage(player,enemy);
+                ActionMage(player,enemy);
+            }
+            else if(enemy.name == "Szkielet wojownik")
+            {
+                ActionSkeletonWarrior(player,enemy);
             }
             else
             {
@@ -417,17 +471,56 @@ int LeftSecond(Player& player)
             {
             case 1:
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesLeftSecond,"Skeletons");
+                outcome = Fight(player,listOfEnemiesLeftSecond,"Skeleton Mage");
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
-                    return CentreSecond(player);
+                    return Crypt(player);
                     
                 }
                 else if(outcome == 0)
                 {
                     std::cout << "ZGINALES!Koniec gry." << std::endl;
                 }
+                continueSecond = false;
+                break;
+            case 2:
+                Trap(player);
+                
+                return CentreSecond(player);
+                continueSecond = false;
+                break;
+            case 3:
+                CheckInventory(player);
+                
+            break;
+            default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+                break;
+            }
+    }
+    
+}
+int LeftSecondCleared(Player& player)
+{
+    int choice;
+    int outcome;
+    bool continueSecond = true;
+    std::vector<Enemy> listOfEnemiesLeftSecond;
+    std::cout << "Przechodzisz dalej w glab cmentarza.Po walce rozgladasz sie po po okolicy" << std::endl;
+    std::cout << "Na wprost przed toba widnieje wejscie do krypty z ktorej dochodza niezbyt glosne odglosy poruszania sie jakiejs istoty." << std::endl;
+    std::cout << "Po prawej widac zarosnieta brame, i biegnaca przez nia sciezka." << std::endl;
+    while(continueSecond)
+    {
+        std::cout << "Masz przed soba dwie siezki" << std::endl;
+        std::cout << "______________________________________________________" << std::endl;
+        std::cout << "|1 - Wejdz do krypty |2 - Prawo |3 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                return Crypt(player);
                 continueSecond = false;
                 break;
             case 2:
@@ -798,5 +891,53 @@ void HealingShrine(Player& player)
     player.currentMana += 20;
 
 }
+int Crypt(Player& player)
+{
+    int choice;
+    int outcome;
+    bool continueSecond = true;
+    std::vector<Enemy> listOfEnemiesCrypt;
+    std::cout << "Po walce przechodzisz dalej w glad krypty." << std::endl;
+    std::cout << "Wchodzisz do ostatniego pomieszczenia z grobowcami, gdzie stoi jakas postac." << std::endl;
+    std::cout << "Ludzki szkielet w pelnej zbroi zbliza sie do ciebie powoli..." << std::endl;
+    while(continueSecond)
+    {
+        
+        std::cout << "______________________________________________________" << std::endl;
+        std::cout << "|1 - Walka |2 - Uciekaj! |3 - Sprawdz ekwipunek" << std::endl;
+        std::cin >> choice;
 
+            switch (choice)
+            {
+            case 1:
+               
+                outcome = Fight(player,listOfEnemiesCrypt,"Skeleton Warrior");
+                if(outcome == 1)
+                {
+                    Chest(GetWeaponFirstLevel(),player);
+                    return LeftSecondCleared(player);
+                    
+                }
+                else if(outcome == 0)
+                {
+                    std::cout << "ZGINALES!Koniec gry." << std::endl;
+                }
+                continueSecond = false;
+                break;
+            case 2:
+                
+                
+                return LeftSecondCleared(player);
+                continueSecond = false;
+                break;
+            case 3:
+                CheckInventory(player);
+                
+            break;
+            default:
+            std::cout << "Nie prawidlowy wybor" << std::endl;
+                break;
+            }
+    }
+}
 #endif

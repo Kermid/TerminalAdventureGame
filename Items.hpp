@@ -17,6 +17,7 @@ class Item
         int intelligence;
         int cost;
         std::string type;
+        std::string questValue;
         Item(std::string name,int armor,int damage,int strenght,int agility,int stamina,int intelligence,int cost,std::string type)
         {
             this->name = name;
@@ -42,6 +43,12 @@ class Item
             {
                 type = "Mikstura Many";
             }
+            
+        };
+        Item(std::string name,std::string questValue)
+        {
+            this->name = name;
+            this->questValue = questValue;
             
         };
        

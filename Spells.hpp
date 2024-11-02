@@ -237,4 +237,41 @@ void fireBallEnemy(Player& player,Enemy& enemy)
     
     
 }
+void hardeningEnemy(Enemy& enemy)
+{
+    enemy.armor += 3;
+    std::cout << "------------------------------" << std::endl;
+    std::cout << "WROG PRZYJMUJE POSTAWE OBRONNA"<< std::endl;
+    std::cout << "------------------------------" << std::endl;
+}
+void strongAttackEnemy(Player& player,Enemy& enemy)
+{
+    int manaCost = 10;
+    if(enemy.currentMana >= manaCost)
+    {
+        if(!CriticalStrike(enemy))
+    {
+        int damage = (RandomNumber(5) + enemy.strenght) - player.armor;
+        enemy.currentMana -= manaCost;
+        player.currentHealth -= damage;
+        std::cout << "----------------------" << std::endl;
+        std::cout << "SILNY ATAK PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "----------------------" << std::endl;
+    }
+    else if(CriticalStrike(enemy))
+    {
+        int damage = 2 * (RandomNumber(5) + enemy.strenght) - player.armor;
+        enemy.currentMana -= manaCost;
+        player.currentHealth -= damage;
+        std::cout << "--------------------------------" << std::endl;
+        std::cout << "KRYTYCZNY SILNY ATAK PRZECIWNIKA: " << damage << std::endl;
+        std::cout << "--------------------------------" << std::endl;
+    }
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
+}
 #endif 

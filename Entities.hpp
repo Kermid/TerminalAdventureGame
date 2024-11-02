@@ -119,7 +119,7 @@ void SpawnMage(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
     for(int i = 0;i < randomNum;i++)
     {
-         Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",4,4,4,8,3,40,50,2,true,40,50);
+         Enemy enemy(listOfEnemies.size() + 1,"Szkielet Mag",4,4,4,8,3,30,30,2,true,30,30);
          listOfEnemies.push_back(enemy);
     }
    
@@ -129,10 +129,15 @@ void SpawnWolves(int randomNum,std::vector<Enemy>& listOfEnemies)
     
     for(int i = 0;i < randomNum;i++)
     {
-        Enemy enemy(listOfEnemies.size() + 1,"Wilk",2,7,4,1,0,30,20,6,true,30,20);
+        Enemy enemy(listOfEnemies.size() + 1,"Wilk",2,7,4,1,0,20,20,6,true,20,20);
         listOfEnemies.push_back(enemy);
     }
     
+}
+void SpawnWarriorSkeleton(std::vector<Enemy>& listOfEnemies)
+{
+    Enemy enemy(listOfEnemies.size() + 1,"Szkielet wojownik",6,4,6,1,4,70,30,3,true,70,20);
+    listOfEnemies.push_back(enemy);
 }
 void AnnounceEnemies(std::vector<Enemy>& listOfEnemies)
 {
@@ -353,13 +358,13 @@ void EquipItem(Player& player,Item& item)
 void UseHealingPotion(Item item,Player& player)
 {
     
-    if(player.health - player.currentHealth < 10)
+    if(player.health - player.currentHealth < 12)
     {
         player.currentHealth += player.health - player.currentHealth;
     }
     else
     {
-        player.currentHealth += 10;
+        player.currentHealth += 12;
     }
     
     for(int i = 0;i <= player.Inventory.size();i++)
