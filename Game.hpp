@@ -8,6 +8,7 @@
 #include <ctime>
 #include <vector>
 
+bool Wolfdodge;
 void Chest(Item item,Player& player);
 int CentreSecond(Player& player);
 int LeftSecond(Player& player);
@@ -237,19 +238,39 @@ void Attack(Player& player,Enemy& enemy)
     
     if(!CriticalStrike(player))
     {
-        int damage = (1 + player.strenght) - enemy.armor;
-        std::cout << "----------------" << std::endl;
-        std::cout << "NORMALNY ATAK: " << damage << std::endl;
-        std::cout << "----------------" << std::endl;
-        enemy.currentHealth -= damage;
+        if(Wolfdodge)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "UNIK PRZECIWNIKA" << std::endl;
+            std::cout << "----------------" << std::endl;
+        }
+        else
+        {
+            int damage = (1 + player.strenght) - enemy.armor;
+            std::cout << "----------------" << std::endl;
+            std::cout << "NORMALNY ATAK: " << damage << std::endl;
+            std::cout << "----------------" << std::endl;
+            enemy.currentHealth -= damage;
+        }
+        
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (1 + player.strenght) - enemy.armor;
-        std::cout << "----------------------" << std::endl;
-        std::cout << "TRAFIENIE KRYTYCZNE: " << damage << std::endl;
-        std::cout << "----------------------" << std::endl;
-        enemy.currentHealth -= damage;
+        if(Wolfdodge)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "UNIK PRZECIWNIKA" << std::endl;
+            std::cout << "----------------" << std::endl;
+        }
+        else
+        {
+             int damage = 2 * (1 + player.strenght) - enemy.armor;
+            std::cout << "----------------------" << std::endl;
+            std::cout << "TRAFIENIE KRYTYCZNE: " << damage << std::endl;
+            std::cout << "----------------------" << std::endl;
+            enemy.currentHealth -= damage;
+        }
+       
     }
 
     DisplayCurrentHealth(enemy);
@@ -336,6 +357,40 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy)
         hardeningEnemy(enemy);
     }
 }
+void ActionWolf(Player& player,Enemy& enemy)
+{
+    
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 20)
+    {
+        if(CriticalStrike(enemy))
+        {
+            int damage = 2 * (1 + enemy.strenght) - player.armor;
+            std::cout << "------------------------------" << std::endl;
+            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "------------------------------" << std::endl;
+            player.currentHealth -= damage;
+            Wolfdodge = false;
+        }
+        else
+        {
+            int damage = (1 + enemy.strenght) - player.armor;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "" << std::endl;
+            player.currentHealth -= damage;
+            Wolfdodge = false;
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        Wolfdodge = dodgeNext(enemy);
+    }
+
+}
 void EnemyAttack(Player& player,Enemy& enemy)
 {
     
@@ -410,6 +465,10 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
             else if(enemy.name == "Szkielet wojownik")
             {
                 ActionSkeletonWarrior(player,enemy);
+            } 
+            else if(enemy.name == "Wilk")
+            {
+                ActionWolf(player,enemy);
             }
             else
             {

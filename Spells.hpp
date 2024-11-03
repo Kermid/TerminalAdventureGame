@@ -274,4 +274,18 @@ void strongAttackEnemy(Player& player,Enemy& enemy)
     }
     
 }
+bool dodgeNext(Enemy& enemy)
+{
+    int dodgeValue = 50;
+    int random = RandomNumber(100);
+    if(dodgeValue >= random)
+    {
+        return true;
+    }
+    else if ( dodgeValue <= random)
+    {
+        return false;
+    }
+    return false;
+}
 #endif 
