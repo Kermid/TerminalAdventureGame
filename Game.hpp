@@ -387,6 +387,8 @@ void ActionWolf(Player& player,Enemy& enemy)
     }
     else if (random >= 20 && random <= 30)
     {
+
+
         Wolfdodge = dodgeNext(enemy);
     }
 
@@ -458,21 +460,22 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
         for(Enemy& enemy : listOfEnemies)
         {
             
-            if(enemy.name == "Szkielet Mag")
+            if(enemy.name == "Szkielet")
             {
-                ActionMage(player,enemy);
+                EnemyAttack(player,enemy);
             }
-            else if(enemy.name == "Szkielet wojownik")
-            {
-                ActionSkeletonWarrior(player,enemy);
-            } 
             else if(enemy.name == "Wilk")
             {
                 ActionWolf(player,enemy);
-            }
-            else
+            } 
+            else if(enemy.name == "Szkielet wojownik")
             {
-                EnemyAttack(player,enemy);
+                ActionSkeletonWarrior(player,enemy);
+            }
+            else if(enemy.name == "Szkielet Mag")
+            {
+                ActionMage(player,enemy);
+                
             }
         }
         //checking if list is empty or player has died
