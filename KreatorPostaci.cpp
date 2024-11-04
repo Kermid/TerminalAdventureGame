@@ -4,7 +4,7 @@
 #include <vector>
 #include <limits>
 #include "Entities.hpp"
-#include "Game.hpp"
+#include "FirstLevel.hpp"
 #include "Items.hpp"
 #include "town.hpp"
 #include "Spells.hpp"
@@ -124,9 +124,10 @@ void Create(Player &player,int playerIdCounter)
     int temp;
     int playerStartPoints = 8;
     int genderContinue = true;
-    //std::cin.ignore();
+    std::cin.ignore();
     std::cout << "Podaj nazwe swojej postaci" << std::endl;
     std::getline(std::cin,player.name);
+
     std::cout << "--------------------------------" << std::endl;
     std::cout << "|Podaj klase swojej postaci 1-6|" << std::endl;
     std::cout << "|1 - Wojownik                  |" << std::endl;

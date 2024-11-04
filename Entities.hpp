@@ -503,5 +503,11 @@ void CheckInventory(Player& player)
     }
     }
 }
-
+void ShowStats(Player& player)
+{   
+    std::cout << "--------------------------------------------------" << std::endl;
+    std::cout << "|Twoje zdrowie: " << player.currentHealth << "/" << player.health << std::endl;
+    std::cout << "|Twoja Mana: " << player.currentMana << "/" << player.mana << std::endl;
+    std::cout << "--------------------------------------------------" << std::endl;
+}
 #endif

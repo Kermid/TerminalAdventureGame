@@ -1,8 +1,9 @@
 #ifndef TOWN_HPP
 #define TOWN_HPP
-#include "Game.hpp"
+#include "FirstLevel.hpp"
 #include "Entities.hpp"
 #include "Items.hpp"
+#include "Inn.hpp"
 #include "Spells.hpp"
 #include <iostream>
 #include <vector>
@@ -355,7 +356,7 @@ void Town(Player& player)
         
         std::cout << "***** Miasto Bagienna przystan! *****" << std::endl;
         std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
-        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Zadania 5 - Regiony  6 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Karczma 5 - Regiony  6 - Sprawdz ekwipunek" << std::endl;
         std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
         std::cin >> townChoice;
         switch(townChoice)
@@ -370,13 +371,15 @@ void Town(Player& player)
                 potionShop(player);
             break;
             case 4:
-                
+                Inn(player);
             break;
             case 5:
                 regions(player);
             break;
             case 6:
                 CheckInventory(player);
+            break;
+            case 7:
             break;
             default:
                 std::cout << "Nieprawidlowa opcja!" << std::endl;
