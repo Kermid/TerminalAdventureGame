@@ -482,10 +482,12 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
             listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemy](Enemy& e) {return e.EnemyId == enemy.EnemyId;}),listOfEnemies.end());
 
             //Po zabiciu id jest aktualizowane
-
-            for(Enemy& enemy : listOfEnemies)
+            int counter = 1;
+            for(Enemy& enemyIdUpdate : listOfEnemies)
             {
-                enemy.EnemyId--;
+                enemy.EnemyId = counter;
+                counter++;
+                
             }
         }
         for(Enemy& enemy : listOfEnemies)
