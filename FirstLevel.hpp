@@ -155,9 +155,17 @@ void Chest(Item item,Player& player)
     int choiceItem;
     int counter;
     bool itemTaking = true;
+    std::vector<Item> chest;
+    int spawnChance = RandomNumber(100);
+    int amountGold = RandomNumber(2);
+    if(spawnChance >= 10 && spawnChance <= 100)
+    {
+        Item goldPurce = Item("Sakwa zlota");
+        chest.push_back(goldPurce);
+    }
     Item healthPotion = Item("Mikstura Leczaca",2);
     Item manaPotion = Item("Mikstura Many",2);
-    std::vector<Item> chest;
+    
     
     chest.push_back(item);
 
@@ -216,7 +224,17 @@ void Chest(Item item,Player& player)
     case 2:
     for(Item itemChest : chest)
         {
-            player.Inventory.push_back(itemChest);
+            
+            if(itemChest.name == "Sakwa zlota")
+            {
+                player.gold += amountGold;
+                std::cout << "Udalo ci sie znalesc " << amountGold << " zlota." << std::endl;
+            }
+            else
+            {
+                player.Inventory.push_back(itemChest);
+            }
+            
         }
         chest.clear();
         itemTaking = false;

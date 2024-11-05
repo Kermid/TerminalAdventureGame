@@ -44,12 +44,20 @@ class Item
                 type = "Mikstura Many";
             }
             
+            
         };
         Item(std::string name,std::string questValue)
         {
             this->name = name;
             this->questValue = questValue;
             
+        };
+        Item(std::string name)
+        {
+            if(name == "Sakwa zlota")
+            {
+                type = "Sakwa zlota";
+            }
         };
        
 };
