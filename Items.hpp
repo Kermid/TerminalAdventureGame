@@ -55,7 +55,8 @@ class Item
         Item(std::string name)
         {
             if(name == "Sakwa zlota")
-            {
+            {   
+                this->name = name;
                 type = "Sakwa zlota";
             }
         };

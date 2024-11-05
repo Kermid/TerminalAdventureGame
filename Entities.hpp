@@ -48,6 +48,8 @@ class Player : public Character{
             std::string playerClass;
             int playerId;
             std::vector<Item> Inventory;
+            int Level = 1;
+            int experience = 0;
             Player(int playerId,std::string name,std::string playerClass,std::string gender,int strenght,int agility,int stamina,int intelligence,int armor,int health,int mana,bool alive,int currenHealth,int currentMana,int gold)
             {
                 this->name = name;
@@ -67,7 +69,97 @@ class Player : public Character{
                 this->gold = gold;
             }
             Player();
-           
+           void levelUp()
+           {
+            if(playerClass == "Wojownik")
+            {
+                Level++;
+                strenght += 2;
+                agility += 1;
+                stamina += 2;
+                intelligence += 1;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+            else if(playerClass == "Mag")
+            {
+                Level++;
+                strenght += 1;
+                agility += 1;
+                stamina += 1;
+                intelligence += 3;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+            else if(playerClass == "Lotr")
+            {
+                Level++;
+                strenght += 1;
+                agility += 3;
+                stamina += 1;
+                intelligence += 1;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+            else if(playerClass == "Berserker")
+            {
+                Level++;
+                strenght += 3;
+                agility += 1;
+                stamina += 1;
+                intelligence += 2;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+            else if(playerClass == "Nekromanta")
+            {
+                Level++;
+                strenght += 1;
+                agility += 1;
+                stamina += 2;
+                intelligence += 2;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+            else if(playerClass == "Lowczy")
+            {
+                Level++;
+                strenght += 2;
+                agility += 2;
+                stamina += 1;
+                intelligence += 1;
+
+                int newHealth = stamina * 10;
+                health =  newHealth;
+
+                int newMana = intelligence * 10;
+                mana = newMana;
+            }
+           }
+           void PlayerGiveExperience(int value)
+           {    
+                experience += value;
+           }
 };
 class Enemy : public Character
 {

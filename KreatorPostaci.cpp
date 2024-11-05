@@ -15,8 +15,6 @@ Player& Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);
 Player ChooseCharacter(std::vector<Player>& playerCharacters);
-
-
 int main()
 {
     srand(time(NULL));

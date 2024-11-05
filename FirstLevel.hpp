@@ -204,11 +204,19 @@ void Chest(Item item,Player& player)
             if (choiceItem > 0 && choiceItem <= chest.size())
             {
                 
-                player.Inventory.push_back(chest[choiceItem - 1]);
+                if(chest[choiceItem - 1].name == "Sakwa zlota")
+                {
+                    player.gold += amountGold;
+                    std::cout << "Udalo ci sie znalesc " << amountGold << " zlota." << std::endl;
+                    chest.erase(chest.begin() + (choiceItem - 1));
+                }
+                else
+                {
+                    player.Inventory.push_back(chest[choiceItem - 1]);
 
-                
-                chest.erase(chest.begin() + (choiceItem - 1));
-
+                    chest.erase(chest.begin() + (choiceItem - 1));
+                }
+            
             }
             else
             {
@@ -229,6 +237,7 @@ void Chest(Item item,Player& player)
             {
                 player.gold += amountGold;
                 std::cout << "Udalo ci sie znalesc " << amountGold << " zlota." << std::endl;
+                chest.erase(chest.begin());
             }
             else
             {
@@ -437,23 +446,27 @@ void EnemyAttack(Player& player,Enemy& enemy)
 int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight)
 {
     bool endFight = false;
-
+    int ExpValue = 0;
     if(typeOfFight == "Skeletons")
     {
         SpawnSkeletons(RandomNumber(2),listOfEnemies);
+        ExpValue = listOfEnemies.size() * 20;
     }
     else if(typeOfFight == "Wolves")
     {
         SpawnWolves(RandomNumber(4),listOfEnemies);
+        ExpValue = listOfEnemies.size() * 10;
     }
     else if(typeOfFight == "Skeleton Mage")
     {
         SpawnMage(RandomNumber(1),listOfEnemies);
         SpawnSkeletons(RandomNumber(1),listOfEnemies);
+        ExpValue = 50;
     }
     else if(typeOfFight == "Skeleton Warrior")
     {
         SpawnWarriorSkeleton(listOfEnemies);
+        ExpValue = 50;
     }
 
     AnnounceEnemies(listOfEnemies);
@@ -499,6 +512,23 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
         //checking if list is empty or player has died
         if(listOfEnemies.empty())
         {
+            player.PlayerGiveExperience(ExpValue);
+            std::cout << "Otrzymales " << ExpValue << " punktow doswiadczenia!" << std::endl;
+            if(player.experience >= 70 && player.Level == 1)
+            {
+                player.levelUp();
+                std::cout << "Osiagnales " << player.Level << " poziom!" << std::endl;
+            }
+            else if(player.experience >= 120 && player.Level == 2)
+            {
+                player.levelUp();
+                std::cout << "Osiagnales " << player.Level << " poziom!" << std::endl;
+            }
+            else if(player.experience >= 200 && player.Level == 3)
+            {
+                player.levelUp();
+                std::cout << "Osiagnales " << player.Level << " poziom!" << std::endl;
+            }
             endFight = true;
             return 1;
         }
