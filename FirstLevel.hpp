@@ -15,7 +15,7 @@ int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight);
-void FightingInterface(Player& player,Enemy& enemy);
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies);
 void HealingShrine(Player& player);
 int RightThird(Player& player);
 int LeftThird(Player& player);
@@ -156,8 +156,10 @@ void Chest(Item item,Player& player)
     int counter;
     bool itemTaking = true;
     std::vector<Item> chest;
+
     int spawnChance = RandomNumber(100);
     int amountGold = RandomNumber(2);
+
     if(spawnChance >= 10 && spawnChance <= 100)
     {
         Item goldPurce = Item("Sakwa zlota");
@@ -230,21 +232,21 @@ void Chest(Item item,Player& player)
             
         break;
     case 2:
-    for(Item itemChest : chest)
+
+     for (auto it = chest.begin(); it != chest.end(); )
+    {
+        if (it->name == "Sakwa zlota")
         {
-            
-            if(itemChest.name == "Sakwa zlota")
-            {
-                player.gold += amountGold;
-                std::cout << "Udalo ci sie znalesc " << amountGold << " zlota." << std::endl;
-                chest.erase(chest.begin());
-            }
-            else
-            {
-                player.Inventory.push_back(itemChest);
-            }
-            
+            player.gold += amountGold;
+            std::cout << "Udalo ci sie znalesc " << amountGold << " zlota." << std::endl;
+            it = chest.erase(it); 
         }
+        else
+        {
+            player.Inventory.push_back(*it);
+            ++it; 
+        }
+    }
         chest.clear();
         itemTaking = false;
         break;
@@ -475,7 +477,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     while (endFight == false)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
-        FightingInterface(player,enemy);
+        FightingInterface(player,enemy,listOfEnemies);
         if(enemy.currentHealth <= 0)
         {
             
@@ -859,7 +861,7 @@ int RightThird(Player& player)
     }
     return 0;
 }
-void FightingInterface(Player& player,Enemy& enemy)
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies)
 
 {
     int choice;
@@ -892,37 +894,178 @@ void FightingInterface(Player& player,Enemy& enemy)
     switch (classType)
     {
     case 1:
-        std::cout << "_______________________________________" << std::endl;
-        std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
-        std::cin >> choice;
-        switch (choice)
+        
+        switch(player.Level)
         {
-        case 1:
-            Attack(player,enemy);
+            case 1:
+                std::cout << "_______________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        case 2:
-            strongAttack(player,enemy);
+            case 2:
+                std::cout << "___________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak |3 - Szeroki atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                        WideStrike(player,listOfEnemies,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        default:
+            case 3:
+                std::cout << "___________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak |3 - Szeroki atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                    break;
+                        WideStrike(player,listOfEnemies,enemy);
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
+            case 4:
+                std::cout << "______________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak |3 - Szeroki atak |4 - Blok" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                        WideStrike(player,listOfEnemies,enemy);
+                    break;
+                    case 4:
+                        Block(player);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
+            break;
+
         }
-        break;
+    break;
+        
     case 2:
-        std::cout << "_______________________________________" << std::endl;
-        std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
-        std::cin >> choice;
-        switch (choice)
+        switch(player.Level)
         {
-        case 1:
-            Attack(player,enemy);
+            case 1:
+                std::cout << "_______________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        case 2:
-            fireBall(player,enemy);
+            case 2:
+                std::cout << "_______________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia |3 - Magiczne pociski" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                        MagicMissiles(player,listOfEnemies,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        default:
+            case 3:
+                std::cout << "_______________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia |3 - Magiczne pociski" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                    break;
+                        MagicMissiles(player,listOfEnemies,enemy);
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
+            case 4:
+                std::cout << "__________________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia |3 - Magiczne pociski |4 - Lodowa Tarcza" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                        MagicMissiles(player,listOfEnemies,enemy);
+                    break;
+                    case 4:
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
+            break;
+
         }
-        break;
+    break;
     case 3:
         std::cout << "_______________________________________" << std::endl;
         std::cout << "|1 - Atak |2 - Podstepny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;

@@ -288,4 +288,99 @@ bool dodgeNext(Enemy& enemy)
     }
     return false;
 }
+void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
+{
+    int manaCost = 10;
+    if(player.currentMana >= manaCost)
+    {
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
+        listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
+        enemy.currentHealth -= damage;
+        listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+        std::cout << "--------------" << std::endl;
+        std::cout << "SILNY ATAK: " << damage << std::endl;
+        std::cout << "--------------" << std::endl;
+    }
+    else if(CriticalStrike(player))
+    {
+        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
+
+        listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
+        enemy.currentHealth -= damage;
+        listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+
+        std::cout << "-----------------------" << std::endl;
+        std::cout << "KRYTYCZNY SILNY ATAK: " << damage << std::endl;
+        std::cout << "-----------------------" << std::endl;
+    }
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
+}
+void Block(Player& player)
+{
+     int manaCost = 10;
+     if(player.currentMana >= manaCost)
+    {
+        std::cout << "-------------" << std::endl;
+        std::cout << "UZYLES BLOKU: " << std::endl;
+        std::cout << "-------------" << std::endl;
+        //WarriorBlock = true;
+
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+
+}
+void MagicMissiles(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
+{
+    int manaCost = 10;
+    int damage;
+    if(player.currentMana >= manaCost)
+    {
+        if(!MagicalCriticalStrike(player))
+    {
+        
+        for(int i = 0;i < 4;i++)
+        {   
+            damage = (RandomNumber(3) + player.intelligence);
+            listOfEnemies[RandomNumber(listOfEnemies.size())].currentHealth -= damage;
+            std::cout << "-------------------"<< std::endl;
+            std::cout << "MAGICZNE POCISKI: " << damage << std::endl;
+            std::cout << "-------------------"<< std::endl;
+        }
+        player.currentMana -= 10;
+        
+        
+    }
+    else if(MagicalCriticalStrike(player))
+    {
+        
+        for(int i = 0;i < 4;i++)
+        {
+            damage = 2 * (RandomNumber(3) + player.intelligence);
+            listOfEnemies[RandomNumber(listOfEnemies.size())].currentHealth -= damage;
+            std::cout << "-------------------"<< std::endl;
+            std::cout << "KRYTYCZNE MAGICZNE POCISKI: " << damage << std::endl;
+            std::cout << "-------------------"<< std::endl;
+        }
+        player.currentMana -= 10;
+    }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+    
+    
+}
 #endif 
