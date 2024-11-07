@@ -9,13 +9,15 @@
 #include <vector>
 
 bool Wolfdodge;
+bool warriorBlock;
+bool barbarianRage;
 void Chest(Item item,Player& player);
 int CentreSecond(Player& player);
 int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
 int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight);
-void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies);
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool barbarianRage);
 void HealingShrine(Player& player);
 int RightThird(Player& player);
 int LeftThird(Player& player);
@@ -272,6 +274,7 @@ void Attack(Player& player,Enemy& enemy)
             std::cout << "----------------" << std::endl;
             std::cout << "UNIK PRZECIWNIKA" << std::endl;
             std::cout << "----------------" << std::endl;
+            Wolfdodge = false;
         }
         else
         {
@@ -290,6 +293,7 @@ void Attack(Player& player,Enemy& enemy)
             std::cout << "----------------" << std::endl;
             std::cout << "UNIK PRZECIWNIKA" << std::endl;
             std::cout << "----------------" << std::endl;
+            Wolfdodge = false;
         }
         else
         {
@@ -311,21 +315,41 @@ void ActionMage(Player& player,Enemy& enemy)
     if (random >= 0 && random < 20)
     {
         if(CriticalStrike(enemy))
-        {
-            int damage = 2 * (1 + enemy.strenght) - player.armor;
-            std::cout << "------------------------------" << std::endl;
-            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "------------------------------" << std::endl;
-            player.currentHealth -= damage;
+        {   
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+            
         }
         else
         {
-            int damage = (1 + enemy.strenght) - player.armor;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "" << std::endl;
-            player.currentHealth -= damage;
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
         }
 
         DisplayCurrentHealth(player);
@@ -349,20 +373,39 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy)
         }
         if(CriticalStrike(enemy))
         {
-            int damage = 2 * (1 + enemy.strenght) - player.armor;
-            std::cout << "------------------------------" << std::endl;
-            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "------------------------------" << std::endl;
-            player.currentHealth -= damage;
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
         }
         else
         {
-            int damage = (1 + enemy.strenght) - player.armor;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "" << std::endl;
-            player.currentHealth -= damage;
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
         }
 
         DisplayCurrentHealth(player);
@@ -374,7 +417,18 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy)
             enemy.armor -= 3;
             endOfHardnening = !endOfHardnening;
         }
-       strongAttackEnemy(player,enemy);
+        if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorBlock = false;
+        }
+        else
+        {
+            strongAttackEnemy(player,enemy);
+        }
+       
     }
     else if(random >= 10 && random < 20)
     {
@@ -394,30 +448,50 @@ void ActionWolf(Player& player,Enemy& enemy)
     {
         if(CriticalStrike(enemy))
         {
-            int damage = 2 * (1 + enemy.strenght) - player.armor;
-            std::cout << "------------------------------" << std::endl;
-            std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "------------------------------" << std::endl;
-            player.currentHealth -= damage;
-            Wolfdodge = false;
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+                Wolfdodge = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+                Wolfdodge = false;
+            }
+            
         }
-        else
+        else if(CriticalStrike(enemy))
         {
-            int damage = (1 + enemy.strenght) - player.armor;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
-            std::cout << "-------------------" << std::endl;
-            std::cout << "" << std::endl;
-            player.currentHealth -= damage;
-            Wolfdodge = false;
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                warriorBlock = false;
+                Wolfdodge = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+                Wolfdodge = !Wolfdodge;
+            }
         }
 
         DisplayCurrentHealth(player);
     }
     else if (random >= 20 && random <= 30)
     {
-
-
         Wolfdodge = dodgeNext(enemy);
     }
 
@@ -427,20 +501,40 @@ void EnemyAttack(Player& player,Enemy& enemy)
     
     if(CriticalStrike(enemy))
     {
-        int damage = 2 * (1 + enemy.strenght) - player.armor;
-        std::cout << "------------------------------" << std::endl;
-        std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
-        std::cout << "------------------------------" << std::endl;
-        player.currentHealth -= damage;
+        if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
     }
-    else
+    else if(!CriticalStrike(enemy))
     {
-        int damage = (1 + enemy.strenght) - player.armor;
-        std::cout << "-------------------" << std::endl;
-        std::cout << "ATAK PRZECIWNIKA: " << damage << std::endl;
-        std::cout << "-------------------" << std::endl;
-        std::cout << "" << std::endl;
-        player.currentHealth -= damage;
+       if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorBlock = false;
+        }
+        else
+        {
+            int damage = (1 + enemy.strenght) - player.armor;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "-------------------" << std::endl;
+            player.currentHealth -= damage;
+            warriorBlock = false;
+        }
     }
 
     DisplayCurrentHealth(player);
@@ -449,6 +543,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
 {
     bool endFight = false;
     int ExpValue = 0;
+    int barbarianRageCounter = 0;
     if(typeOfFight == "Skeletons")
     {
         SpawnSkeletons(RandomNumber(2),listOfEnemies);
@@ -477,7 +572,12 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     while (endFight == false)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
-        FightingInterface(player,enemy,listOfEnemies);
+        FightingInterface(player,enemy,listOfEnemies,barbarianRage);
+        barbarianRageCounter++;
+        if(barbarianRageCounter == 2)
+        {
+            BarbarianRageEnd(player);
+        }
         if(enemy.currentHealth <= 0)
         {
             
@@ -497,20 +597,65 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
             
             if(enemy.name == "Szkielet")
             {
-                EnemyAttack(player,enemy);
+                if(enemy.stun)
+                {
+                    std::cout << "--------------------" << std::endl;
+                    std::cout << "PRZECIWNIK OGLUSZONY" << std::endl;
+                    std::cout << "--------------------" << std::endl;
+                }
+                else
+                {
+                    EnemyAttack(player,enemy);
+                }
             }
             else if(enemy.name == "Wilk")
             {
-                ActionWolf(player,enemy);
+                if(enemy.stun)
+                {
+                    std::cout << "--------------------" << std::endl;
+                    std::cout << "PRZECIWNIK OGLUSZONY" << std::endl;
+                    std::cout << "--------------------" << std::endl;
+                }
+                else
+                {
+                    ActionWolf(player,enemy);
+                }
+                
             } 
             else if(enemy.name == "Szkielet wojownik")
             {
-                ActionSkeletonWarrior(player,enemy);
+                 if(enemy.stun)
+                {
+                    std::cout << "--------------------" << std::endl;
+                    std::cout << "PRZECIWNIK OGLUSZONY" << std::endl;
+                    std::cout << "--------------------" << std::endl;
+                }
+                else
+                {
+                    ActionSkeletonWarrior(player,enemy);
+                }
+                
             }
             else if(enemy.name == "Szkielet Mag")
             {
-                ActionMage(player,enemy);
-                
+                if(enemy.stun)
+                {
+                    std::cout << "--------------------" << std::endl;
+                    std::cout << "PRZECIWNIK OGLUSZONY" << std::endl;
+                    std::cout << "--------------------" << std::endl;
+                }
+                else
+                {
+                     ActionMage(player,enemy);
+                }
+               
+            }
+            if(enemy.poisoned)
+            {
+                enemy.currentHealth -= 2;
+                std::cout << "------------------------" << std::endl;
+                std::cout << "OBRAZENIA OD TRUCIZNY: 2"<< std::endl;
+                std::cout << "------------------------" << std::endl;
             }
         }
         //checking if list is empty or player has died
@@ -861,8 +1006,7 @@ int RightThird(Player& player)
     }
     return 0;
 }
-void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies)
-
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool barbarianRage)
 {
     int choice;
     int classType;
@@ -970,7 +1114,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         WideStrike(player,listOfEnemies,enemy);
                     break;
                     case 4:
-                        Block(player);
+                        Block(player,warriorBlock);
                     break;
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
@@ -1067,39 +1211,177 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
         }
     break;
     case 3:
-        std::cout << "_______________________________________" << std::endl;
-        std::cout << "|1 - Atak |2 - Podstepny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
-        std::cin >> choice;
-        switch (choice)
+        switch(player.Level)
         {
-        case 1:
-            Attack(player,enemy);
+            case 1:
+                std::cout << "_______________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Podstepny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        sinisterStrike(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        case 2:
-            sinisterStrike(player,enemy);
+            case 2:
+                std::cout << "____________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Podstepny atak |3 - Zatrute uderzenie" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        sinisterStrike(player,enemy);
+                    break;
+                    case 3:
+                        VenomStrike(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        default:
+            case 3:
+                std::cout << "____________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Podstepny atak |3 - Zatrute uderzenie" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        sinisterStrike(player,enemy);
+                    break;
+                    case 3:
+                    break;
+                        VenomStrike(player,enemy);
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
+            case 4:
+                std::cout << "_____________________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Podstepny atak |3 - Zatrute uderzenie |4 - Kopniecie" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        sinisterStrike(player,enemy);
+                    break;
+                    case 3:
+                        VenomStrike(player,enemy);
+                    break;
+                    case 4:
+                        Kick(enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
+            break;
+
         }
-        break;
-        
+    break; 
     case 4:
-        std::cout << "_______________________________________" << std::endl;
-        std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
-        std::cin >> choice;
-        switch (choice)
+        switch(player.Level)
         {
-        case 1:
-            Attack(player,enemy);
+            case 1:
+                std::cout << "_______________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        case 2:
-            strongAttack(player,enemy);
+            case 2:
+                std::cout << "____________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                        CarnageStrike(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        default:
+            case 3:
+                std::cout << "____________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak  |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                    break;
+                        CarnageStrike(player,enemy);
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
+            case 4:
+                std::cout << "_____________________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Silny atak |3 - Krwiozerczy Cios |4 - Szal" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        strongAttack(player,enemy);
+                    break;
+                    case 3:
+                        CarnageStrike(player,enemy);
+                    break;
+                    case 4:
+                        BarbarianRage(player,barbarianRage);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
+            break;
+
         }
-        break;
-        break;
+    break;
     case 5:
         std::cout << "_______________________________________" << std::endl;
         std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;

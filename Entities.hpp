@@ -26,6 +26,9 @@ class Character{
         bool alive = true;
         int gold;
         int speed;
+        bool poisoned = false;
+        bool bleed = false;
+        bool stun = false;
         Character(std::string name,int strenght,int agility,int stamina,int intelligence,int armor,int health,int speed,bool alive,int currentMana,int gold)
         {
             this->name = name;

@@ -11,6 +11,7 @@
 #include <windows.h>
 
 Player selectedPlayer;
+
 Player& Menu();
 void Create(Player& player,int playerIdCounter);
 void DisplayPlayers(std::vector<Player>& playerCharacters);

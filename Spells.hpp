@@ -297,11 +297,40 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
     {
         int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
         player.currentMana -= manaCost;
-        listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
-        enemy.currentHealth -= damage;
-        listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+        if(listOfEnemies.size() == 2)
+        {
+            if(listOfEnemies[0].EnemyId == 1)
+            {
+                listOfEnemies[enemy.EnemyId].currentHealth -= damage;
+                listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
+                std::cout << "----------------------" << std::endl;
+                std::cout << "SZEROKI ATAK: " << damage << std::endl;
+                std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                std::cout << "----------------------" << std::endl;
+            }
+            else if(listOfEnemies[1].EnemyId == 2)
+            {
+                listOfEnemies[enemy.EnemyId].currentHealth -= damage;
+                listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+                std::cout << "----------------------" << std::endl;
+                std::cout << "SZEROKI ATAK: " << damage << std::endl;
+                std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                std::cout << "----------------------" << std::endl;
+            }
+        }
+        else
+        {
+            listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
+            enemy.currentHealth -= damage;
+            listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+
+            std::cout << "--------------" << std::endl;
+            std::cout << "SZEROKI ATAK: " << damage << std::endl;
+            std::cout << "--------------" << std::endl;
+        }
+        
         std::cout << "--------------" << std::endl;
-        std::cout << "SILNY ATAK: " << damage << std::endl;
+        std::cout << "SZEROKI ATAK: " << damage << std::endl;
         std::cout << "--------------" << std::endl;
     }
     else if(CriticalStrike(player))
@@ -324,7 +353,7 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
     }
     
 }
-void Block(Player& player)
+void Block(Player& player,bool warriorBlock)
 {
      int manaCost = 10;
      if(player.currentMana >= manaCost)
@@ -332,7 +361,7 @@ void Block(Player& player)
         std::cout << "-------------" << std::endl;
         std::cout << "UZYLES BLOKU: " << std::endl;
         std::cout << "-------------" << std::endl;
-        //WarriorBlock = true;
+        warriorBlock = true;
 
     }
     else 
@@ -382,5 +411,98 @@ void MagicMissiles(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy
     }
     
     
+}
+void VenomStrike(Player& player,Enemy& enemy)
+{
+    int manaCost = 5;
+    if(player.currentMana >= manaCost)
+    {
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(2) + player.agility) - enemy.armor;
+        enemy.poisoned = true;
+        player.currentMana -= 5;
+        enemy.currentHealth -= damage;
+        std::cout << "---------------------" << std::endl;
+        std::cout << "ZATRUTE UDERZENIE: " << damage << std::endl;
+        std::cout << "---------------------" << std::endl;
+    }
+    else if(CriticalStrike(player))
+    {
+        int damage = 2 * (RandomNumber(3) + player.agility) - enemy.armor;
+        enemy.poisoned = true;
+        player.currentMana -= 5;
+        enemy.currentHealth -= damage;
+        std::cout << "------------------------------" << std::endl;
+        std::cout << "KRYTYCZNE ZATRUTE UDERZENIE: " << damage << std::endl;
+        std::cout << "------------------------------" << std::endl;
+    }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+}
+void Kick(Enemy& enemy)
+{
+    enemy.stun = true;
+    std::cout << "-----------" << std::endl;
+    std::cout << "KOPNIECIE: " << std::endl;
+    std::cout << "-----------" << std::endl;
+}
+void CarnageStrike(Player& player,Enemy& enemy)
+{
+    int manaCost = 15;
+    if(player.currentMana >= manaCost)
+    {
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentHealth += damage / 2;
+        player.currentMana -= manaCost;
+        enemy.currentHealth -= damage;
+        std::cout << "-----------------------" << std::endl;
+        std::cout << "KRWIOZERCZE UDERZENIE: " << damage << std::endl;
+        std::cout << "LECZENIE: " << damage / 2 << std::endl;
+        std::cout << "-----------------------" << std::endl;
+    }
+    else if(CriticalStrike(player))
+    {
+        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentHealth += damage / 2;
+        player.currentMana -= manaCost;
+        enemy.currentHealth -= damage;
+        std::cout << "---------------------------" << std::endl;
+        std::cout << "KRYTYCZNY KRWIOZERCZY CIOS: " << damage << std::endl;
+        std::cout << "LECZENIE: " << damage / 2 << std::endl;
+        std::cout << "---------------------------" << std::endl;
+    }
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+}
+void BarbarianRage(Player& player,bool barbarianRage)
+{
+    player.strenght += 8;
+    player.agility += 8;
+    player.currentHealth += 10;
+    std::cout << "---------------" << std::endl;
+    std::cout << "SILA + 8 " << std::endl;
+    std::cout << "ZRECZONSC + 8 " << std::endl;
+    std::cout << "ZDROWIE + 10" << std::endl;
+    std::cout <<"----------------" << std::endl;
+}
+void BarbarianRageEnd(Player& player)
+{
+    player.strenght -= 8;
+    player.agility -= 8;
+    player.currentHealth -= 10;
+    std::cout << "---------------" << std::endl;
+    std::cout << "SILA - 8 " << std::endl;
+    std::cout << "ZRECZONSC - 8 " << std::endl;
+    std::cout << "ZDROWIE - 10 " << std::endl;
+    std::cout << "---------------" << std::endl;
 }
 #endif 
