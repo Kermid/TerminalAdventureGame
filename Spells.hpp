@@ -48,14 +48,18 @@ void fireBall(Player& player,Enemy& enemy)
         int damage = (RandomNumber(10) + player.intelligence);
         player.currentMana -= 10;
         enemy.currentHealth -= damage;
+        std::cout << "---------------" << std::endl;
         std::cout << "KULA OGNIA: " << damage << std::endl;
+        std::cout << "---------------" << std::endl;
     }
     else if(MagicalCriticalStrike(player))
     {
         int damage = 2 * (RandomNumber(10) + player.intelligence);
         player.currentMana -= 10;
         enemy.currentHealth -= damage;
+        std::cout << "----------------------" << std::endl;
         std::cout << "KRYTYCZNA KULA OGNIA: " << damage << std::endl;
+        std::cout << "----------------------" << std::endl;
     }
     }
     else
@@ -294,58 +298,81 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
     if(player.currentMana >= manaCost)
     {
         if(!CriticalStrike(player))
-    {
-        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
-        player.currentMana -= manaCost;
-        if(listOfEnemies.size() == 2)
         {
-            if(listOfEnemies[0].EnemyId == 1)
+            int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+            player.currentMana -= manaCost;
+            if(listOfEnemies.size() == 2)
             {
-                listOfEnemies[enemy.EnemyId].currentHealth -= damage;
+                if(enemy.EnemyId == 1)
+                {
+                    listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage;
+                    listOfEnemies[enemy.EnemyId].currentHealth -= damage / 2;
+                    std::cout << "----------------------" << std::endl;
+                    std::cout << "SZEROKI ATAK: " << damage << std::endl;
+                    std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                    std::cout << "----------------------" << std::endl;
+                }
+                else if(enemy.EnemyId == 2)
+                {
+                    listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage;
+                    listOfEnemies[enemy.EnemyId - 2].currentHealth -= damage / 2;
+                    std::cout << "----------------------" << std::endl;
+                    std::cout << "SZEROKI ATAK: " << damage << std::endl;
+                    std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                    std::cout << "----------------------" << std::endl;
+                }
+            }
+            else
+            {
                 listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
-                std::cout << "----------------------" << std::endl;
-                std::cout << "SZEROKI ATAK: " << damage << std::endl;
-                std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
-                std::cout << "----------------------" << std::endl;
-            }
-            else if(listOfEnemies[1].EnemyId == 2)
-            {
-                listOfEnemies[enemy.EnemyId].currentHealth -= damage;
+                enemy.currentHealth -= damage;
                 listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
-                std::cout << "----------------------" << std::endl;
+
+                std::cout << "--------------" << std::endl;
                 std::cout << "SZEROKI ATAK: " << damage << std::endl;
                 std::cout << "OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
-                std::cout << "----------------------" << std::endl;
+                std::cout << "--------------" << std::endl;
             }
+        
+       
         }
         else
         {
-            listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
-            enemy.currentHealth -= damage;
-            listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
+            int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+            player.currentMana -= manaCost;
+            if(listOfEnemies.size() == 2)
+            {
+                if(enemy.EnemyId == 1)
+                {
+                    listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage;
+                    listOfEnemies[enemy.EnemyId].currentHealth -= damage / 2;
+                    std::cout << "-----------------------------" << std::endl;
+                    std::cout << "KRYTYCZNY SZEROKI ATAK: " << damage << std::endl;
+                    std::cout << "KRYTYCZNE OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                    std::cout << "-----------------------------" << std::endl;
+                }
+                else if(enemy.EnemyId == 2)
+                {
+                    listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage;
+                    listOfEnemies[enemy.EnemyId - 2].currentHealth -= damage / 2;
+                    std::cout << "-----------------------------" << std::endl;
+                    std::cout << "KRYTYCZNY SZEROKI ATAK: " << damage << std::endl;
+                    std::cout << "KRYTYCZNE OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                    std::cout << "-----------------------------" << std::endl;
+                }
+            }
+            else
+            {
+                listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
+                enemy.currentHealth -= damage;
+                listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
 
-            std::cout << "--------------" << std::endl;
-            std::cout << "SZEROKI ATAK: " << damage << std::endl;
-            std::cout << "--------------" << std::endl;
+                std::cout << "-----------------------------" << std::endl;
+                std::cout << "KRYTYCZNY SZEROKI ATAK: " << damage << std::endl;
+                std::cout << "KRYTYCZNE OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
+                std::cout << "-----------------------------" << std::endl;
+            }
         }
-        
-        std::cout << "--------------" << std::endl;
-        std::cout << "SZEROKI ATAK: " << damage << std::endl;
-        std::cout << "--------------" << std::endl;
-    }
-    else if(CriticalStrike(player))
-    {
-        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
-        player.currentMana -= manaCost;
-
-        listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
-        enemy.currentHealth -= damage;
-        listOfEnemies[enemy.EnemyId - 1].currentHealth -= damage / 2;
-
-        std::cout << "-----------------------" << std::endl;
-        std::cout << "KRYTYCZNY SILNY ATAK: " << damage << std::endl;
-        std::cout << "-----------------------" << std::endl;
-    }
     }
     else 
     {
@@ -372,38 +399,64 @@ void Block(Player& player,bool warriorBlock)
 }
 void MagicMissiles(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
 {
-    int manaCost = 10;
+    int manaCost = 30;
     int damage;
     if(player.currentMana >= manaCost)
     {
         if(!MagicalCriticalStrike(player))
-    {
-        
-        for(int i = 0;i < 4;i++)
-        {   
-            damage = (RandomNumber(3) + player.intelligence);
-            listOfEnemies[RandomNumber(listOfEnemies.size())].currentHealth -= damage;
-            std::cout << "-------------------"<< std::endl;
-            std::cout << "MAGICZNE POCISKI: " << damage << std::endl;
-            std::cout << "-------------------"<< std::endl;
-        }
-        player.currentMana -= 10;
-        
-        
-    }
-    else if(MagicalCriticalStrike(player))
-    {
-        
-        for(int i = 0;i < 4;i++)
         {
-            damage = 2 * (RandomNumber(3) + player.intelligence);
-            listOfEnemies[RandomNumber(listOfEnemies.size())].currentHealth -= damage;
-            std::cout << "-------------------"<< std::endl;
-            std::cout << "KRYTYCZNE MAGICZNE POCISKI: " << damage << std::endl;
-            std::cout << "-------------------"<< std::endl;
+            if(listOfEnemies.size() == 1)
+            {
+                for(int i = 0;i < 4;i++)
+                { 
+                    damage = (RandomNumber(3) + player.intelligence);
+                    enemy.currentHealth -= damage;
+                    std::cout << "-------------------"<< std::endl;
+                    std::cout << "MAGICZNE POCISKI: " << damage << std::endl;
+                    std::cout << "-------------------"<< std::endl;
+                }
+            }
+            else
+            {
+                for(int i = 0;i < 4;i++)
+                {   
+                    damage = (RandomNumber(3) + player.intelligence);
+                    listOfEnemies[RandomNumber(listOfEnemies.size()) - 1].currentHealth -= damage;
+                    std::cout << "-------------------"<< std::endl;
+                    std::cout << "MAGICZNE POCISKI: " << damage << std::endl;
+                    std::cout << "-------------------"<< std::endl;
+                }
+            }
+            
+            player.currentMana -= 10;   
         }
-        player.currentMana -= 10;
-    }
+        else 
+        {
+            if(listOfEnemies.size() == 1)
+            {
+                for(int i = 0;i < 4;i++)
+                { 
+                    damage = 2 * (RandomNumber(3) + player.intelligence);
+                    enemy.currentHealth -= damage;
+                    std::cout << "-------------------"<< std::endl;
+                    std::cout << "KRYTYCZNE MAGICZNE POCISKI: " << damage << std::endl;
+                    std::cout << "-------------------"<< std::endl;
+                }
+            }
+            else
+            {
+                for(int i = 0;i < 4;i++)
+                {
+                    damage = 2 * (RandomNumber(3) + player.intelligence);
+                    listOfEnemies[RandomNumber(listOfEnemies.size())].currentHealth -= damage;
+                    std::cout << "-------------------"<< std::endl;
+                    std::cout << "KRYTYCZNE MAGICZNE POCISKI: " << damage << std::endl;
+                    std::cout << "-------------------"<< std::endl;
+                }
+            }
+            
+            player.currentMana -= 10;
+        }
     }
     else
     {
@@ -485,6 +538,7 @@ void CarnageStrike(Player& player,Enemy& enemy)
 }
 void BarbarianRage(Player& player,bool barbarianRage)
 {
+    barbarianRage = true;
     player.strenght += 8;
     player.agility += 8;
     player.currentHealth += 10;
@@ -504,5 +558,72 @@ void BarbarianRageEnd(Player& player)
     std::cout << "ZRECZONSC - 8 " << std::endl;
     std::cout << "ZDROWIE - 10 " << std::endl;
     std::cout << "---------------" << std::endl;
+}
+void lifeSteal(Player& player,Enemy& enemy)
+{
+     int manaCost = 10;
+    if(player.currentMana >= manaCost)
+    {
+        if(!MagicalCriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.intelligence);
+        player.currentHealth += damage / 3;
+        player.currentMana -= 10;
+        enemy.currentHealth -= damage;
+        std::cout << "-----------------" << std::endl;
+        std::cout << "KRADZIEZ ZYCIA: " << damage << std::endl;
+        std::cout << "LECZENIE: " << damage / 3 << std::endl;
+        std::cout << "-----------------" << std::endl;
+    }
+    else if(MagicalCriticalStrike(player))
+    {
+        int damage = 2 * (RandomNumber(10) + player.intelligence);
+        player.currentHealth += damage / 3;
+        player.currentMana -= 10;
+        enemy.currentHealth -= damage;
+        std::cout << "-------------------------" << std::endl;
+        std::cout << "KRYTYCZNA KRADZIEZ ZYCIA: " << damage << std::endl;
+        std::cout << "LECZENIE: " << damage / 3 << std::endl;
+        std::cout << "-------------------------" << std::endl;
+    }
+    }
+    else
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+}
+void RendStrike(Player& player,Enemy& enemy)
+{
+    int manaCost = 10;
+    enemy.bleed = true;
+    if(player.currentMana >= manaCost)
+    {
+        if(!CriticalStrike(player))
+    {
+        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
+        enemy.currentHealth -= damage;
+        std::cout << "--------------" << std::endl;
+        std::cout << "KRWAWIACY CIOS: " << damage << std::endl;
+        std::cout << "--------------" << std::endl;
+    }
+    else if(CriticalStrike(player))
+    {
+        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+        player.currentMana -= manaCost;
+        enemy.currentHealth -= damage;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "KRYTYCZNY KRWAWIACY CIOS: " << damage << std::endl;
+        std::cout << "------------------------" << std::endl;
+    }
+    }
+    else 
+    {
+        std::cout << "**** BRAK MANY ****"<< std::endl;
+    }
+}
+void SpawnDemon()
+{
+    
 }
 #endif 

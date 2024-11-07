@@ -121,7 +121,7 @@ void Create(Player &player,int playerIdCounter)
     int playerClass;
     bool playerClassBool = true;
     int temp;
-    int playerStartPoints = 8;
+    int playerStartPoints = 10;
     int genderContinue = true;
     std::cin.ignore();
     std::cout << "Podaj nazwe swojej postaci" << std::endl;

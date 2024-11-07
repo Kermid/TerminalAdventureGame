@@ -467,7 +467,7 @@ void ActionWolf(Player& player,Enemy& enemy)
             }
             
         }
-        else if(CriticalStrike(enemy))
+        else if(!CriticalStrike(enemy))
         {
             if(warriorBlock)
             {
@@ -544,9 +544,10 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     bool endFight = false;
     int ExpValue = 0;
     int barbarianRageCounter = 0;
+    int counter = 0;
     if(typeOfFight == "Skeletons")
     {
-        SpawnSkeletons(RandomNumber(2),listOfEnemies);
+        SpawnSkeletons(RandomNumber(5),listOfEnemies);
         ExpValue = listOfEnemies.size() * 20;
     }
     else if(typeOfFight == "Wolves")
@@ -573,25 +574,34 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
         FightingInterface(player,enemy,listOfEnemies,barbarianRage);
-        barbarianRageCounter++;
-        if(barbarianRageCounter == 2)
+        if(barbarianRage)
         {
-            BarbarianRageEnd(player);
-        }
-        if(enemy.currentHealth <= 0)
-        {
-            
-            listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemy](Enemy& e) {return e.EnemyId == enemy.EnemyId;}),listOfEnemies.end());
-
-            //Po zabiciu id jest aktualizowane
-            int counter = 1;
-            for(Enemy& enemyIdUpdate : listOfEnemies)
+            barbarianRageCounter++;
+            if(barbarianRageCounter == 2)
             {
-                enemy.EnemyId = counter;
-                counter++;
-                
+                BarbarianRageEnd(player);
+                barbarianRage = !barbarianRage;
             }
         }
+        
+        for(Enemy& enemyFight : listOfEnemies)
+        {
+            if(enemyFight.currentHealth <= 0)
+            {
+            
+                listOfEnemies.erase(std::remove_if(listOfEnemies.begin(),listOfEnemies.end(),[&enemyFight](Enemy& e) {return e.EnemyId == enemyFight.EnemyId;}),listOfEnemies.end());
+
+                //Po zabiciu id jest aktualizowane
+                counter = 1;
+                for(Enemy& enemyIdUpdate : listOfEnemies)
+                {
+                    enemyIdUpdate.EnemyId = counter;
+                    counter++;
+                
+                }
+             }
+        }
+        
         for(Enemy& enemy : listOfEnemies)
         {
             
@@ -656,6 +666,13 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 std::cout << "------------------------" << std::endl;
                 std::cout << "OBRAZENIA OD TRUCIZNY: 2"<< std::endl;
                 std::cout << "------------------------" << std::endl;
+            }
+            if(enemy.bleed)
+            {
+                enemy.currentHealth -= 2;
+                std::cout << "--------------------------" << std::endl;
+                std::cout << "OBRAZENIA OD KRWAWIENIA: 2"<< std::endl;
+                std::cout << "--------------------------" << std::endl;
             }
         }
         //checking if list is empty or player has died
@@ -1091,8 +1108,9 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         strongAttack(player,enemy);
                     break;
                     case 3:
-                    break;
                         WideStrike(player,listOfEnemies,enemy);
+                    break;
+                        
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
                     break;
@@ -1178,8 +1196,9 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         fireBall(player,enemy);
                     break;
                     case 3:
-                    break;
                         MagicMissiles(player,listOfEnemies,enemy);
+                    break;
+                        
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
                     break;
@@ -1263,8 +1282,9 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         sinisterStrike(player,enemy);
                     break;
                     case 3:
-                    break;
                         VenomStrike(player,enemy);
+                    break;
+                        
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
                     break;
@@ -1300,8 +1320,8 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
         switch(player.Level)
         {
             case 1:
-                std::cout << "_______________________________________" << std::endl;
-                std::cout << "|1 - Atak |2 - Silny atak" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cout << "___________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Krwawiacy cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
                 std::cin >> choice;
                 switch (choice)
                 {
@@ -1309,7 +1329,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         Attack(player,enemy);
                     break;
                     case 2:
-                        strongAttack(player,enemy);
+                        RendStrike(player,enemy);
                     break;
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
@@ -1318,7 +1338,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
             break;
             case 2:
                 std::cout << "____________________________________________________" << std::endl;
-                std::cout << "|1 - Atak |2 - Silny atak |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cout << "|1 - Atak |2 - Krwawiacy cios |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
                 std::cin >> choice;
                 switch (choice)
                 {
@@ -1326,7 +1346,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         Attack(player,enemy);
                     break;
                     case 2:
-                        strongAttack(player,enemy);
+                        RendStrike(player,enemy);
                     break;
                     case 3:
                         CarnageStrike(player,enemy);
@@ -1338,7 +1358,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
             break;
             case 3:
                 std::cout << "____________________________________________________" << std::endl;
-                std::cout << "|1 - Atak |2 - Silny atak  |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cout << "|1 - Atak |2 - Krwawiacy cios |3 - Krwiozerczy Cios" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
                 std::cin >> choice;
                 switch (choice)
                 {
@@ -1346,11 +1366,12 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         Attack(player,enemy);
                     break;
                     case 2:
-                        strongAttack(player,enemy);
+                        RendStrike(player,enemy);
                     break;
                     case 3:
-                    break;
                         CarnageStrike(player,enemy);
+                    break;
+                        
                     default:
                         std::cout << "Nieprawidlowa opcja" << std::endl;
                     break;
@@ -1358,7 +1379,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
             break;
             case 4:
                 std::cout << "_____________________________________________________________________" << std::endl;
-                std::cout << "|1 - Atak |2 - Silny atak |3 - Krwiozerczy Cios |4 - Szal" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cout << "|1 - Atak |2 - Krwawiacy cios |3 - Krwiozerczy Cios |4 - Szal" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
                 std::cin >> choice;
                 switch (choice)
                 {
@@ -1366,7 +1387,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                         Attack(player,enemy);
                     break;
                     case 2:
-                        strongAttack(player,enemy);
+                        RendStrike(player,enemy);
                     break;
                     case 3:
                         CarnageStrike(player,enemy);
@@ -1383,21 +1404,92 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
         }
     break;
     case 5:
-        std::cout << "_______________________________________" << std::endl;
-        std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
-        std::cin >> choice;
-        switch (choice)
+        switch(player.Level)
         {
-        case 1:
-            Attack(player,enemy);
+            case 1:
+                std::cout << "_______________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        case 2:
-            fireBall(player,enemy);
+            case 2:
+                std::cout << "___________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia |3 - Kradziez zycia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                        lifeSteal(player,enemy);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
-        default:
+            case 3:
+                std::cout << "___________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia  |3 - Kradziez zycia" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                        lifeSteal(player,enemy);
+                    break;
+                        
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
             break;
+            case 4:
+                std::cout << "_________________________________________________________________________" << std::endl;
+                std::cout << "|1 - Atak |2 - Kula ognia |3 - Kradziez zycia |4 - Przywolanie demona" << " |MANA: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;
+                std::cin >> choice;
+                switch (choice)
+                {
+                    case 1:
+                        Attack(player,enemy);
+                    break;
+                    case 2:
+                        fireBall(player,enemy);
+                    break;
+                    case 3:
+                        lifeSteal(player,enemy);
+                    break;
+                    case 4:
+                        BarbarianRage(player,barbarianRage);
+                    break;
+                    default:
+                        std::cout << "Nieprawidlowa opcja" << std::endl;
+                    break;
+                }
+            break;
+
         }
-        break;
+    break;
     case 6:
         std::cout << "_______________________________________" << std::endl;
         std::cout << "|1 - Atak |2 - Salwa lowcy" << " |Mana: "<< player.currentMana << "/" << player.mana << "|"<< std::endl;

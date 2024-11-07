@@ -104,13 +104,13 @@ void OrderBeer(Player& player)
 void OrderMeal(Player& player)
 {
     player.gold -= 1;
-    if(player.health - player.currentHealth < 12)
+    if(player.health - player.currentHealth < 20)
     {
         player.currentHealth += player.health - player.currentHealth;
     }
     else
     {
-        player.currentHealth += 12;
+        player.currentHealth += 20;
     }
     ShowStats(player);
 
