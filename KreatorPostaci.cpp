@@ -40,7 +40,6 @@ Player& Menu()
 
     Player player = Player(1,"Kermid","Wojownik","Mezczyzna",13,5,5,5,1,50,50,true,50,50,0);
     playerCharacters.push_back(player);
-
     do
     {
         std::cout << "-------------------" << std::endl;

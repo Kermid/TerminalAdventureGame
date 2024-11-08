@@ -506,12 +506,22 @@ void Kick(Enemy& enemy)
 void CarnageStrike(Player& player,Enemy& enemy)
 {
     int manaCost = 15;
+    int heal;
     if(player.currentMana >= manaCost)
     {
         if(!CriticalStrike(player))
     {
         int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
-        player.currentHealth += damage / 2;
+        heal = damage / 2;
+        if(player.health - player.currentHealth < heal)
+        {
+            player.currentHealth += player.health - player.currentHealth;
+        }
+        else
+        {
+            player.currentHealth += heal;
+        }
+        
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
         std::cout << "-----------------------" << std::endl;
@@ -522,12 +532,20 @@ void CarnageStrike(Player& player,Enemy& enemy)
     else if(CriticalStrike(player))
     {
         int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
-        player.currentHealth += damage / 2;
+        heal = damage / 2;
+        if(player.health - player.currentHealth < heal)
+        {
+            player.currentHealth += player.health - player.currentHealth;
+        }
+        else
+        {
+            player.currentHealth += heal;
+        }
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
         std::cout << "---------------------------" << std::endl;
         std::cout << "KRYTYCZNY KRWIOZERCZY CIOS: " << damage << std::endl;
-        std::cout << "LECZENIE: " << damage / 2 << std::endl;
+        std::cout << "LECZENIE: " << heal << std::endl;
         std::cout << "---------------------------" << std::endl;
     }
     }
@@ -536,7 +554,7 @@ void CarnageStrike(Player& player,Enemy& enemy)
         std::cout << "**** BRAK MANY ****"<< std::endl;
     }
 }
-void BarbarianRage(Player& player,bool barbarianRage)
+void BarbarianRage(Player& player,bool& barbarianRage)
 {
     barbarianRage = true;
     player.strenght += 8;
