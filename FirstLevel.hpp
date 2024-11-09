@@ -16,8 +16,8 @@ int CentreSecond(Player& player);
 int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
-int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage);
-void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool& barbarianRage);
+int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock);
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock);
 void HealingShrine(Player& player);
 int RightThird(Player& player);
 int LeftThird(Player& player);
@@ -309,7 +309,7 @@ void Attack(Player& player,Enemy& enemy)
     DisplayCurrentHealth(enemy);
 
 }
-void ActionMage(Player& player,Enemy& enemy)
+void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock)
 {
     int random = RandomNumber(30);
     if (random >= 0 && random < 20)
@@ -360,7 +360,7 @@ void ActionMage(Player& player,Enemy& enemy)
     }
 
 }
-void ActionSkeletonWarrior(Player& player,Enemy& enemy)
+void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
 {
     bool endOfHardnening = false;
     int random = RandomNumber(30);
@@ -440,7 +440,7 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy)
         hardeningEnemy(enemy);
     }
 }
-void ActionWolf(Player& player,Enemy& enemy)
+void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock)
 {
     
     int random = RandomNumber(30);
@@ -496,7 +496,7 @@ void ActionWolf(Player& player,Enemy& enemy)
     }
 
 }
-void EnemyAttack(Player& player,Enemy& enemy)
+void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock)
 {
     
     if(CriticalStrike(enemy))
@@ -539,7 +539,7 @@ void EnemyAttack(Player& player,Enemy& enemy)
 
     DisplayCurrentHealth(player);
 }
-int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage)
+int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock)
 {
     bool endFight = false;
     int ExpValue = 0;
@@ -573,7 +573,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     while (endFight == false)
     {
         Enemy& enemy = ChooseEnemy(listOfEnemies);
-        FightingInterface(player,enemy,listOfEnemies,barbarianRage);
+        FightingInterface(player,enemy,listOfEnemies,barbarianRage,warriorBlock);
         if(barbarianRage)
         {
             barbarianRageCounter++;
@@ -615,7 +615,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    EnemyAttack(player,enemy);
+                    EnemyAttack(player,enemy,warriorBlock);
                 }
             }
             else if(enemy.name == "Wilk")
@@ -628,7 +628,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    ActionWolf(player,enemy);
+                    ActionWolf(player,enemy,warriorBlock);
                 }
                 
             } 
@@ -642,7 +642,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    ActionSkeletonWarrior(player,enemy);
+                    ActionSkeletonWarrior(player,enemy,warriorBlock);
                 }
                 
             }
@@ -656,7 +656,7 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                     ActionMage(player,enemy);
+                     ActionMage(player,enemy,warriorBlock);
                 }
                
             }
@@ -796,7 +796,9 @@ int LeftSecondCleared(Player& player)
             switch (choice)
             {
             case 1:
-                return Crypt(player);
+                std::cout << "-------------------------------" << std::endl;
+                std::cout << "W krypta jest juz wyczyszczona." << std::endl;
+                std::cout << "-------------------------------" << std::endl;
                 continueSecond = false;
                 break;
             case 2:
@@ -1023,7 +1025,7 @@ int RightThird(Player& player)
     }
     return 0;
 }
-void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool& barbarianRage)
+void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock)
 {
     int choice;
     int classType;

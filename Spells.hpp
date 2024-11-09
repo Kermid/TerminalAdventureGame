@@ -380,7 +380,7 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
     }
     
 }
-void Block(Player& player,bool warriorBlock)
+void Block(Player& player,bool& warriorBlock)
 {
      int manaCost = 10;
      if(player.currentMana >= manaCost)
