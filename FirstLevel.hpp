@@ -11,12 +11,13 @@
 bool Wolfdodge = false;
 bool warriorBlock = false;
 bool barbarianRage = false;
+int warriorblockCounter = 0;
 void Chest(Item item,Player& player);
 int CentreSecond(Player& player);
 int LeftSecond(Player& player);
 void Trap(Player& player);
 void CheckInventory(Player& player);
-int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock);
+int Fight(Player& player,std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter);
 void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock);
 void HealingShrine(Player& player);
 int RightThird(Player& player);
@@ -55,7 +56,7 @@ int FirstLevel(Player& player)
             std::cout << "Cmentarz jest cichy, poza odleglym rechotem zab i szeletem traw slychac szelest lisci w oddali" << std::endl;
             std::cout << " " << std::endl;
 
-                outcome = Fight(player,listOfEnemies,"Skeletons",barbarianRage);
+                outcome = Fight(player,listOfEnemies,"Skeletons",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -309,7 +310,7 @@ void Attack(Player& player,Enemy& enemy)
     DisplayCurrentHealth(enemy);
 
 }
-void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock)
+void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorBlockCounter)
 {
     int random = RandomNumber(30);
     if (random >= 0 && random < 20)
@@ -321,6 +322,7 @@ void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
                 warriorBlock = false;
             }
             else
@@ -340,6 +342,7 @@ void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
                 warriorBlock = false;
             }
             else
@@ -360,7 +363,7 @@ void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock)
     }
 
 }
-void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
+void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
 {
     bool endOfHardnening = false;
     int random = RandomNumber(30);
@@ -378,6 +381,7 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
                 warriorBlock = false;
             }
             else
@@ -396,7 +400,8 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
-                warriorBlock = false;
+                warriorblockCounter++;
+                
             }
             else
             {
@@ -422,7 +427,8 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
             std::cout << "----------------" << std::endl;
             std::cout << "|BLOKUJESZ ATAK" << std::endl;
             std::cout << "----------------" << std::endl;
-            warriorBlock = false;
+            warriorblockCounter++;
+            
         }
         else
         {
@@ -440,7 +446,7 @@ void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock)
         hardeningEnemy(enemy);
     }
 }
-void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock)
+void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
 {
     
     int random = RandomNumber(30);
@@ -453,7 +459,7 @@ void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
-                warriorBlock = false;
+                warriorblockCounter++;
                 Wolfdodge = false;
             }
             else
@@ -474,7 +480,7 @@ void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "------------------------------" << std::endl;
-                warriorBlock = false;
+                warriorblockCounter++;
                 Wolfdodge = false;
             }
             else
@@ -496,7 +502,7 @@ void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock)
     }
 
 }
-void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock)
+void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
 {
     
     if(CriticalStrike(enemy))
@@ -506,7 +512,7 @@ void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock)
                 std::cout << "----------------" << std::endl;
                 std::cout << "|BLOKUJESZ ATAK" << std::endl;
                 std::cout << "----------------" << std::endl;
-                warriorBlock = false;
+                warriorblockCounter++;
             }
             else
             {
@@ -524,7 +530,7 @@ void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock)
             std::cout << "----------------" << std::endl;
             std::cout << "|BLOKUJESZ ATAK" << std::endl;
             std::cout << "----------------" << std::endl;
-            warriorBlock = false;
+            warriorblockCounter++;
         }
         else
         {
@@ -533,17 +539,18 @@ void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock)
             std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
             std::cout << "-------------------" << std::endl;
             player.currentHealth -= damage;
-            warriorBlock = false;
+            warriorblockCounter++;
         }
     }
 
     DisplayCurrentHealth(player);
 }
-int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock)
+int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter)
 {
     bool endFight = false;
     int ExpValue = 0;
     int barbarianRageCounter = 0;
+    
     int counter = 0;
     if(typeOfFight == "Skeletons")
     {
@@ -615,7 +622,8 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    EnemyAttack(player,enemy,warriorBlock);
+                    EnemyAttack(player,enemy,warriorBlock,warriorblockCounter);
+                    EndBlock(warriorblockCounter,warriorBlock);
                 }
             }
             else if(enemy.name == "Wilk")
@@ -628,7 +636,8 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    ActionWolf(player,enemy,warriorBlock);
+                    ActionWolf(player,enemy,warriorBlock,warriorblockCounter);
+                    EndBlock(warriorblockCounter,warriorBlock);
                 }
                 
             } 
@@ -642,7 +651,8 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                    ActionSkeletonWarrior(player,enemy,warriorBlock);
+                    ActionSkeletonWarrior(player,enemy,warriorBlock,warriorblockCounter);
+                    EndBlock(warriorblockCounter,warriorBlock);
                 }
                 
             }
@@ -656,7 +666,8 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
                 }
                 else
                 {
-                     ActionMage(player,enemy,warriorBlock);
+                     ActionMage(player,enemy,warriorBlock,warriorblockCounter);
+                     EndBlock(warriorblockCounter,warriorBlock);
                 }
                
             }
@@ -747,7 +758,7 @@ int LeftSecond(Player& player)
             {
             case 1:
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesLeftSecond,"Skeleton Mage",barbarianRage);
+                outcome = Fight(player,listOfEnemiesLeftSecond,"Skeleton Mage",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -838,7 +849,7 @@ int CentreSecond(Player& player)
             case 1:
                 //mageskeleton
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeleton Mage",barbarianRage);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeleton Mage",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -853,7 +864,7 @@ int CentreSecond(Player& player)
                 case 2:
                 //wolves
                 Trap(player);
-                outcome = Fight(player,listOfEnemiesCentreSecond,"Wolves",barbarianRage);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Wolves",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -868,7 +879,7 @@ int CentreSecond(Player& player)
                 break;
                 case 3:
                 //skeletons
-                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeletons",barbarianRage);
+                outcome = Fight(player,listOfEnemiesCentreSecond,"Skeletons",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -909,7 +920,7 @@ int LeftThird(Player& player)
         {
             case 1:
             HealingShrine(player);
-            outcome = Fight(player,listOfEnemiesLeftThird,"Wolves",barbarianRage);
+            outcome = Fight(player,listOfEnemiesLeftThird,"Wolves",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -959,7 +970,7 @@ int CentreThird(Player& player)
         switch (choice)
         {
             case 1:
-            outcome = Fight(player,listOfEnemiesCentreThird,"Skeletons",barbarianRage);
+            outcome = Fight(player,listOfEnemiesCentreThird,"Skeletons",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetArmorFirstLevel(),player);
@@ -999,7 +1010,7 @@ int RightThird(Player& player)
         switch (choice)
         {
             case 1:
-                outcome = Fight(player,listOfEnemiesRightThird,"Skeletons",barbarianRage);
+                outcome = Fight(player,listOfEnemiesRightThird,"Skeletons",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);
@@ -1068,6 +1079,7 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                 {
                     case 1:
                         Attack(player,enemy);
+                        
                     break;
                     case 2:
                         strongAttack(player,enemy);
@@ -1542,7 +1554,7 @@ int Crypt(Player& player)
             {
             case 1:
                
-                outcome = Fight(player,listOfEnemiesCrypt,"Skeleton Warrior",barbarianRage);
+                outcome = Fight(player,listOfEnemiesCrypt,"Skeleton Warrior",barbarianRage,warriorBlock,warriorblockCounter);
                 if(outcome == 1)
                 {
                     Chest(GetWeaponFirstLevel(),player);

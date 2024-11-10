@@ -397,6 +397,13 @@ void Block(Player& player,bool& warriorBlock)
     }
 
 }
+void EndBlock(int& warriorblockCounter,bool& warriorBlock)
+{
+    if(warriorblockCounter == 3)
+    {
+        warriorBlock = !warriorBlock;
+    }
+}
 void MagicMissiles(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
 {
     int manaCost = 30;
