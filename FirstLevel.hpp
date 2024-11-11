@@ -28,7 +28,8 @@ int FirstLevel(Player& player)
 {
     int choice;
     int outcome;
-
+    Item necklace("Wisiorek","skarb");
+    Item ring("Pierscionek","skarb");
     std::vector<Enemy> listOfEnemies;
 
     //case 2 jest tutaj bo sie psuje jak jest w switch
@@ -88,6 +89,7 @@ int FirstLevel(Player& player)
                 {
                 case 1:
                     Trap(player);
+                    FindTresure(player.Inventory,necklace);
                     Chest(GetArmorFirstLevel(),player);
                     return CentreSecond(player);
                     SecondContinue = false;
@@ -127,7 +129,7 @@ int FirstLevel(Player& player)
                 switch(choiceThird)
                 {
                 case 1:
-                    Chest(GetWeaponFirstLevel(),player);
+                    FindTresure(player.Inventory,ring);
                     RightThird(player);
                     continueThird = false;
                 break;
@@ -1079,7 +1081,6 @@ void FightingInterface(Player& player,Enemy& enemy,std::vector<Enemy>& listOfEne
                 {
                     case 1:
                         Attack(player,enemy);
-                        
                     break;
                     case 2:
                         strongAttack(player,enemy);

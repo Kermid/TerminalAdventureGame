@@ -322,6 +322,13 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
                     std::cout << "----------------------" << std::endl;
                 }
             }
+            else if(listOfEnemies.size() == 1)
+            {
+                enemy.currentHealth -= damage;
+                std::cout << "--------------" << std::endl;
+                std::cout << "SZEROKI ATAK: " << damage << std::endl;
+                std::cout << "--------------" << std::endl;
+            }
             else
             {
                 listOfEnemies[enemy.EnemyId + 1].currentHealth -= damage / 2;
@@ -360,6 +367,13 @@ void WideStrike(Player& player,std::vector<Enemy>& listOfEnemies,Enemy& enemy)
                     std::cout << "KRYTYCZNE OBRAZENIA OBOK CELU: " << damage / 2 << std::endl;
                     std::cout << "-----------------------------" << std::endl;
                 }
+            }
+            else if(listOfEnemies.size() == 1)
+            {
+                enemy.currentHealth -= damage;
+                std::cout << "--------------" << std::endl;
+                std::cout << "KRYTYCZNY SZEROKI ATAK: " << damage << std::endl;
+                std::cout << "--------------" << std::endl;
             }
             else
             {
@@ -646,6 +660,10 @@ void RendStrike(Player& player,Enemy& enemy)
     {
         std::cout << "**** BRAK MANY ****"<< std::endl;
     }
+}
+void CursedStrikes(Player& player)
+{
+
 }
 void SpawnDemon()
 {

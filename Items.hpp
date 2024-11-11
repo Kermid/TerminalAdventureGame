@@ -17,7 +17,6 @@ class Item
         int intelligence;
         int cost;
         std::string type;
-        std::string questValue;
         Item(std::string name,int armor,int damage,int strenght,int agility,int stamina,int intelligence,int cost,std::string type)
         {
             this->name = name;
@@ -46,18 +45,21 @@ class Item
             
             
         };
-        Item(std::string name,std::string questValue)
-        {
-            this->name = name;
-            this->questValue = questValue;
-            
-        };
         Item(std::string name)
         {
             if(name == "Sakwa zlota")
             {   
                 this->name = name;
                 type = "Sakwa zlota";
+            }
+        };
+        Item(std::string name,std::string typeName)
+        {
+            if(typeName == "skarb")
+            {   
+                this->name = name;
+                this->type = typeName;
+                this->cost = 3;
             }
         };
        
@@ -253,6 +255,10 @@ Item ChooseItem(std::vector<Item>& listOfItems)
     
     return listOfItems[playerChoice-1];
 }
-
+void FindTresure(std::vector<Item>& listOfItems,Item& item)
+{
+    std::cout << "Znalazles " << item.name << "!" << std::endl;
+    listOfItems.push_back(item);
+}
 
 #endif

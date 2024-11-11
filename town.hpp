@@ -342,10 +342,6 @@ void armorShop(Player& player)
     }
     
 }
-void regions(Player& player)
-{
-
-}
 void Town(Player& player)
 {
     bool townContinue = true;
@@ -374,7 +370,7 @@ void Town(Player& player)
                 Inn(player);
             break;
             case 5:
-                regions(player);
+                
             break;
             case 6:
                 CheckInventory(player);
