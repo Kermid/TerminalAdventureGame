@@ -8,6 +8,8 @@
 #include "Items.hpp"
 #include "town.hpp"
 #include "Spells.hpp"
+#include "SecondLevel.hpp"
+#include "Locations.hpp"
 #include <windows.h>
 
 Player selectedPlayer;
