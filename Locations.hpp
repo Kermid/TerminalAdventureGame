@@ -14,8 +14,9 @@ public:
 
 Location generateForestArea()
 {
-    Location location
+    Location location;
     int randomEvent = rand() % 100;
+
     if(randomEvent < 10)
     {
         location.description = "Przed Tobą rozciąga się gęsta paproć, gdzie słychać szmer....";
@@ -77,5 +78,80 @@ Location generateForestArea()
         location.hasLoot = false;
     }
 }
-
+std::string GenerateTypeOfFight()
+{
+    std::string randomType;
+    int randomEvent = rand() % 100;
+    if(randomEvent < 20)
+    {
+       return randomType = "Wilki";
+    }
+    else if(randomEvent < 40)
+    {
+       return randomType = "Dziki";
+    }
+    else if(randomEvent < 60)
+    {
+       return randomType = "Niedzwiedz";
+    }
+    else if(randomEvent < 80)
+    {
+       return randomType = "Duch lasu";
+    }
+    else 
+    {
+       return randomType = "Bandyci";
+    }
+}
+void GenerateLocationRandomFight(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter)
+{
+    std::cout << location.description << std::endl;
+    std::string TypeFight = GenerateTypeOfFight();
+    int randomValue = RandomNumber(20);
+    if(location.hasFight)
+    {
+        Fight(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
+    }
+    if(location.hasLoot)
+    {
+        if(randomValue < 10)
+        {
+            Chest(GetArmorSecondLevel(),player);
+        }
+        else if(randomValue < 20)
+        {
+            Chest(GetWeaponSecondLevel(),player);
+        }
+        else
+        {
+            std::cout << "Jednak nic tutaj nie ma dla ciebie" << std::endl;
+        }
+        
+    }
+}
+void GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,std::string TypeOfFight)
+{
+    std::cout << location.description << std::endl;
+    if(location.hasFight)
+    {
+        Fight(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
+    }
+    int randomValue = RandomNumber(20);
+    if(location.hasLoot)
+    {
+        if(randomValue < 10)
+        {
+            Chest(GetArmorSecondLevel(),player);
+        }
+        else if(randomValue < 20)
+        {
+            Chest(GetWeaponSecondLevel(),player);
+        }
+        else
+        {
+            std::cout << "Jednak nic tutaj nie ma dla ciebie" << std::endl;
+        }
+        
+    }
+}
 #endif
