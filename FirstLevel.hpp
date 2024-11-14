@@ -556,24 +556,48 @@ int Fight(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFi
     int counter = 0;
     if(typeOfFight == "Skeletons")
     {
-        SpawnSkeletons(RandomNumber(2),listOfEnemies);
-        ExpValue = listOfEnemies.size() * 20;
+        int randomNum = RandomNumber(2);
+        SpawnSkeletons(randomNum,listOfEnemies);
+        ExpValue = randomNum * 20;
     }
     else if(typeOfFight == "Wolves")
     {
-        SpawnWolves(RandomNumber(4),listOfEnemies);
-        ExpValue = listOfEnemies.size() * 10;
+        int randomNum = RandomNumber(4);
+        SpawnWolves(randomNum,listOfEnemies);
+        ExpValue = randomNum * 15;
     }
     else if(typeOfFight == "Skeleton Mage")
     {
-        SpawnMage(RandomNumber(1),listOfEnemies);
-        SpawnSkeletons(RandomNumber(1),listOfEnemies);
-        ExpValue = 50;
+        SpawnMage(1,listOfEnemies);
+        SpawnSkeletons(1,listOfEnemies);
+        ExpValue = 80;
     }
     else if(typeOfFight == "Skeleton Warrior")
     {
         SpawnWarriorSkeleton(listOfEnemies);
-        ExpValue = 50;
+        ExpValue = 80;
+    }
+    else if(typeOfFight == "Boars")
+    {
+        int randomNum = RandomNumber(2);
+        SpawnBoars(randomNum,listOfEnemies);
+        ExpValue = randomNum * 50;
+    }
+    else if(typeOfFight == "Bear")
+    {
+        SpawnBear(1,listOfEnemies);
+        ExpValue = 120;
+    }
+    else if(typeOfFight == "Ghost of the forest")
+    {
+        SpawnForestGhost(2,listOfEnemies);
+        ExpValue = 2 * 50;
+    }
+    else if(typeOfFight == "Bandits")
+    {
+        int randomNum = RandomNumber(3);
+        SpawnBandits(randomNum,listOfEnemies);
+        ExpValue = randomNum * 60;
     }
 
     AnnounceEnemies(listOfEnemies);
@@ -1583,5 +1607,6 @@ int Crypt(Player& player)
                 break;
             }
     }
+    return 0;
 }
 #endif

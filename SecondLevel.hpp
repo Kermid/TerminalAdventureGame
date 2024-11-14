@@ -3,9 +3,9 @@
 #include "Entities.hpp"
 #include "Locations.hpp"
 
-int SecondLeft(Player player);
-int SecondCentre(Player& player);
-int SecondRight(Player& player);
+int SecondLevelLeft(Player player);
+int SecondLevelCentre(Player& player);
+int SecondLevelRight(Player& player);
 int SecondLevel(Player& player)
 {
     int choice;
@@ -29,7 +29,7 @@ int SecondLevel(Player& player)
             outcome = GenerateLocationRandomFight(locationLeft,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
             if(outcome == 1)
             {
-                return LeftSecond(player);
+                return SecondLevelLeft(player);
             }
             else if(outcome == 0)
             {
@@ -41,7 +41,7 @@ int SecondLevel(Player& player)
             outcome = GenerateLocationRandomFight(locationCentre,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
             if(outcome == 1)
             {
-                return CentreSecond(player);
+                return SecondLevelCentre(player);
             }
             else if(outcome == 0)
             {
@@ -53,7 +53,7 @@ int SecondLevel(Player& player)
             outcome = GenerateLocationRandomFight(locationRight,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
             if(outcome == 1)
             {
-                return RightThird(player);
+                return SecondLevelRight(player);
             }
             else if(outcome == 0)
             {
@@ -68,9 +68,9 @@ int SecondLevel(Player& player)
         break;
         }
     }
-
+    return 0;
 }
-int SecondLeft(Player& player)
+int SecondLevelLeft(Player& player)
 {
     int choice;
     int outcome;
@@ -116,6 +116,7 @@ int SecondLeft(Player& player)
                 return 1;
             }
             continueFirst = false;
+        break;
         case 4:
             CheckInventory(player);
         break;
@@ -124,8 +125,13 @@ int SecondLeft(Player& player)
         break;
         }
     }
+    return 0;
 }
-int SecondCentre(Player& player)
+inline int SecondLevelLeft(Player player)
+{
+    return 0;
+}
+int SecondLevelCentre(Player &player)
 {
     int choice;
     int outcome;
@@ -171,6 +177,7 @@ int SecondCentre(Player& player)
                 return 1;
             }
             continueFirst = false;
+        break;
         case 4:
             CheckInventory(player);
         break;
@@ -179,8 +186,9 @@ int SecondCentre(Player& player)
         break;
         }
     }
+    return 0;
 }
-int SecondRight(Player& player)
+int SecondLevelRight(Player& player)
 {
     int choice;
     int outcome;
@@ -226,6 +234,7 @@ int SecondRight(Player& player)
                 return 1;
             }
             continueFirst = false;
+        break;
         case 4:
             CheckInventory(player);
         break;
@@ -234,6 +243,7 @@ int SecondRight(Player& player)
         break;
         }
     }
+    return 0;
 }
 
 #endif

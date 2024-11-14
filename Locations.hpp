@@ -77,6 +77,7 @@ Location generateForestArea()
         location.hasFight = false;
         location.hasLoot = false;
     }
+    return location;
 }
 std::string GenerateTypeOfFight()
 {
@@ -84,23 +85,23 @@ std::string GenerateTypeOfFight()
     int randomEvent = rand() % 100;
     if(randomEvent < 20)
     {
-       return randomType = "Wilki";
+       return randomType = "Wolves";
     }
     else if(randomEvent < 40)
     {
-       return randomType = "Dziki";
+       return randomType = "Boars";
+    }
+    else if(randomEvent < 50)
+    {
+       return randomType = "Bear";
     }
     else if(randomEvent < 60)
     {
-       return randomType = "Niedzwiedz";
-    }
-    else if(randomEvent < 80)
-    {
-       return randomType = "Duch lasu";
+       return randomType = "Ghost of the forest";
     }
     else 
     {
-       return randomType = "Bandyci";
+       return randomType = "Bandits";
     }
 }
 int GenerateLocationRandomFight(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter)
@@ -108,7 +109,7 @@ int GenerateLocationRandomFight(Location location,Player& player,std::vector<Ene
     std::cout << location.description << std::endl;
     std::string TypeFight = GenerateTypeOfFight();
     int outcome;
-    int randomValue = RandomNumber(20);
+    
     if(location.hasFight)
     {
         outcome = Fight(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
@@ -119,6 +120,7 @@ int GenerateLocationRandomFight(Location location,Player& player,std::vector<Ene
     }
     if(location.hasLoot)
     {
+        int randomValue = RandomNumber(20);
         if(randomValue < 10)
         {
             Chest(GetArmorSecondLevel(),player);
@@ -147,9 +149,10 @@ int GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOf
             return outcome;
         }
     }
-    int randomValue = RandomNumber(20);
+    
     if(location.hasLoot)
     {
+        int randomValue = RandomNumber(20);
         if(randomValue < 10)
         {
             Chest(GetArmorSecondLevel(),player);

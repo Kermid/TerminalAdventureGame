@@ -23,10 +23,11 @@ int main()
     srand(time(NULL));
     selectedPlayer = Menu();
     SecondLevel(selectedPlayer);
+    /*
     if(FirstLevel(selectedPlayer) == 1)
     {
         Town(selectedPlayer);
-    }
+    }*/
     
     return 0;
 }

@@ -210,6 +210,46 @@ void SpawnSkeletons(int randomNum,std::vector<Enemy>& listOfEnemies)
     }
     
 }
+void SpawnBear(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    
+    for(int i = 0;i < randomNum;i++)
+    {
+        Enemy enemy(listOfEnemies.size() + 1,"Niedzwiedz",10,5,6,1,3,70,30,2,true,70,30);
+        listOfEnemies.push_back(enemy);
+    }
+    
+}
+void SpawnBoars(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    
+    for(int i = 0;i < randomNum;i++)
+    {
+        Enemy enemy(listOfEnemies.size() + 1,"Dzik",4,9,4,1,2,35,30,2,true,35,30);
+        listOfEnemies.push_back(enemy);
+    }
+    
+}
+void SpawnBandits(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    
+    for(int i = 0;i < randomNum;i++)
+    {
+        Enemy enemy(listOfEnemies.size() + 1,"Bandyta",6,6,6,2,3,40,30,2,true,40,30);
+        listOfEnemies.push_back(enemy);
+    }
+    
+}
+void SpawnForestGhost(int randomNum,std::vector<Enemy>& listOfEnemies)
+{
+    
+    for(int i = 0;i < randomNum;i++)
+    {
+        Enemy enemy(listOfEnemies.size() + 1,"Duch lasu",3,4,4,1,2,50,40,2,true,50,40);
+        listOfEnemies.push_back(enemy);
+    }
+    
+}
 void SpawnMage(int randomNum,std::vector<Enemy>& listOfEnemies)
 {
     for(int i = 0;i < randomNum;i++)
