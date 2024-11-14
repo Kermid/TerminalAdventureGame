@@ -103,14 +103,19 @@ std::string GenerateTypeOfFight()
        return randomType = "Bandyci";
     }
 }
-void GenerateLocationRandomFight(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter)
+int GenerateLocationRandomFight(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter)
 {
     std::cout << location.description << std::endl;
     std::string TypeFight = GenerateTypeOfFight();
+    int outcome;
     int randomValue = RandomNumber(20);
     if(location.hasFight)
     {
-        Fight(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
+        outcome = Fight(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
+        if(outcome == 0)
+        {
+            return outcome;
+        }
     }
     if(location.hasLoot)
     {
@@ -128,13 +133,19 @@ void GenerateLocationRandomFight(Location location,Player& player,std::vector<En
         }
         
     }
+    return outcome;
 }
-void GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,std::string TypeOfFight)
+int GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,std::string TypeOfFight)
 {
     std::cout << location.description << std::endl;
+    int outcome;
     if(location.hasFight)
     {
-        Fight(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
+        outcome = Fight(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
+        if(outcome == 0)
+        {
+            return outcome;
+        }
     }
     int randomValue = RandomNumber(20);
     if(location.hasLoot)
@@ -153,5 +164,6 @@ void GenerateLocation(Location location,Player& player,std::vector<Enemy>& listO
         }
         
     }
+    return outcome;
 }
 #endif

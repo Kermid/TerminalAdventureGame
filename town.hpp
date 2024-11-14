@@ -352,7 +352,7 @@ void Town(Player& player)
         
         std::cout << "***** Miasto Bagienna przystan! *****" << std::endl;
         std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
-        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Karczma 5 - Regiony  6 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "1 - Sklep z bronia 2 - Sklep z zbroja 3 - Sklep z miksturami 4 - Karczma 5 - Wyjdz z miasta  6 - Sprawdz ekwipunek" << std::endl;
         std::cout << "-----------------------------------------------------------------------------------------------------------" << std::endl;
         std::cin >> townChoice;
         switch(townChoice)
@@ -370,7 +370,7 @@ void Town(Player& player)
                 Inn(player);
             break;
             case 5:
-                
+                townContinue = false;
             break;
             case 6:
                 CheckInventory(player);
