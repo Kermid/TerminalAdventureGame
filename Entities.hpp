@@ -7,6 +7,10 @@
 #include <vector>
 
 
+bool Wolfdodge = false;
+bool warriorBlock = false;
+bool barbarianRage = false;
+int warriorblockCounter = 0;
 
 class Character{
     public:
@@ -194,6 +198,14 @@ Character::Character()
 {
 
 }
+void strongAttackEnemy(Player& player,Enemy& enemy);
+bool MagicalCriticalStrike(Enemy& enemy);
+bool MagicalCriticalStrike(Player& player);
+bool CriticalStrike(Player& player);
+bool CriticalStrike(Enemy& enemy);
+void hardeningEnemy(Enemy& enemy);
+void fireBallEnemy(Player& player,Enemy& enemy);
+bool dodgeNext(Enemy& enemy);
 int RandomNumber(int number)
 {
     int randomNum;
@@ -644,5 +656,585 @@ void ShowStats(Player& player)
     std::cout << "|Twoje zdrowie: " << player.currentHealth << "/" << player.health << std::endl;
     std::cout << "|Twoja Mana: " << player.currentMana << "/" << player.mana << std::endl;
     std::cout << "--------------------------------------------------" << std::endl;
+}
+void ActionBear(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+    bool endOfHardnening = false;
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 10)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(CriticalStrike(enemy))
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+        else
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorblockCounter++;
+            
+        }
+        else
+        {
+            strongAttackEnemy(player,enemy);
+        }
+       
+    }
+    else if(random >= 10 && random < 20)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        hardeningEnemy(enemy);
+    }
+}
+void ActionBoar(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+      bool endOfHardnening = false;
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 10)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(CriticalStrike(enemy))
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+        else
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorblockCounter++;
+            
+        }
+        else
+        {
+            strongAttackEnemy(player,enemy);
+        }
+       
+    }
+    else if(random >= 10 && random < 20)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        hardeningEnemy(enemy);
+    }
+}
+void ActionForestGhost(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorBlockCounter)
+{
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 20)
+    {
+        if(CriticalStrike(enemy))
+        {   
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+            
+        }
+        else
+        {
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        fireBallEnemy(player,enemy);
+    }
+}
+void ActionBandit(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+      bool endOfHardnening = false;
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 10)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(CriticalStrike(enemy))
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+        else
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorblockCounter++;
+            
+        }
+        else
+        {
+            strongAttackEnemy(player,enemy);
+        }
+       
+    }
+    else if(random >= 10 && random < 20)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        hardeningEnemy(enemy);
+    }
+}
+void ActionMage(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorBlockCounter)
+{
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 20)
+    {
+        if(CriticalStrike(enemy))
+        {   
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+            
+        }
+        else
+        {
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        fireBallEnemy(player,enemy);
+    }
+
+}
+void ActionSkeletonWarrior(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+    bool endOfHardnening = false;
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 10)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(CriticalStrike(enemy))
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                warriorBlock = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+        else
+        {
+           if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorblockCounter++;
+            
+        }
+        else
+        {
+            strongAttackEnemy(player,enemy);
+        }
+       
+    }
+    else if(random >= 10 && random < 20)
+    {
+        if(endOfHardnening)
+        {
+            enemy.armor -= 3;
+            endOfHardnening = !endOfHardnening;
+        }
+        hardeningEnemy(enemy);
+    }
+}
+void ActionWolf(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+    int random = RandomNumber(30);
+    if (random >= 0 && random < 20)
+    {
+        if(CriticalStrike(enemy))
+        {
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+                Wolfdodge = false;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+                Wolfdodge = false;
+            }
+            
+        }
+        else if(!CriticalStrike(enemy))
+        {
+            if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                warriorblockCounter++;
+                Wolfdodge = false;
+            }
+            else
+            {
+                int damage = (1 + enemy.strenght) - player.armor;
+                std::cout << "-------------------" << std::endl;
+                std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "-------------------" << std::endl;
+                player.currentHealth -= damage;
+                Wolfdodge = !Wolfdodge;
+            }
+        }
+
+        DisplayCurrentHealth(player);
+    }
+    else if (random >= 20 && random <= 30)
+    {
+        Wolfdodge = dodgeNext(enemy);
+    }
+
+}
+void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorblockCounter)
+{
+    
+    if(CriticalStrike(enemy))
+    {
+        if(warriorBlock)
+            {
+                std::cout << "----------------" << std::endl;
+                std::cout << "|BLOKUJESZ ATAK" << std::endl;
+                std::cout << "----------------" << std::endl;
+                warriorblockCounter++;
+            }
+            else
+            {
+                int damage = 2 * (1 + enemy.strenght) - player.armor;
+                std::cout << "------------------------------" << std::endl;
+                std::cout << "|ATAK KRYTYCZNY PRZECIWNIKA: " << damage << std::endl;
+                std::cout << "------------------------------" << std::endl;
+                player.currentHealth -= damage;
+            }
+    }
+    else if(!CriticalStrike(enemy))
+    {
+       if(warriorBlock)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "|BLOKUJESZ ATAK" << std::endl;
+            std::cout << "----------------" << std::endl;
+            warriorblockCounter++;
+        }
+        else
+        {
+            int damage = (1 + enemy.strenght) - player.armor;
+            std::cout << "-------------------" << std::endl;
+            std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
+            std::cout << "-------------------" << std::endl;
+            player.currentHealth -= damage;
+            warriorblockCounter++;
+        }
+    }
+
+    DisplayCurrentHealth(player);
+}
+void Attack(Player& player,Enemy& enemy)
+{
+    
+    if(!CriticalStrike(player))
+    {
+        if(Wolfdodge)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "UNIK PRZECIWNIKA" << std::endl;
+            std::cout << "----------------" << std::endl;
+            Wolfdodge = false;
+        }
+        else
+        {
+            int damage = (1 + player.strenght) - enemy.armor;
+            std::cout << "----------------" << std::endl;
+            std::cout << "NORMALNY ATAK: " << damage << std::endl;
+            std::cout << "----------------" << std::endl;
+            enemy.currentHealth -= damage;
+        }
+        
+    }
+    else if(CriticalStrike(player))
+    {
+        if(Wolfdodge)
+        {
+            std::cout << "----------------" << std::endl;
+            std::cout << "UNIK PRZECIWNIKA" << std::endl;
+            std::cout << "----------------" << std::endl;
+            Wolfdodge = false;
+        }
+        else
+        {
+             int damage = 2 * (1 + player.strenght) - enemy.armor;
+            std::cout << "----------------------" << std::endl;
+            std::cout << "TRAFIENIE KRYTYCZNE: " << damage << std::endl;
+            std::cout << "----------------------" << std::endl;
+            enemy.currentHealth -= damage;
+        }
+       
+    }
+
+    DisplayCurrentHealth(enemy);
+
 }
 #endif

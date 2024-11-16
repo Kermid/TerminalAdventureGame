@@ -1,8 +1,9 @@
 #ifndef LOCATIONS_HPP
 #define LOCATIONS_HPP
 #include <iostream>
+#include "SecondLevel.hpp"
 
-
+int FightSecondLevel(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter);
 class Location
 {
 
@@ -112,7 +113,7 @@ int GenerateLocationRandomFight(Location location,Player& player,std::vector<Ene
     
     if(location.hasFight)
     {
-        outcome = Fight(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
+        outcome = FightSecondLevel(player,listOfEnemies,TypeFight,barbarianRage,warriorBlock,warriorblockCounter);
         if(outcome == 0)
         {
             return outcome;
@@ -143,7 +144,7 @@ int GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOf
     int outcome;
     if(location.hasFight)
     {
-        outcome = Fight(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
+        outcome = FightSecondLevel(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
         if(outcome == 0)
         {
             return outcome;
