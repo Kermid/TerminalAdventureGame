@@ -21,13 +21,17 @@ Player ChooseCharacter(std::vector<Player>& playerCharacters);
 int main()
 {
     srand(time(NULL));
+    
     selectedPlayer = Menu();
-    SecondLevel(selectedPlayer);
-    /*
-    if(FirstLevel(selectedPlayer) == 1)
+    int progress = FirstLevel(selectedPlayer);
+    if( progress == 1)
     {
-        Town(selectedPlayer);
-    }*/
+        progress = Town(selectedPlayer);
+        if(progress == 2)
+        {
+            SecondLevel(selectedPlayer);
+        }
+    }
     
     return 0;
 }

@@ -4,6 +4,7 @@
 #include "SecondLevel.hpp"
 
 int FightSecondLevel(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter);
+int FightSecondLevel(Player& player, std::vector<Enemy>& listOfEnemies,std::string typeOfFight,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,int numberOfEnemies);
 class Location
 {
 
@@ -11,6 +12,13 @@ public:
     std::string description;
     bool hasFight;
     bool hasLoot;
+    Location(std::string description,bool hasFight,bool hasLoot)
+    {
+        this->description = description;
+        this->hasFight = hasFight;
+        this->hasLoot = hasLoot;
+    }
+    Location(): description(""), hasFight(false), hasLoot(false) {}
 };
 
 Location generateForestArea()
@@ -138,13 +146,13 @@ int GenerateLocationRandomFight(Location location,Player& player,std::vector<Ene
     }
     return outcome;
 }
-int GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,std::string TypeOfFight)
+int GenerateLocation(Location location,Player& player,std::vector<Enemy>& listOfEnemies,bool& barbarianRage,bool& warriorBlock,int& warriorblockCounter,std::string TypeOfFight,int numberOfEnemies)
 {
     std::cout << location.description << std::endl;
     int outcome;
     if(location.hasFight)
     {
-        outcome = FightSecondLevel(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter);
+        outcome = FightSecondLevel(player,listOfEnemies,TypeOfFight,barbarianRage,warriorBlock,warriorblockCounter,numberOfEnemies);
         if(outcome == 0)
         {
             return outcome;

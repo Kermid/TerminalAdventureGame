@@ -342,7 +342,7 @@ void armorShop(Player& player)
     }
     
 }
-void Town(Player& player)
+int Town(Player& player)
 {
     bool townContinue = true;
     int townChoice;
@@ -370,6 +370,7 @@ void Town(Player& player)
                 Inn(player);
             break;
             case 5:
+            return 1;
                 townContinue = false;
             break;
             case 6:
@@ -382,6 +383,6 @@ void Town(Player& player)
             break;
         }
     }
-
+return 0;
 }
 #endif 
