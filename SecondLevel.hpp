@@ -689,54 +689,49 @@ int SecondLevelBearsDen(Player& player)
     }
     return 0;
 }
-int SecondLevelCentreSecond(Player& player)
+int SecondLevelBanditCamp(Player& player)
 {
-    int choice;
+     int choice;
     int outcome;
     bool continueFirst = true;
     std::vector<Enemy> listOfEnemies;
-
-    Location locationLeft = generateForestArea();
-    Location locationCentre = generateForestArea();
-    Location locationRight= generateForestArea();
+    std::string description = "Z daleka widzisz dym oraz wsrod drzew namioty.W poblizu chyba znajduje sie obozowisko bandytow";
+    Location banditCamp(description,true,true);
+    Location SecondLevelRightThird = generateForestArea();
 
     while(continueFirst)
     {
-        std::cout << "Masz przed soba trzy siezki" << std::endl;
-        std::cout << "1 - Lewo  2 - Prosto  3 - Prawo 4 - Sprawdz ekwipunek" << std::endl;
+        std::cout << "Stoisz przed jaskinia.Ze srodka dobiegaja powarkiwania.Wchodzisz do srodka?" << std::endl;
+        std::cout << "1 - Zaatakuj 2 - Odejdz 3 - Sprawdz ekwipunek" << std::endl;
         std::cin >> choice;
     
         switch (choice)
         {
         case 1:
-            outcome = GenerateLocationRandomFight(locationLeft,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
+            outcome = GenerateLocation(banditCamp,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter,"Bandyta",4);
             if(outcome == 1)
             {
-                return 1;
+                return SecondLevelLeft(player);
+            }
+            else if(outcome == 0)
+            {
+                 std::cout << "ZGINALES!Koniec gry." << std::endl;
             }
             continueFirst = false;
         break;
         case 2:
-            outcome = GenerateLocationRandomFight(locationCentre,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
+            outcome = GenerateLocationRandomFight(SecondLevelRightThird,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
             if(outcome == 1)
             {
-                return 1;
-            }
-            continueFirst = false;
-        break;
-        case 3:
-            outcome = GenerateLocationRandomFight(locationRight,player,listOfEnemies,barbarianRage,warriorBlock,warriorblockCounter);
-            if(outcome == 1)
-            {
-                return 1;
+                return SecondLevelCentreSecond(player);
             }
             else if(outcome == 0)
             {
-                return 1;
+                 std::cout << "ZGINALES!Koniec gry." << std::endl;
             }
             continueFirst = false;
-        break;
-        case 4:
+        break;     
+        case 3:
             CheckInventory(player);
         break;
         default:
@@ -746,7 +741,15 @@ int SecondLevelCentreSecond(Player& player)
     }
     return 0;
 }
-
+int SecondLevelCentreSecond(Player& player)
+{
+    return 1;
+}
+int SecondLevelRightSecond(Player& player)
+{
+    return 1;
+}
+   
 #endif
 
 
