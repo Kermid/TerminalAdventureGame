@@ -15,7 +15,7 @@ void strongAttack(Player& player,Enemy& enemy)
     {
         if(!CriticalStrike(player))
     {
-        int damage = (RandomNumber(10) + player.strenght) - enemy.armor;
+        int damage = (RandomNumber(12) + player.strenght) - enemy.armor;
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
         std::cout << "--------------" << std::endl;
@@ -24,7 +24,7 @@ void strongAttack(Player& player,Enemy& enemy)
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (RandomNumber(10) + player.strenght) - enemy.armor;
+        int damage = 2 * (RandomNumber(12) + player.strenght) - enemy.armor;
         player.currentMana -= manaCost;
         enemy.currentHealth -= damage;
         std::cout << "-----------------------" << std::endl;
@@ -76,7 +76,7 @@ void sinisterStrike(Player& player,Enemy& enemy)
     {
         if(!CriticalStrike(player))
     {
-        int damage = (RandomNumber(3) + player.agility) - enemy.armor;
+        int damage = (RandomNumber(3) + player.agility);
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
         std::cout << "------------------" << std::endl;
@@ -85,7 +85,7 @@ void sinisterStrike(Player& player,Enemy& enemy)
     }
     else if(CriticalStrike(player))
     {
-        int damage = 2 * (RandomNumber(3) + player.agility) - enemy.armor;
+        int damage = 2 * (RandomNumber(3) + player.agility);
         player.currentMana -= 5;
         enemy.currentHealth -= damage;
         std::cout << "---------------------------" << std::endl;

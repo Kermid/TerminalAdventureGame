@@ -1186,7 +1186,7 @@ void EnemyAttack(Player& player,Enemy& enemy,bool& warriorBlock,int& warriorbloc
             std::cout << "|ATAK PRZECIWNIKA: " << damage << std::endl;
             std::cout << "-------------------" << std::endl;
             player.currentHealth -= damage;
-            warriorblockCounter++;
+            
         }
     }
 
